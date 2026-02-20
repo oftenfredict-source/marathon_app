@@ -1,0 +1,98 @@
+/*------------------------------------------------------------------
+    File Name: custom.css
+-------------------------------------------------------------------*/
+
+/** ADD YOUR AWESOME CODES HERE **/
+
+/* Custom UI Refinements */
+.user_placeholder {
+    width: 45px;
+    height: 45px;
+    background: #ffcc00;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a1a1a;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    margin: 0 auto;
+    font-size: 18px;
+}
+
+.user_profle_side {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.user_profle_side .user_img {
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.user_profle_side .user_info h6 {
+    font-size: 15px;
+    margin-bottom: 0;
+    color: #fff;
+    font-weight: 600;
+}
+
+.user_profle_side .user_info p {
+    font-size: 11px;
+    margin-bottom: 0;
+    color: #28a745;
+}
+
+/* Topbar logo visibility toggle */
+/* By default, hide topbar logo on desktop/tablets where sidebar is always visible as a bar */
+@media (min-width: 1200px) {
+    .topbar_logo_section {
+        display: none !important;
+    }
+}
+
+/* On mobile/small screens, hide topbar logo ONLY when sidebar is toggled open */
+@media (max-width: 1199px) {
+    .topbar_logo_section {
+        display: block;
+    }
+
+    #sidebar.active~#content .topbar_logo_section {
+        display: none;
+    }
+}
+
+.topbar_logo_section {
+    transition: all 0.3s ease;
+}
+
+/* Sidebar logout specific styling */
+#sidebar ul li.logout_link a {
+    color: #ff3333 !important;
+    font-weight: bold;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 20px;
+}
+
+#sidebar ul li.logout_link a:hover {
+    background: rgba(255, 51, 51, 0.1) !important;
+    color: #ff6666 !important;
+}
+
+/* Override responsive.css hiding the topbar profile dropdown */
+@media (max-width: 1199px) {
+    .right_topbar .icon_info ul.user_profile_dd {
+        display: block !important;
+    }
+
+    .right_topbar .icon_info ul.user_profile_dd li {
+        width: auto !important;
+    }
+
+    .right_topbar .icon_info ul.user_profile_dd li a {
+        padding: 5px 15px !important;
+        font-size: 14px !important;
+    }
+}
