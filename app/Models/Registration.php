@@ -18,8 +18,9 @@ class Registration extends Model
         return $this->belongsTo(RaceCategory::class, 'category_id');
     }
 
-    public function payment()
+    public function groupBooking()
     {
-        return $this->hasOne(Payment::class);
+        return $this->belongsTo(GroupBooking::class);
     }
 }
+

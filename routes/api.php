@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\RunnerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\GroupBookingController;
 use App\Http\Controllers\RegistrationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/categories', [RegistrationController::class, 'getCategories']);
 Route::get('/exchange-rate', [RegistrationController::class, 'getExchangeRate']);
 Route::post('/register', [RegistrationController::class, 'register']);
+Route::post('/register-group', [RegistrationController::class, 'registerGroup']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
@@ -37,11 +39,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/registrations/statistics', [RegistrationManagementController::class, 'getStatistics']);
         Route::post('/verify-payment', [RegistrationController::class, 'verifyPayment']);
 
+        Route::get('/runners/export', [RunnerController::class, 'export']);
         Route::get('/runners', [RunnerController::class, 'index']);
         Route::get('/runners/{id}', [RunnerController::class, 'show']);
         Route::put('/runners/{id}', [RunnerController::class, 'update']);
         Route::post('/runners/{id}/checkin', [RunnerController::class, 'checkIn']);
-        Route::get('/runners/export', [RunnerController::class, 'export']);
 
         Route::get('/categories', [CategoryController::class, 'index']);
         Route::post('/categories', [CategoryController::class, 'store']);
@@ -59,5 +61,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/sms-logs', [\App\Http\Controllers\Admin\SmsLogController::class, 'index']);
         Route::get('/sms-logs/stats', [\App\Http\Controllers\Admin\SmsLogController::class, 'getStats']);
         Route::post('/sms-logs/{id}/resend', [\App\Http\Controllers\Admin\SmsLogController::class, 'resend']);
+
+        // Group Bookings
+        Route::get('/group-bookings', [GroupBookingController::class, 'index']);
+        Route::get('/group-bookings/{id}', [GroupBookingController::class, 'show']);
+        Route::post('/group-bookings/{id}/verify-payment', [GroupBookingController::class, 'verifyPayment']);
     });
 });

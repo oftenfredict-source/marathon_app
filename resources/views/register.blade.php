@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Swahili Marathon - Registration</title>
 
@@ -556,9 +557,91 @@
                 }
             </style>
 
+            <!-- === MODE TOGGLE === -->
+            <div class="d-flex gap-3 mb-4" style="gap:12px;">
+                <button type="button" id="btn-individual" onclick="setMode('individual')" class="btn flex-fill py-3"
+                    style="border-radius:14px; font-weight:700; font-size:1rem;
+                    background:var(--primary-yellow); color:#000; border:none;">
+                    <i class="fas fa-user me-2"></i> Individual
+                </button>
+                <button type="button" id="btn-group" onclick="setMode('group')" class="btn flex-fill py-3" style="border-radius:14px; font-weight:700; font-size:1rem;
+                    background:rgba(255,255,255,0.08); color:#fff; border:1px solid rgba(255,255,255,0.2);">
+                    <i class="fas fa-users me-2"></i> Group / Bulk
+                </button>
+            </div>
+
+            <div id="error-box-group" class="error-alert"></div>
+
+            <!-- ===== GROUP FORM ===== -->
+            <div id="group-form-section" style="display:none;">
+                <div class="form-section-title">1. Group Leader Information</div>
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Leader Full Name</label>
+                        <input type="text" id="g-leader-name" class="form-control" placeholder="John Doe">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Leader Phone</label>
+                        <input type="text" id="g-leader-phone" class="form-control" placeholder="712345678">
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Group / Club Name <span
+                                style="opacity:.5;font-weight:400">(Optional)</span></label>
+                        <input type="text" id="g-group-name" class="form-control"
+                            placeholder="e.g. Mwanza Runners Club">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Leader Email <span
+                                style="opacity:.5;font-weight:400">(Optional)</span></label>
+                        <input type="email" id="g-leader-email" class="form-control" placeholder="leader@email.com">
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Registration Type</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="g-type" value="adult" checked onchange="updateGroupPrice()">
+                                Adult (40,000 TZS base)
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="g-type" value="student" onchange="updateGroupPrice()"> Student
+                                (20,000 TZS base)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section-title">2. Group Members <span
+                        style="font-weight:400;font-size:.95rem;color:rgba(255,255,255,.6)">(minimum 2)</span></div>
+
+                <div id="members-container"></div>
+
+                <button type="button" onclick="addMember()" class="btn mt-2 mb-4"
+                    style="background:rgba(255,255,255,0.08);border:1px dashed rgba(255,255,255,.3);color:#fff;border-radius:12px;padding:10px 24px;font-weight:600;">
+                    <i class="fas fa-plus me-2"></i> Add Member
+                </button>
+
+                <!-- Discount & Price Summary -->
+                <div class="price-display mb-3" id="group-price-display">
+                    <div class="price-label">Group Registration Fee</div>
+                    <div style="font-size:1rem;opacity:.7;margin-bottom:6px;" id="group-discount-line">Add at least 2
+                        members to see discount</div>
+                    <div class="price-value" id="group-total-price">-- TZS</div>
+                </div>
+
+                <button type="button" onclick="handleGroupRegistration()" class="btn btn-register">
+                    Confirm Group Registration
+                </button>
+            </div>
+            <!-- ===== END GROUP FORM ===== -->
+
             <form id="registration-form" onsubmit="handleRegistration(event)">
                 @csrf
                 <div class="form-section-title">1. Runner Information</div>
+
                 <div class="row mb-4">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">First Name</label>
@@ -572,8 +655,9 @@
 
                 <div class="row mb-4">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label">Email Address</label>
-                        <input type="email" name="email" class="form-control" required>
+                        <label class="form-label">Email Address <span
+                                style="opacity:0.5; font-weight:400; text-transform:none; letter-spacing:0;">(Optional)</span></label>
+                        <input type="email" name="email" class="form-control" placeholder="your@email.com">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Gender</label>
@@ -876,27 +960,50 @@
                 const response = await fetch(`${apiBase}/categories`);
                 categories = await response.json();
 
+                // Populate individual form select
                 const select = document.getElementById('category_id');
-                select.innerHTML = '<option value="">Select Distance</option>';
+                if (select) {
+                    select.innerHTML = '<option value="">Select Distance</option>';
+                    categories.forEach(cat => {
+                        const isFull = cat.registrations_count >= cat.registration_limit;
+                        const option = document.createElement('option');
+                        option.value = cat.id;
+                        option.disabled = isFull;
+                        option.textContent = `${cat.name} (${cat.registrations_count}/${cat.registration_limit})${isFull ? ' [FULL]' : ''}`;
+                        select.appendChild(option);
+                    });
 
-                categories.forEach(cat => {
-                    const isFull = cat.registrations_count >= cat.registration_limit;
-                    const option = document.createElement('option');
-                    option.value = cat.id;
-                    option.disabled = isFull;
-                    option.textContent = `${cat.name} (${cat.registrations_count}/${cat.registration_limit})${isFull ? ' [FULL]' : ''}`;
-                    select.appendChild(option);
-                });
-
-                if (categories.length > 0) {
-                    select.value = categories[0].id;
-                    updatePrice();
+                    if (categories.length > 0) {
+                        select.value = categories[0].id;
+                        updatePrice();
+                    }
                 }
+
+                // NEW: Populate any existing group member dropdowns that were created before fetch finished
+                updateAllMemberDropdowns();
             } catch (err) {
                 console.error('Failed to load categories', err);
-                document.getElementById('error-box').textContent = "Failed to load race distances. Please refresh.";
-                document.getElementById('error-box').style.display = 'block';
+                const errBox = document.getElementById('error-box');
+                if (errBox) {
+                    errBox.textContent = "Failed to load race distances. Please refresh.";
+                    errBox.style.display = 'block';
+                }
             }
+        }
+
+        // NEW: Helper to populate dropdowns in group member cards
+        function updateAllMemberDropdowns() {
+            const dropdowns = document.querySelectorAll('.m-category');
+            const options = categories.map(c => {
+                const isFull = c.registrations_count >= c.registration_limit;
+                return `<option value="${c.id}" ${isFull ? 'disabled' : ''}>${c.name} ${isFull ? '[FULL]' : ''}</option>`;
+            }).join('');
+
+            dropdowns.forEach(dd => {
+                const currentVal = dd.value;
+                dd.innerHTML = `<option value="">Select distance</option>${options}`;
+                if (currentVal) dd.value = currentVal;
+            });
         }
 
         // Update Price logic
@@ -1005,8 +1112,9 @@
                         <h5 class="text-warning mb-3"><i class="fas fa-mobile-alt me-2"></i>Payment Instructions</h5>
                         <p class="mb-2">Please pay <strong>${priceStr}</strong> to complete your registration:</p>
                         <ul class="list-unstyled mb-0">
-                            <li><strong>1. Mobile Money:</strong> Pay to LIPA NAMBA <strong>515515 (SWAHILI MARATHON)</strong></li>
-                            <li><strong>2. Important:</strong> After payment, you will receive a confirmation SMS with a unique transaction reference. <strong>Please keep this reference number</strong> - you will need it for payment verification.</li>
+                            <li><strong>1. Mobile Money:</strong> Pay to LIPA NAMBA <strong>5935033 (MIX BY YAS)</strong></li>
+                            <li><strong>2. Account Name:</strong> <strong>SWAHILI MARATHON</strong></li>
+                            <li><strong>3. Important:</strong> After payment, you will receive a confirmation SMS with a unique transaction reference. <strong>Please keep this reference number</strong> - you will need it for payment verification.</li>
                             <li class="mt-3 text-white-50 small"><i class="fas fa-info-circle me-1"></i> Your Bib number will be assigned after payment verification.</li>
                         </ul>
                     `;
@@ -1028,8 +1136,240 @@
             populateCountries();
             toggleNationality(document.querySelector('input[name="nationality"]:checked'));
             toggleStudent();
+            // Start with 2 default members
+            addMember(); addMember();
         });
+
+        // ===================== GROUP REGISTRATION JS =====================
+
+        let memberCount = 0;
+
+        function setMode(mode) {
+            const isGroup = (mode === 'group');
+            document.getElementById('group-form-section').style.display = isGroup ? 'block' : 'none';
+            document.getElementById('registration-form').style.display = isGroup ? 'none' : 'block';
+            // Toggle button styles
+            document.getElementById('btn-individual').style.background = isGroup ? 'rgba(255,255,255,0.08)' : 'var(--primary-yellow)';
+            document.getElementById('btn-individual').style.color = isGroup ? '#fff' : '#000';
+            document.getElementById('btn-individual').style.border = isGroup ? '1px solid rgba(255,255,255,0.2)' : 'none';
+            document.getElementById('btn-group').style.background = isGroup ? 'var(--primary-yellow)' : 'rgba(255,255,255,0.08)';
+            document.getElementById('btn-group').style.color = isGroup ? '#000' : '#fff';
+            document.getElementById('btn-group').style.border = isGroup ? 'none' : '1px solid rgba(255,255,255,0.2)';
+        }
+
+        function addMember() {
+            const idx = memberCount++;
+            const container = document.getElementById('members-container');
+            const optionsHtml = categories.map(c => {
+                const isFull = c.registrations_count >= c.registration_limit;
+                return `<option value="${c.id}" ${isFull ? 'disabled' : ''}>${c.name} ${isFull ? '[FULL]' : ''}</option>`;
+            }).join('');
+
+            const card = document.createElement('div');
+            card.className = 'mb-3 p-3';
+            card.id = `member-card-${idx}`;
+            card.style.cssText = 'background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:16px;';
+            card.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span style="font-weight:700;color:var(--primary-yellow);">Member ${container.children.length + 1}</span>
+                    <button type="button" onclick="removeMember(${idx})"
+                        style="background:none;border:none;color:rgba(255,100,100,.8);cursor:pointer;font-size:1.2rem;" title="Remove">
+                        <i class="fas fa-times-circle"></i>
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 mb-3">
+                        <label class="form-label">Member Full Name</label>
+                        <input type="text" class="form-control m-full-name" data-idx="${idx}" placeholder="e.g. John Doe">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Gender</label>
+                        <select class="form-select m-gender" data-idx="${idx}">
+                            <option value="">Select</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">T-Shirt Size</label>
+                        <select class="form-select m-tshirt" data-idx="${idx}">
+                            <option value="">Select</option>
+                            <option value="S">S</option><option value="M">M</option>
+                            <option value="L">L</option><option value="XL">XL</option><option value="XXL">XXL</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Race Distance</label>
+                        <select class="form-select m-category" data-idx="${idx}" onchange="updateGroupPrice()">
+                            <option value="">Select distance</option>
+                            ${optionsHtml}
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Phone <span style="opacity:.5;font-weight:400">(Optional)</span></label>
+                        <input type="text" class="form-control m-phone" data-idx="${idx}" placeholder="712345678">
+                    </div>
+                </div>`;
+            container.appendChild(card);
+            updateGroupPrice();
+            renumberMembers();
+        }
+
+        function removeMember(idx) {
+            const el = document.getElementById(`member-card-${idx}`);
+            if (el) el.remove();
+            updateGroupPrice();
+            renumberMembers();
+        }
+
+        function renumberMembers() {
+            const cards = document.querySelectorAll('#members-container > div');
+            cards.forEach((card, i) => {
+                const label = card.querySelector('span[style*="primary-yellow"]');
+                if (label) label.textContent = `Member ${i + 1}`;
+            });
+        }
+
+        function getGroupType() {
+            return document.querySelector('input[name="g-type"]:checked')?.value || 'adult';
+        }
+
+        function updateGroupPrice() {
+            const memberCards = document.querySelectorAll('#members-container > div');
+            const count = memberCards.length;
+            const type = getGroupType();
+            const base = type === 'student' ? 20000 : 40000;
+
+            let discount = 0;
+            if (count >= 10) discount = 20;
+            else if (count >= 5) discount = 10;
+            else if (count >= 2) discount = 5;
+
+            const subtotal = count * base;
+            const saving = subtotal * (discount / 100);
+            const total = subtotal - saving;
+
+            const discountLine = document.getElementById('group-discount-line');
+            const totalEl = document.getElementById('group-total-price');
+
+            if (count < 2) {
+                discountLine.textContent = 'Add at least 2 members to see discount';
+                totalEl.textContent = '-- TZS';
+            } else {
+                discountLine.innerHTML =
+                    `${count} members × ${base.toLocaleString()} TZS` +
+                    (discount > 0 ? ` &nbsp;—&nbsp; <span style="color:#3fab30;">${discount}% group discount applied (−${saving.toLocaleString()} TZS)</span>` : '');
+                totalEl.textContent = `${total.toLocaleString()} TZS`;
+            }
+        }
+
+        async function handleGroupRegistration() {
+            const errorBox = document.getElementById('error-box-group');
+            errorBox.style.display = 'none';
+
+            const leaderName = document.getElementById('g-leader-name').value.trim();
+            const leaderPhone = document.getElementById('g-leader-phone').value.trim();
+            const groupName = document.getElementById('g-group-name').value.trim();
+            const leaderEmail = document.getElementById('g-leader-email').value.trim();
+            const type = getGroupType();
+
+            if (!leaderName || !leaderPhone) {
+                errorBox.textContent = 'Please fill in the leader name and phone number.';
+                errorBox.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            const memberCards = Array.from(document.querySelectorAll('#members-container > div'));
+            if (memberCards.length < 2) {
+                errorBox.textContent = 'Please add at least 2 members for group registration.';
+                errorBox.style.display = 'block';
+                return;
+            }
+
+            const members = [];
+            for (let i = 0; i < memberCards.length; i++) {
+                const card = memberCards[i];
+                const fullName = card.querySelector('.m-full-name')?.value.trim();
+                const gender = card.querySelector('.m-gender')?.value;
+                const tshirt = card.querySelector('.m-tshirt')?.value;
+                const cat = card.querySelector('.m-category')?.value;
+                const phone = card.querySelector('.m-phone')?.value.trim();
+
+                if (!fullName || !gender || !tshirt || !cat) {
+                    errorBox.textContent = `Please complete all required fields for Member ${i + 1}.`;
+                    errorBox.style.display = 'block';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    return;
+                }
+
+                // Split full name: first word as first name, rest as last name
+                const parts = fullName.split(/\s+/);
+                const firstName = parts[0];
+                const lastName = parts.slice(1).join(' ') || 'Runner';
+
+                members.push({
+                    first_name: firstName,
+                    last_name: lastName,
+                    gender,
+                    t_shirt_size: tshirt,
+                    category_id: cat,
+                    phone: phone || null,
+                    nationality: 'Tanzanian'
+                });
+            }
+
+            document.getElementById('loading-overlay').style.display = 'flex';
+
+            try {
+                const res = await fetch(`${apiBase}/register-group`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '' },
+                    body: JSON.stringify({ leader_name: leaderName, leader_phone: leaderPhone, leader_email: leaderEmail || null, group_name: groupName || null, registration_type: type, members })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    const msgs = data.errors ? Object.values(data.errors).flat().join(' | ') : (data.message || 'Registration failed.');
+                    throw new Error(msgs);
+                }
+
+                // Build success overlay content
+                const pi = data.payment_info;
+                const memberList = (data.members || []).map((m, i) =>
+                    `<li>${m.runner.first_name} ${m.runner.last_name}</li>`
+                ).join('');
+
+                document.getElementById('success-message').innerHTML =
+                    `Your group of <strong>${members.length}</strong> has been registered successfully!<br>
+                     An SMS with payment instructions has been sent to <strong>+255${leaderPhone}</strong>.`;
+
+                document.getElementById('payment-instructions').innerHTML = `
+                    <h5 style="color:var(--primary-yellow);"><i class="fas fa-mobile-alt me-2"></i>Payment Instructions</h5>
+                    <p><strong>Total Amount:</strong> ${Number(pi.amount).toLocaleString()} ${pi.currency}</p>
+                    <p><strong>Lipa Number:</strong> ${pi.lipa_number}</p>
+                    <p><strong>Account Name:</strong> ${pi.account_name}</p>
+                    <p><strong>Reference:</strong> ${pi.reference}</p>
+                    <hr style="border-color:rgba(255,255,255,.2);">
+                    <p style="opacity:.85;margin-bottom:4px;"><strong>Members Registered (${members.length}):</strong></p>
+                    <ul style="padding-left:18px;margin:0;">${memberList}</ul>
+                    <hr style="border-color:rgba(255,255,255,.2);">
+                    <p class="mb-0" style="font-size:.9rem;opacity:.75;">After payment, send your transaction screenshot or reference number to <strong>+255755165284</strong> for verification. Bib numbers will be assigned once payment is confirmed.</p>`;
+
+                document.getElementById('success-overlay').style.display = 'flex';
+
+            } catch (err) {
+                errorBox.textContent = err.message;
+                errorBox.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } finally {
+                document.getElementById('loading-overlay').style.display = 'none';
+            }
+        }
     </script>
+
 </body>
 
 </html>

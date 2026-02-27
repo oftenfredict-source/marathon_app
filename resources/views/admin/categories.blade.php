@@ -59,6 +59,8 @@
                                 <span>Reports</span></a></li>
                         <li><a href="/admin/sms-logs"><i class="fa fa-envelope-o blue2_color"></i>
                                 <span>SMS Logs</span></a></li>
+                        <li><a href="/admin/group-bookings"><i class="fa fa-group purple_color"></i>
+                                <span>Group Bookings</span></a></li>
                         <li><a href="/admin/settings"><i class="fa fa-cog red_color"></i> <span>Settings</span></a></li>
                         <li class="logout_link"><a href="#" onclick="logout()"><i class="fa fa-sign-out red_color"></i>
                                 <span>Log Out</span></a></li>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Runner;
 use App\Models\Registration;
 use App\Models\RaceCategory;
+use App\Models\GroupBooking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -63,7 +64,7 @@ class RegistrationController extends Controller
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'nullable|email|max:255',
             'phone' => 'required|string|max:20',
             'nationality' => 'required|string|max:255',
             'region' => 'nullable|string|max:255',
@@ -95,14 +96,23 @@ class RegistrationController extends Controller
             DB::beginTransaction();
 
             // Find or create runner
-            // Using email + names to allow family members to share an email address
-            $runner = Runner::updateOrCreate(
-                [
+            // Match by email+name if email provided, otherwise by phone+name
+            if ($request->filled('email')) {
+                $matchFields = [
                     'email' => $request->email,
                     'first_name' => $request->first_name,
                     'last_name' => $request->last_name,
-                ],
-                $request->only(['phone', 'nationality', 'region', 'country', 'passport_number', 't_shirt_size', 'gender'])
+                ];
+            } else {
+                $matchFields = [
+                    'phone' => $request->phone,
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                ];
+            }
+            $runner = Runner::updateOrCreate(
+                $matchFields,
+                $request->only(['email', 'phone', 'nationality', 'region', 'country', 'passport_number', 't_shirt_size', 'gender'])
             );
             \Log::info('Runner updated/created', ['runner_id' => $runner->id]);
 
@@ -150,7 +160,7 @@ class RegistrationController extends Controller
                 $smsMessage .= "Category: {$category->name}\n";
                 $smsMessage .= "Registration ID: {$registration->id}\n\n";
                 $smsMessage .= "Please complete payment:\n";
-                $smsMessage .= "Lipa Number: 515515\n";
+                $smsMessage .= "Lipa Number: 5935033 (MIX BY YAS)\n";
                 $smsMessage .= "Account: SWAHILI MARATHON\n";
                 $smsMessage .= "Amount: " . number_format($amount) . " {$currency}";
 
@@ -185,7 +195,7 @@ class RegistrationController extends Controller
                 'payment_info' => [
                     'amount' => $amount,
                     'currency' => $currency,
-                    'lipa_number' => '515515', // Placeholder Lipa Number
+                    'lipa_number' => '5935033 (MIX BY YAS)',
                     'account_name' => 'SWAHILI MARATHON',
                 ]
             ]);
@@ -198,6 +208,157 @@ class RegistrationController extends Controller
     }
 
     /**
+     * Handle group / bulk registration.
+     */
+    public function registerGroup(Request $request)
+    {
+        \Log::info('Group registration attempt', ['leader' => $request->leader_name, 'count' => count($request->members ?? [])]);
+
+        $validator = Validator::make($request->all(), [
+            'leader_name' => 'required|string|max:255',
+            'leader_phone' => 'required|string|max:20',
+            'leader_email' => 'nullable|email|max:255',
+            'group_name' => 'nullable|string|max:255',
+            'registration_type' => 'required|in:adult,student',
+            'members' => 'required|array|min:2',
+            'members.*.first_name' => 'required|string|max:255',
+            'members.*.last_name' => 'required|string|max:255',
+            'members.*.gender' => 'required|in:male,female,other',
+            'members.*.t_shirt_size' => 'required|in:S,M,L,XL,XXL',
+            'members.*.category_id' => 'required|exists:race_categories,id',
+            'members.*.phone' => 'nullable|string|max:20',
+            'members.*.email' => 'nullable|email|max:255',
+            'members.*.nationality' => 'nullable|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $members = $request->members;
+        $count = count($members);
+        $type = $request->registration_type;   // adult | student
+        $basePriceLocal = $type === 'student' ? 20000 : 40000;
+        $discountPct = GroupBooking::discountForSize($count);
+
+        try {
+            DB::beginTransaction();
+
+            // --- Calculate totals ---
+            $subtotal = 0;
+            $currency = 'TZS'; // will adjust if any international runner
+
+            foreach ($members as $m) {
+                $nationality = $m['nationality'] ?? 'Tanzanian';
+                if ($nationality === 'International') {
+                    // Use exchange service for international price
+                    $exchangeService = app(\App\Services\CurrencyExchangeService::class);
+                    $subtotal += $exchangeService->convertTshToUsd($basePriceLocal);
+                    $currency = 'USD';
+                } else {
+                    $subtotal += $basePriceLocal;
+                }
+            }
+
+            $discountAmount = $subtotal * ($discountPct / 100);
+            $total = $subtotal - $discountAmount;
+
+            // --- Create group booking ---
+            $groupBooking = GroupBooking::create([
+                'group_name' => $request->group_name,
+                'leader_name' => $request->leader_name,
+                'leader_phone' => $request->leader_phone,
+                'leader_email' => $request->leader_email,
+                'registration_type' => $type,
+                'member_count' => $count,
+                'discount_percent' => $discountPct,
+                'subtotal_amount' => $subtotal,
+                'total_amount' => $total,
+                'currency' => $currency,
+                'status' => 'pending',
+            ]);
+
+            // --- Create runner + registration per member ---
+            $createdMembers = [];
+            foreach ($members as $m) {
+                $nationality = $m['nationality'] ?? 'Tanzanian';
+
+                // Find or create runner
+                $matchFields = [];
+                if (!empty($m['email'])) {
+                    $matchFields = ['email' => $m['email'], 'first_name' => $m['first_name'], 'last_name' => $m['last_name']];
+                } else {
+                    $matchFields = ['first_name' => $m['first_name'], 'last_name' => $m['last_name'], 'phone' => $m['phone'] ?? $request->leader_phone];
+                }
+
+                $runner = Runner::updateOrCreate(
+                    $matchFields,
+                    [
+                        'email' => $m['email'] ?? null,
+                        'phone' => $m['phone'] ?? $request->leader_phone,
+                        'nationality' => $nationality,
+                        't_shirt_size' => $m['t_shirt_size'],
+                        'gender' => $m['gender'],
+                        'region' => $m['region'] ?? null,
+                        'country' => $m['country'] ?? null,
+                    ]
+                );
+
+                $registration = Registration::create([
+                    'group_booking_id' => $groupBooking->id,
+                    'runner_id' => $runner->id,
+                    'category_id' => $m['category_id'],
+                    'type' => $type,
+                    'bib_number' => null,
+                    'status' => 'pending',
+                ]);
+
+                $createdMembers[] = [
+                    'runner' => $runner,
+                    'registration' => $registration,
+                ];
+            }
+
+            DB::commit();
+
+            // --- SMS to leader ---
+            try {
+                $smsService = app(\App\Services\SmsService::class);
+                $smsMsg = "Hello {$request->leader_name}, your group registration for Swahili Marathon 2026 is confirmed!\n\n";
+                $smsMsg .= "Group: " . ($request->group_name ?? 'N/A') . "\n";
+                $smsMsg .= "Members: {$count}\n";
+                $smsMsg .= "Discount: {$discountPct}%\n";
+                $smsMsg .= "Total Due: " . number_format($total) . " {$currency}\n\n";
+                $smsMsg .= "Please pay to:\nLipa Number: 5935033 (MIX BY YAS)\nAccount: SWAHILI MARATHON\n";
+                $smsMsg .= "Reference your Group ID: {$groupBooking->id}";
+
+                $smsService->sendAndLog($request->leader_phone, $smsMsg, 'group_registration', $groupBooking->id);
+            } catch (\Exception $e) {
+                \Log::error('Group SMS failed', ['error' => $e->getMessage()]);
+            }
+
+            return response()->json([
+                'message' => 'Group registration successful',
+                'group_booking' => $groupBooking,
+                'members' => $createdMembers,
+                'payment_info' => [
+                    'amount' => $total,
+                    'currency' => $currency,
+                    'lipa_number' => '5935033 (MIX BY YAS)',
+                    'account_name' => 'SWAHILI MARATHON',
+                    'reference' => "Group ID: {$groupBooking->id}",
+                ],
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error('Group registration error', ['exception' => $e->getMessage()]);
+            return response()->json(['message' => 'Group registration failed: ' . $e->getMessage()], 500);
+        }
+    }
+
+    /**
+
      * Verify payment and assign bib number.
      */
     public function verifyPayment(Request $request)

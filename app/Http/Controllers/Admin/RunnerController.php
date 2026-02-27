@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Runner;
 use App\Models\Registration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class RunnerController extends Controller
 {
@@ -146,30 +148,72 @@ class RunnerController extends Controller
     /**
      * Export runners to CSV.
      */
-    public function export()
+    public function export(Request $request)
     {
-        $runners = Runner::with('registrations.category')->get();
-
-        $csv = "First Name,Last Name,Email,Phone,Nationality,Gender,Category,Bib Number,Status\n";
-
-        foreach ($runners as $runner) {
-            $registration = $runner->registrations->first();
-            $csv .= sprintf(
-                "%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
-                $runner->first_name,
-                $runner->last_name,
-                $runner->email,
-                $runner->phone,
-                $runner->nationality,
-                $runner->gender,
-                $registration ? $registration->category->name : 'N/A',
-                $registration ? $registration->bib_number : 'N/A',
-                $registration ? $registration->status : 'N/A'
-            );
+        // If not authenticated via session/header, try the token from query string
+        if (!Auth::check() && $request->has('token')) {
+            $tokenToken = $request->token;
+            $accessToken = PersonalAccessToken::findToken($tokenToken);
+            if ($accessToken && $accessToken->tokenable) {
+                Auth::login($accessToken->tokenable);
+            }
         }
 
-        return response($csv)
-            ->header('Content-Type', 'text/csv')
-            ->header('Content-Disposition', 'attachment; filename="runners_' . date('Y-m-d') . '.csv"');
+        if (!Auth::check()) {
+            return response()->json(['message' => 'Unauthenticated'], 401);
+        }
+
+        $runners = Runner::with('registrations.category')->get();
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="runners_' . date('Y-m-d') . '.csv"',
+            'Pragma' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0'
+        ];
+
+        $callback = function () use ($runners) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, [
+                'ID',
+                'First Name',
+                'Last Name',
+                'Email',
+                'Phone',
+                'Nationality',
+                'Gender',
+                'DOB',
+                'T-Shirt Size',
+                'Category',
+                'Bib Number',
+                'Status',
+                'Checked In',
+                'Registered At'
+            ]);
+
+            foreach ($runners as $runner) {
+                $registration = $runner->registrations->first();
+                fputcsv($file, [
+                    $runner->id,
+                    $runner->first_name,
+                    $runner->last_name,
+                    $runner->email,
+                    $runner->phone,
+                    $runner->nationality,
+                    $runner->gender,
+                    $runner->dob,
+                    $runner->t_shirt_size,
+                    $registration ? $registration->category->name : 'N/A',
+                    $registration ? $registration->bib_number : 'N/A',
+                    $registration ? $registration->status : 'N/A',
+                    $registration ? (($registration->checked_in ?? false) ? 'Yes' : 'No') : 'N/A',
+                    $registration ? $registration->created_at->toDateTimeString() : 'N/A',
+                ]);
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }

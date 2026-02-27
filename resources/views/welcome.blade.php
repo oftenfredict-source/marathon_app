@@ -70,7 +70,8 @@
         /* FORCE REGISTER TEXT VIA CSS AS FALLBACK */
         [class*="login"]::after,
         a[href*="login"]::after {
-            /* content: "Register" !important; */ /* Controlled via JS, but this is a hint for me */
+            /* content: "Register" !important; */
+            /* Controlled via JS, but this is a hint for me */
         }
 
         /* SPECIFIC FIX: Top Bar Social (Right side) - Change from Green to DARK THEME */
@@ -239,15 +240,9 @@
             .menu-trigger,
             .sidebar_toggle,
             .sidebar-toggle,
-            .canvas-trigger,
-            .header-button~* {
+            .canvas-trigger {
                 display: none !important;
                 visibility: hidden !important;
-                width: 0 !important;
-                height: 0 !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                overflow: hidden !important;
             }
         }
 
@@ -266,22 +261,400 @@
         }
 
 
-        /* Fix "Get A Quote" and Logo */
-        .header-button .theme-btn span {
+        /* PERSISTENT HEADER REDESIGN - Completely replace template header */
+        header,
+        .header-area,
+        .header-top,
+        [class*="header"] {
+            display: none !important;
             visibility: hidden !important;
-            position: relative !important;
+            pointer-events: none !important;
         }
 
-        .header-button .theme-btn span::after {
-            content: "Login \f30b" !important;
-            font-family: "Outfit", "Font Awesome 6 Free" !important;
-            font-weight: 900 !important;
+        /* ================================================
+           TOP INFO BAR - Polished Premium Design
+        ================================================ */
+        #custom-top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10000000 !important;
+            background: linear-gradient(90deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #aaa;
+            font-size: 13px;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            padding: 0 40px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #ffcc00;
+            pointer-events: all !important;
             visibility: visible !important;
-            position: absolute !important;
-            left: 0 !important;
-            top: 0 !important;
-            white-space: nowrap !important;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        #custom-top-bar .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        #custom-top-bar .top-bar-left a {
+            color: #bbb;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12.5px;
+            font-weight: 500;
+            transition: color 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        #custom-top-bar .top-bar-left a:hover {
+            color: #ffcc00;
+        }
+
+        #custom-top-bar .top-bar-left a i {
+            color: #ffcc00;
+            font-size: 13px;
+        }
+
+        #custom-top-bar .top-bar-divider {
+            width: 1px;
+            height: 18px;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        #custom-top-bar .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        #custom-top-bar .top-bar-right a {
+            color: #aaa;
+            font-size: 14px;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.25s ease;
+        }
+
+        #custom-top-bar .top-bar-right a:hover {
+            color: #000;
+            background: #ffcc00;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 767px) {
+            #custom-top-bar {
+                padding: 0 16px;
+                height: 38px;
+            }
+
+            #custom-top-bar .top-bar-left {
+                gap: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #custom-top-bar {
+                justify-content: center !important;
+            }
+
+            #custom-top-bar .top-bar-left .email-link,
+            #custom-top-bar .top-bar-divider,
+            #custom-top-bar .top-bar-right {
+                display: none !important;
+            }
+
+            #custom-top-bar .top-bar-left {
+                gap: 15px;
+                justify-content: center;
+                width: 100%;
+            }
+
+            #custom-top-bar .top-bar-left a {
+                font-size: 11.5px;
+                font-weight: 600;
+            }
+        }
+
+        /* ================================================
+           FLOATING NAVIGATION PILL - Polished Premium Design
+        ================================================ */
+        #custom-floating-header {
+            display: none;
+            position: fixed;
+            top: 52px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 92%;
+            max-width: 1150px;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 100px;
+            padding: 8px 10px 8px 20px;
+            z-index: 9999999 !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 204, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s ease;
+            pointer-events: all !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        #custom-floating-header .pill-inner {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            width: 100%;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        #custom-floating-header .logo-box-pill img {
+            height: 42px;
+            width: auto;
+            visibility: visible !important;
+        }
+
+        #custom-floating-header .nav-links-pill {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            visibility: visible !important;
+        }
+
+        #custom-floating-header .nav-links-pill a {
+            color: rgba(255, 255, 255, 0.8) !important;
+            text-decoration: none !important;
+            font-weight: 500;
+            font-size: 14.5px;
+            padding: 8px 14px;
+            border-radius: 50px;
+            transition: all 0.25s ease;
+            visibility: visible !important;
+            letter-spacing: 0.2px;
+        }
+
+        #custom-floating-header .nav-links-pill a:hover {
+            color: #ffcc00 !important;
+            background: rgba(255, 204, 0, 0.08);
+        }
+
+        #custom-floating-header .register-btn {
+            background: #ffcc00 !important;
             color: #000 !important;
+            padding: 11px 28px;
+            border-radius: 50px;
+            font-weight: 800;
+            text-decoration: none !important;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(255, 204, 0, 0.4);
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        #custom-floating-header .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 204, 0, 0.5);
+        }
+
+        /* Mobile: hide nav links, keep logo + button */
+        @media (max-width: 991px) {
+            #custom-floating-header {
+                width: 95%;
+                padding: 8px 10px 8px 16px;
+                top: 48px;
+                border-radius: 20px;
+            }
+
+            #custom-floating-header .nav-links-pill {
+                display: none;
+            }
+
+            #custom-floating-header .logo-box-pill img {
+                height: 36px;
+            }
+
+            #mobile-menu-toggle {
+                display: flex !important;
+            }
+
+            #custom-floating-header .register-btn {
+                padding: 8px 18px;
+                font-size: 11px;
+                margin-right: 10px;
+            }
+        }
+
+        #mobile-menu-toggle {
+            display: none;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 204, 0, 0.1);
+            border: 1px solid rgba(255, 204, 0, 0.3);
+            border-radius: 10px;
+            align-items: center;
+            justify-content: center;
+            color: #ffcc00;
+            cursor: pointer;
+            z-index: 100000;
+            transition: all 0.2s;
+        }
+
+        #mobile-menu-toggle:hover {
+            background: #ffcc00;
+            color: #000;
+        }
+
+        /* MOBILE SIDE OVERLAY MENU */
+        #mobile-side-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: #0a0a0a;
+            z-index: 99999999 !important;
+            transition: right 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+            padding: 40px 30px;
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.8);
+            border-left: 2px solid #ffcc00;
+        }
+
+        #mobile-side-menu.active {
+            right: 0;
+        }
+
+        #mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 99999998 !important;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        #mobile-menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .mobile-header-close {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 40px;
+        }
+
+        .close-btn {
+            font-size: 28px;
+            color: #ffcc00;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .mobile-nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-nav-list li {
+            margin-bottom: 25px;
+            transform: translateX(20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        #mobile-side-menu.active .mobile-nav-list li {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .mobile-nav-list li:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        .mobile-nav-list li:nth-child(2) {
+            transition-delay: 0.15s;
+        }
+
+        .mobile-nav-list li:nth-child(3) {
+            transition-delay: 0.2s;
+        }
+
+        .mobile-nav-list li:nth-child(4) {
+            transition-delay: 0.25s;
+        }
+
+        .mobile-nav-list a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .mobile-nav-list a i {
+            color: #ffcc00;
+            font-size: 16px;
+        }
+
+        .header-button .theme-btn,
+        [class*="header-button"] a,
+        .header-btn-wrapper a {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            visibility: visible !important;
+            background-color: #ffcc00 !important;
+            color: #000 !important;
+            font-weight: 800 !important;
+            padding: 8px 20px !important;
+            border-radius: 50px !important;
+            text-transform: uppercase !important;
+            min-width: 130px !important;
+            font-size: 14px !important;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3) !important;
+            margin: 0 !important;
+        }
+
+        /* Ensure parent columns don't break flex */
+        .header-button-column,
+        [class*="col-"].header-button-container {
+            display: flex !important;
+            align-items: center !important;
+            flex-shrink: 0 !important;
+            width: auto !important;
         }
 
         /* Text fix for dark text on light backgrounds */
@@ -289,6 +662,352 @@
         .hero-content h1 {
             color: white !important;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* PERSISTENT CUSTOM HERO SECTION - Completely replaces buggy template hero */
+        #custom-hero-section {
+            position: relative;
+            height: 95vh;
+            min-height: 650px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            background: #000;
+            /* Fallback */
+            color: white;
+            z-index: 5 !important;
+            margin-top: 0;
+            padding-top: 140px;
+            /* Increased from 100px to ensure clearance */
+            overflow: hidden;
+        }
+
+        .hero-slider-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+            z-index: 2;
+        }
+
+        #custom-hero-section .hero-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        #custom-hero-section .hero-badge {
+            display: inline-block;
+            background: #ffcc00;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 14px;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        #custom-hero-section h1 {
+            font-size: clamp(2.8rem, 8vw, 5.5rem) !important;
+            line-height: 1.05 !important;
+            font-weight: 900 !important;
+            margin-bottom: 25px !important;
+            text-transform: uppercase !important;
+            max-width: 900px !important;
+            color: white !important;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        #custom-hero-section p {
+            font-size: 1.3rem !important;
+            max-width: 650px !important;
+            line-height: 1.7 !important;
+            margin-bottom: 45px !important;
+            color: rgba(255, 255, 255, 0.95) !important;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            animation: fadeInLeft 1.2s ease-out;
+        }
+
+        #custom-hero-section .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: #ffcc00 !important;
+            color: #000 !important;
+            padding: 18px 45px;
+            border-radius: 100px;
+            font-weight: 800;
+            text-decoration: none !important;
+            font-size: 18px;
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(255, 204, 0, 0.4);
+            animation: fadeInUp 1.4s ease-out;
+        }
+
+        #custom-hero-section .hero-cta:hover {
+            background: #ffffff !important;
+            color: #000 !important;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3);
+        }
+
+        #custom-hero-section .hero-cta i {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        #custom-hero-section .hero-cta:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Responsive Tweaks */
+        @media (max-width: 991px) {
+            #custom-hero-section {
+                height: 80vh;
+                text-align: center;
+            }
+
+            #custom-hero-section .hero-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #custom-hero-section h1 {
+                font-size: 3.5rem !important;
+            }
+
+            #custom-hero-section p {
+                font-size: 1.1rem !important;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 575px) {
+            #custom-hero-section {
+                padding-top: 100px !important;
+                /* Smaller padding because spacer is doing the work */
+                height: auto !important;
+                min-height: auto !important;
+                /* Remove the extra 130vh height */
+                padding-bottom: 60px !important;
+                display: flex !important;
+                align-items: flex-start !important;
+                text-align: center !important;
+            }
+
+            .hero-mobile-spacer {
+                display: block !important;
+                height: 140px !important;
+                /* Physical barrier for the navigation pill */
+                width: 100%;
+            }
+
+            #custom-hero-section .hero-container {
+                margin-top: 0px !important;
+                width: 100% !important;
+                padding: 0 15px !important;
+            }
+
+            #custom-hero-section .hero-badges-wrapper {
+                justify-content: center !important;
+                gap: 12px !important;
+                margin-top: 0 !important;
+                /* Aggressive push for the badges themselves */
+                margin-bottom: 20px !important;
+            }
+
+            #custom-hero-section h1 {
+                font-size: 2.1rem !important;
+                margin-bottom: 25px !important;
+                line-height: 1.2 !important;
+            }
+
+            #custom-hero-section p {
+                font-size: 0.95rem !important;
+                margin-bottom: 35px !important;
+                padding: 0 10px;
+            }
+
+            #custom-hero-section .hero-cta {
+                padding: 14px 28px;
+                font-size: 15px;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* BACK TO TOP BUTTON */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: #ffcc00;
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 999999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(255, 204, 0, 0.4);
+            border: 2px solid #fff;
+        }
+
+        #back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            bottom: 40px;
+        }
+
+        #back-to-top:hover {
+            background: #000;
+            color: #ffcc00;
+            transform: translateY(-5px);
+        }
+
+        /* Force hide any template hero/sliders */
+        .hero-section,
+        .slider-area,
+        .hero-1,
+        .hero-2,
+        .hero-3,
+        .banner-area,
+        .tp-hero-area,
+        .hero-content {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* PARTNERS SECTION */
+        #custom-partners-section {
+            background: #f9f9f9;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            border-top: 4px solid #ffcc00;
+        }
+
+        #custom-partners-section .partners-label {
+            text-transform: uppercase;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #888;
+            margin-bottom: 12px;
+        }
+
+        #custom-partners-section h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #111;
+            margin-bottom: 50px;
+        }
+
+        #custom-partners-section h2 span {
+            color: #ffcc00;
+        }
+
+        #custom-partners-section .partners-grid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+
+        #custom-partners-section .partner-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        #custom-partners-section .partner-card:hover {
+            transform: translateY(-6px);
+        }
+
+        #custom-partners-section .partner-card img {
+            height: 90px;
+            width: auto;
+            max-width: 180px;
+            object-fit: contain;
+            filter: grayscale(30%);
+            transition: filter 0.3s ease;
+            border-radius: 6px;
+        }
+
+        #custom-partners-section .partner-card:hover img {
+            filter: grayscale(0%);
+        }
+
+        #custom-partners-section .partner-card span {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 767px) {
+            #custom-partners-section {
+                padding: 40px 20px;
+            }
+
+            #custom-partners-section .partners-grid {
+                gap: 30px;
+            }
+
+            #custom-partners-section .partner-card img {
+                height: 65px;
+            }
         }
 
         /* GLOBAL SUB-TITLE FIX - Target any sub-title or label that might be green */
@@ -305,9 +1024,9 @@
         .footer-section,
         .footer-area,
         footer {
-            padding-top: 30px !important;
-            padding-bottom: 0 !important;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('/img/header/header-3.jpeg') !important;
+            padding-top: 80px !important;
+            padding-bottom: 20px !important;
+            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.9)), url('/img/header/header-3.jpeg') !important;
             background-size: cover !important;
             background-position: center !important;
             background-attachment: fixed !important;
@@ -315,8 +1034,7 @@
 
         .single-footer-widget,
         .footer-widget {
-            margin-bottom: 10px !important;
-            padding-bottom: 0 !important;
+            margin-bottom: 30px !important;
         }
 
         .single-footer-widget p {
@@ -333,8 +1051,10 @@
         .footer-bottom,
         .footer-copyright,
         [class*="footer-bottom"] {
-            padding: 12px 0 !important;
-            margin-top: 10px !important;
+            padding: 20px 0 !important;
+            margin-top: 40px !important;
+            background: #050505 !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
         }
 
         .contact-info-area,
@@ -361,6 +1081,107 @@
         .list-area a:hover,
         .footer-bottom a:hover {
             color: #ffcc00 !important;
+        }
+
+        /* PREMIUM FOOTER HEADINGS */
+        .single-footer-widget h3,
+        .footer-widget h3,
+        .widget-title {
+            color: #ffcc00 !important;
+            font-size: 24px !important;
+            font-weight: 800 !important;
+            margin-bottom: 30px !important;
+            position: relative !important;
+            padding-bottom: 15px !important;
+            display: inline-block !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+        }
+
+        .single-footer-widget h3::after,
+        .footer-widget h3::after,
+        .widget-title::after {
+            content: '' !important;
+            position: absolute !important;
+            left: 0 !important;
+            bottom: 0 !important;
+            width: 80% !important;
+            height: 2px !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        .single-footer-widget h3::before,
+        .footer-widget h3::before,
+        .widget-title::before {
+            content: '' !important;
+            position: absolute !important;
+            left: 0 !important;
+            bottom: 0 !important;
+            width: 40px !important;
+            height: 2px !important;
+            background: #ffcc00 !important;
+            z-index: 1 !important;
+        }
+
+        /* LIST ICONS */
+        .single-footer-widget ul li i,
+        .footer-widget ul li i {
+            color: #ffcc00 !important;
+            /* Changed to yellow for better accent */
+            font-size: 13px !important;
+            margin-right: 12px !important;
+        }
+
+        .single-footer-widget ul li a,
+        .footer-widget ul li a {
+            color: #ccc !important;
+            font-size: 16px !important;
+            transition: all 0.3s ease !important;
+            display: inline-block !important;
+            padding: 5px 0 !important;
+        }
+
+        .single-footer-widget ul li a:hover,
+        .footer-widget ul li a:hover {
+            color: #ffcc00 !important;
+            transform: translateX(5px) !important;
+        }
+
+        /* Footer Column Spacing */
+        .footer-section .col-lg-3,
+        .footer-area .col-lg-3 {
+            padding-right: 40px !important;
+        }
+
+        @media (max-width: 991px) {
+
+            .footer-section .col-lg-3,
+            .footer-area .col-lg-3,
+            .footer-section .col-md-6,
+            .footer-area .col-md-6 {
+                padding-right: 15px !important;
+                text-align: center !important;
+            }
+
+            .single-footer-widget h3::after,
+            .footer-widget h3::after,
+            .widget-title::after {
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+            }
+
+            .single-footer-widget h3::before,
+            .footer-widget h3::before,
+            .widget-title::before {
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+            }
+
+            .single-footer-widget ul li {
+                display: flex !important;
+                justify-content: center !important;
+                text-align: center !important;
+            }
         }
     </style>
 
@@ -459,7 +1280,7 @@
                 // Also force the container itself
                 box.style.setProperty('background-color', '#1a222a', 'important');
                 box.style.setProperty('background', '#1a222a', 'important');
-                         });
+            });
 
             // About Us Video Injection & Styling
             document.querySelectorAll('.about-section, #about, .about-area').forEach(section => {
@@ -919,17 +1740,17 @@
                 if (text.includes('Login') || btn.href.includes('/login') || text.includes('Register') || btn.href.includes('/register') || btn.classList.contains('login-btn')) {
                     btn.href = registerUrl;
                     btn.onclick = (e) => { e.preventDefault(); window.location.href = registerUrl; };
-                    
+
                     // Kill all child text nodes that say Login
                     const walker = document.createTreeWalker(btn, NodeFilter.SHOW_TEXT, null, false);
                     let node;
-                    while(node = walker.nextNode()) {
+                    while (node = walker.nextNode()) {
                         if (node.nodeValue.includes('Login')) node.nodeValue = 'Register';
                     }
-                    
+
                     const span = btn.querySelector('span');
                     if (span && span.innerText.includes('Login')) span.innerText = 'Register';
-                    
+
                     if (btn.innerText.includes('Login')) {
                         btn.innerHTML = btn.innerHTML.replace(/Login/g, 'Register');
                     }
@@ -989,73 +1810,74 @@
                 const footerFallback = document.querySelector('footer, .footer-area');
                 if (footerFallback) footerFallback.id = 'contact';
             }
-            // Strategy: Find h3 headings by text, walk up to column parent, replace content
-            const allFooterH3 = document.querySelectorAll('h3');
-            allFooterH3.forEach(h3 => {
-                const text = h3.innerText.trim();
+            // Strategy: Find headings by text (case-insensitive), walk up to column parent, replace content
+            // Targeting h3, h4, and h5 to be safe
+            const footerHeadings = document.querySelectorAll('footer h3, footer h4, footer h5, .footer-area h3, .footer-area h4, .footer-area h5, .footer-section h3, .footer-section h4, .footer-section h5');
+
+            footerHeadings.forEach(h => {
+                const text = h.innerText.trim().toUpperCase();
                 // Find the column container (parent with 'col' in class)
-                let col = h3.closest('[class*="col-"]');
-                if (!col) col = h3.parentElement?.parentElement;
+                let col = h.closest('[class*="col-"]');
+                if (!col) col = h.parentElement?.parentElement;
 
-                // Style all footer headings yellow
-                if (['Quick Links', 'Services', 'Race Category', 'Recent Posts'].some(s => text.includes(s))) {
-                    h3.style.setProperty('color', '#ffcc00', 'important');
-                }
-
-                // QUICK LINKS: Replace Solar links with marathon links
-                if (text.includes('Quick Links') && col) {
+                // QUICK LINKS: Replace marathon links
+                if (text.includes('QUICK LINKS') && col) {
+                    h.innerText = 'Quick Links';
+                    h.style.setProperty('color', '#ffcc00', 'important');
                     const ul = col.querySelector('ul');
-                    if (ul && (ul.innerHTML.includes('Solar') || ul.innerHTML.includes('FAQ') || ul.innerHTML.includes('Our Services') || ul.innerHTML.includes('Blogs'))) {
+                    if (ul) {
                         ul.innerHTML = `
-                            <li><a href="{{ url("/") }}"><i class="fa-solid fa-chevron-right"></i>Home</a></li>
-                            <li><a href="#about"><i class="fa-solid fa-chevron-right"></i>About</a></li>
-                            <li><a href="#km-stats-section"><i class="fa-solid fa-chevron-right"></i>Race Category</a></li>
-                            <li><a href="{{ url("/register") }}"><i class="fa-solid fa-chevron-right"></i>Register</a></li>
-                            <li><a href="#contact"><i class="fa-solid fa-chevron-right"></i>Contact</a></li>
-                        `;
+                                <li style="white-space: nowrap;"><a href="{{ url("/") }}"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> Home</a></li>
+                                <li style="white-space: nowrap;"><a href="#about"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> About</a></li>
+                                <li style="white-space: nowrap;"><a href="#km-stats-section"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> Race Category</a></li>
+                                <li style="white-space: nowrap;"><a href="#contact"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> Contact</a></li>
+                            `;
                     }
                 }
 
-                // SERVICES → RACE CATEGORY: Replace Solar services with race distances
-                if ((text.includes('Service') || text.includes('Race Categor')) && col) {
-                    h3.innerText = 'Race Category';
-                    h3.style.setProperty('color', '#ffcc00', 'important');
+                // SERVICES → RACE CATEGORY
+                if ((text.includes('SERVICES') || text.includes('SERVICE') || text.includes('RACE CATEGORY')) && col) {
+                    h.innerText = 'Race Category';
+                    h.style.setProperty('color', '#ffcc00', 'important');
                     const ul = col.querySelector('ul');
-                    if (ul && (ul.innerHTML.includes('Consultancy') || ul.innerHTML.includes('Solar') || ul.innerHTML.includes('License') || ul.innerHTML.includes('Style Guide'))) {
+                    if (ul) {
                         ul.innerHTML = `
-                            <li><a href="{{ url("/") }}#registration"><i class="fa-solid fa-chevron-right"></i>2.5 KM Fun Run</a></li>
-                            <li><a href="{{ url("/") }}#registration"><i class="fa-solid fa-chevron-right"></i>5 KM Classic</a></li>
-                            <li><a href="{{ url("/") }}#registration"><i class="fa-solid fa-chevron-right"></i>10 KM Challenge</a></li>
-                            <li><a href="{{ url("/") }}#registration"><i class="fa-solid fa-chevron-right"></i>21 KM Half</a></li>
-                            <li><a href="{{ url("/") }}#registration"><i class="fa-solid fa-chevron-right"></i>42 KM Full</a></li>
-                        `;
+                                <li><a href="{{ url("/") }}#registration"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> 2.5 KM Fun Run</a></li>
+                                <li><a href="{{ url("/") }}#registration"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> 5 KM Classic</a></li>
+                                <li><a href="{{ url("/") }}#registration"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> 10 KM Challenge</a></li>
+                                <li><a href="{{ url("/") }}#registration"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> 21 KM Half</a></li>
+                                <li><a href="{{ url("/") }}#registration"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> 42 KM Full</a></li>
+                            `;
                     }
                 }
 
-                // RECENT POSTS → Replace with Contact Us
-                if (text.includes('Recent Post') && col) {
-                    h3.innerText = 'Contact Us';
-                    h3.style.setProperty('color', '#ffcc00', 'important');
+                // RECENT POSTS → Replace with Contact
+                if ((text.includes('RECENT POST') || text.includes('CONTACT')) && col) {
+                    // h.innerText = 'Contact'; // We'll set it inside the innerHTML below
+                    h.style.setProperty('color', '#ffcc00', 'important');
                     // Remove old content (images, dates, etc.)
                     const oldContent = col.querySelector('.single-footer-widget, [class*="widget"]');
                     if (oldContent) {
                         oldContent.innerHTML = `
-                            <div class="widget-head"><h3 style="color: #ffcc00 !important;">Contact Us</h3></div>
-                            <ul class="list-area" style="list-style: none; padding: 0;">
-                                <li style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                                    <i class="fa-solid fa-phone" style="color: #ffcc00; font-size: 16px;"></i>
-                                    <a href="tel:+255755165284" style="color: #ddd;">+255 755 165 284</a>
-                                </li>
-                                <li style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                                    <i class="fa-solid fa-envelope" style="color: #ffcc00; font-size: 16px;"></i>
-                                    <a href="mailto:info@swahilimarathon.com" style="color: #ddd;">info@swahilimarathon.com</a>
-                                </li>
-                                <li style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                                    <i class="fa-solid fa-location-dot" style="color: #ffcc00; font-size: 16px;"></i>
-                                    <span style="color: #ddd;">Dar es Salaam, Tanzania</span>
-                                </li>
-                            </ul>
-                        `;
+                                <h3 class="widget-title" style="color: #ffcc00 !important; margin-bottom: 30px;">Contact</h3>
+                                <ul class="list-area" style="list-style: none; padding: 0; margin-top: 25px;">
+                                    <li style="margin-bottom: 20px; display: flex; align-items: flex-start; gap: 15px;">
+                                        <i class="fa-solid fa-phone" style="color: #ffcc00 !important; font-size: 20px !important; margin-top: 4px;"></i>
+                                        <div>
+                                            <a href="tel:+255755165284" style="color: #ccc !important; display: block; font-size: 16px !important; text-decoration: none !important;">+255 755 165 284</a>
+                                            <a href="tel:+255757979611" style="color: #ccc !important; display: block; font-size: 16px !important; text-decoration: none !important; margin-top: 6px;">+255 757 979 611</a>
+                                        </div>
+                                    </li>
+                                    <li style="margin-bottom: 20px; display: flex; align-items: center; gap: 15px;">
+                                        <i class="fa-solid fa-envelope" style="color: #ffcc00 !important; font-size: 20px !important;"></i>
+                                        <a href="mailto:info@swahilimarathon.com" style="color: #ccc !important; font-size: 16px !important; text-decoration: none !important;">info@swahilimarathon.com</a>
+                                    </li>
+                                    <li style="margin-bottom: 20px; display: flex; align-items: center; gap: 15px;">
+                                        <i class="fa-solid fa-location-dot" style="color: #ffcc00 !important; font-size: 20px !important;"></i>
+                                        <span style="color: #ccc !important; font-size: 16px !important;">Dar es Salaam, Tanzania</span>
+                                    </li>
+                                </ul>
+                            `;
                     }
                 }
             });
@@ -1063,18 +1885,24 @@
             // Footer about text replacement
             document.querySelectorAll('p').forEach(p => {
                 const t = p.innerText.toLowerCase();
-                if ((t.includes('phasellus') || t.includes('ultricies') || t.includes('curabitur')) && p.closest('[class*="col-"]')) {
+                const isFooter = p.closest('footer') || p.closest('.footer-area') || p.closest('.footer-section');
+                if (isFooter && (t.includes('phasellus') || t.includes('ultricies') || t.includes('curabitur') || t.includes('solar energy'))) {
                     p.innerText = 'The Swahili Marathon is a premier athletic event celebrating culture, health, and endurance. Join us for an unforgettable experience through scenic routes.';
+                    p.style.lineHeight = '1.8';
+                    p.style.color = '#ccc';
+                    p.style.marginTop = '20px';
                 }
             });
 
             // Footer logo
             document.querySelectorAll('[class*="footer"] img, footer img').forEach(img => {
-                if (!img.src.includes('asa-logo') && !img.src.includes('news') && img.closest('[class*="col-"]')) {
+                if (!img.src.includes('swahili Marathon') && !img.src.includes('news') && img.closest('[class*="col-"]')) {
                     const isInFirstCol = !img.closest('[class*="col-"]')?.querySelector('h3');
                     if (isInFirstCol || img.alt?.toLowerCase().includes('logo')) {
-                        img.src = '/img/logo/asa-logo.png';
+                        img.src = '/img/logo/swahili Marathon.jpeg';
                         img.style.maxWidth = '180px';
+                        img.style.height = 'auto';
+                        img.style.borderRadius = '8px';
                     }
                 }
             });
@@ -1131,11 +1959,110 @@
         window.addEventListener('load', function () {
             const targetNode = document.getElementById('root') || document.body;
 
+            function injectCustomHero() {
+                if (document.getElementById('custom-hero-section')) return;
+
+                const heroHTML = `
+                    <section id="custom-hero-section">
+                        <div class="hero-slider-container">
+                            <div class="hero-slide active" style="background-image: url('/img/header/header-1.jpeg');"></div>
+                            <div class="hero-slide" style="background-image: url('/img/header/header-2.jpeg');"></div>
+                            <div class="hero-slide" style="background-image: url('/img/header/header-3.jpeg');"></div>
+                            <div class="hero-slide" style="background-image: url('/img/header/header-4.jpeg');"></div>
+                            <div class="hero-slide" style="background-image: url('/img/header/header-5.jpeg');"></div>
+                        </div>
+                        <div class="hero-overlay"></div>
+                        <div class="hero-container" style="position: relative; z-index: 10;">
+                            <!-- Top spacer to guarantee clearance of floating menu on real devices -->
+                            <div class="hero-mobile-spacer" style="height: 150px; display: none;"></div>
+                            <div class="hero-badges-wrapper" style="display: flex; gap: 15px; flex-wrap: wrap;">
+                                <span class="hero-badge">JOIN THE COMMUNITY</span>
+                                <span class="hero-badge" style="background: #fff; color: #000; box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);">27th June 2026</span>
+                            </div>
+                            <h1>More Than Just A <br>Running Tracker</h1>
+                            <p>Connect with fellow marathoners and share your journey towards peak performance. The ultimate platform for registration and community engagement.</p>
+                            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                                <a href="{{ url("/register") }}" class="hero-cta">
+                                    REGISTER NOW <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                                <a href="#about" class="hero-cta" style="background: rgba(255,255,255,0.1) !important; color: #fff !important; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3); box-shadow: none;">
+                                    LEARN MORE
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+                `;
+
+                // Hide original hero sections
+                const selectorsToHide = [
+                    '.hero-section', '.slider-area', '.hero-1', '.hero-2', '.hero-3', '.banner-area', '.tp-hero-area', '.hero-content', '.slider-active'
+                ];
+                selectorsToHide.forEach(sel => {
+                    document.querySelectorAll(sel).forEach(el => {
+                        el.style.setProperty('display', 'none', 'important');
+                    });
+                });
+
+                // Inject before #root
+                const root = document.getElementById('root');
+                if (root) {
+                    root.insertAdjacentHTML('beforebegin', heroHTML);
+                }
+
+                // Start image slider auto-rotation
+                let currentSlide = 0;
+                const slides = document.querySelectorAll('#custom-hero-section .hero-slide');
+                if (slides.length > 1) {
+                    setInterval(() => {
+                        slides[currentSlide].classList.remove('active');
+                        currentSlide = (currentSlide + 1) % slides.length;
+                        slides[currentSlide].classList.add('active');
+                    }, 5000); // Change every 5 seconds
+                }
+            }
+
+            function injectPartnersSection() {
+                if (document.getElementById('custom-partners-section')) return;
+
+                const partners = [
+                    { img: '/img/logo/nenbo ya taifa.png', name: 'Serikali ya Tanzania' },
+                    { img: '/img/logo/Bakita.jpeg', name: 'BAKITA' },
+                    { img: '/img/logo/Asa.png', name: 'ASA' },
+                    { img: '/img/logo/EmCa.png', name: 'EmCa Techonologies' },
+                ];
+
+                const cards = partners.map(p => `
+                    <div class="partner-card">
+                        <img src="${p.img}" alt="${p.name}">
+                        <span>${p.name}</span>
+                    </div>
+                `).join('');
+
+                const section = document.createElement('section');
+                section.id = 'custom-partners-section';
+                section.innerHTML = `
+                    <p class="partners-label">Our Partners & Supporters</p>
+                    <h2>Proudly <span>Supported By</span></h2>
+                    <div class="partners-grid">${cards}</div>
+                `;
+
+                // Insert after the hero section, before the rest of page content
+                const hero = document.getElementById('custom-hero-section');
+                if (hero) {
+                    hero.insertAdjacentElement('afterend', section);
+                } else {
+                    const root = document.getElementById('root');
+                    if (root) root.insertAdjacentElement('beforebegin', section);
+                }
+            }
+
             const safeUpdate = () => {
                 try {
+                    injectCustomHero();
+                    injectPartnersSection();
                     updateBranding();
                 } catch (e) {
-                    console.error("Branding update failed:", e);
+                    console.error("Updates failed:", e);
                 }
             };
 
@@ -1151,7 +2078,8 @@
                 safeUpdate();
                 observer.observe(targetNode, { childList: true, subtree: true });
             });
-            observer.observe(targetNode, { childList: true, subtree: true });
+            setInterval(safeUpdate, 1500);
+
             // Global Nuke for any remaining #1d8f2c green
             function globalColorNuke() {
                 const isTargetGreen = (str) => {
@@ -1187,10 +2115,36 @@
                     if (el.innerText && el.innerText.includes('Login')) {
                         const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
                         let node;
-                        while(node = walker.nextNode()) {
+                        while (node = walker.nextNode()) {
                             if (node.nodeValue.includes('Login')) {
                                 node.nodeValue = node.nodeValue.replace(/Login/g, 'Register');
                             }
+                        }
+                    }
+
+                    // Force Visibility for Header Button
+                    const isHeaderButton = el.classList.contains('header-button') ||
+                        (el.className && typeof el.className === 'string' && el.className.includes('header-button')) ||
+                        (el.innerText && el.innerText.trim() === 'Register' && el.tagName === 'A');
+
+                    if (isHeaderButton) {
+                        el.style.setProperty('display', 'inline-flex', 'important');
+                        el.style.setProperty('visibility', 'visible', 'important');
+                        el.style.setProperty('opacity', '1', 'important');
+                        el.style.setProperty('order', '99', 'important');
+
+                        // Force parent to be a flex row container
+                        let current = el.parentElement;
+                        let depth = 0;
+                        while (current && depth < 3) {
+                            if (current.tagName === 'DIV' || current.tagName === 'HEADER') {
+                                current.style.setProperty('display', 'flex', 'important');
+                                current.style.setProperty('flex-direction', 'row', 'important');
+                                current.style.setProperty('flex-wrap', 'nowrap', 'important');
+                                current.style.setProperty('align-items', 'center', 'important');
+                            }
+                            current = current.parentElement;
+                            depth++;
                         }
                     }
                 });
@@ -1204,7 +2158,7 @@
             function killLogin() {
                 const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
                 let node;
-                while(node = walker.nextNode()) {
+                while (node = walker.nextNode()) {
                     if (node.nodeValue.includes('Login')) {
                         const parent = node.parentElement;
                         // Avoid script/style tags and already processed nodes
@@ -1216,6 +2170,185 @@
             }
             setInterval(killLogin, 500);
             killLogin();
+
+            // INJECT TOP INFO BAR
+            function injectTopInfoBar() {
+                if (document.getElementById('custom-top-bar')) return;
+                const bar = document.createElement('div');
+                bar.id = 'custom-top-bar';
+                bar.innerHTML = `
+                    <div class="top-bar-left">
+                        <a href="tel:+255755165284">
+                            <i class="fa-solid fa-phone-volume"></i> +255 755 165 284
+                        </a>
+                        <div class="top-bar-divider"></div>
+                        <a href="tel:+255757979611">
+                            <i class="fa-solid fa-phone-volume"></i> +255 757 979 611
+                        </a>
+                        <div class="top-bar-divider"></div>
+                        <a href="mailto:info@swahilimarathon.com" class="email-link">
+                            <i class="fa-solid fa-envelope"></i> info@swahilimarathon.com
+                        </a>
+                    </div>
+                    <div class="top-bar-right">
+                        <a href="https://www.facebook.com" target="_blank" title="Facebook">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.twitter.com" target="_blank" title="Twitter / X">
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com" target="_blank" title="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com" target="_blank" title="YouTube">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                    </div>
+                `;
+                document.body.insertAdjacentElement('afterbegin', bar);
+            }
+
+            // INJECT NEW FLOATING HEADER
+            function injectCustomHeader() {
+                if (document.getElementById('custom-floating-header')) return;
+
+                const header = document.createElement('div');
+                header.id = 'custom-floating-header';
+                header.innerHTML = `
+                    <div class="pill-inner">
+                        <div class="logo-box-pill">
+                            <a href="{{ url('/') }}"><img src="/img/logo/swahili Marathon.jpeg" alt="Swahili Marathon Logo" style="height:48px; width:auto; border-radius:6px;"></a>
+                        </div>
+                        <ul class="nav-links-pill">
+                            <li><a href="{{ url('/') }}">Home</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#km-stats-section">Race Category</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <a href="{{ url('/register') }}" class="register-btn">
+                                Register <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                            <button id="mobile-menu-toggle">
+                                <i class="fa-solid fa-bars"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                // INJECT MOBILE SIDE MENU
+                const mobileMenuHTML = `
+                    <div id="mobile-menu-overlay"></div>
+                    <div id="mobile-side-menu">
+                        <div class="mobile-header-close">
+                            <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <ul class="mobile-nav-list">
+                            <li><a href="{{ url('/') }}"><i class="fa-solid fa-house"></i> Home</a></li>
+                            <li><a href="#about"><i class="fa-solid fa-circle-info"></i> About</a></li>
+                            <li><a href="#km-stats-section"><i class="fa-solid fa-person-running"></i> Race Category</a></li>
+                            <li><a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+                        </ul>
+                    </div>
+                `;
+
+                document.body.insertAdjacentHTML('beforeend', mobileMenuHTML);
+                document.body.appendChild(header);
+
+                // Handle Mobile Menu Logic
+                const toggle = header.querySelector('#mobile-menu-toggle');
+                const sideMenu = document.getElementById('mobile-side-menu');
+                const overlay = document.getElementById('mobile-menu-overlay');
+                const closeBtn = sideMenu.querySelector('.close-btn');
+
+                const toggleMenu = (open) => {
+                    sideMenu.classList.toggle('active', open);
+                    overlay.classList.toggle('active', open);
+                    document.body.style.overflow = open ? 'hidden' : '';
+                };
+
+                if (toggle) toggle.onclick = () => toggleMenu(true);
+                if (closeBtn) closeBtn.onclick = () => toggleMenu(false);
+                if (overlay) overlay.onclick = () => toggleMenu(false);
+
+                // Close menu when clicking links
+                sideMenu.querySelectorAll('a').forEach(link => {
+                    link.onclick = () => toggleMenu(false);
+                });
+
+                // Show after injection
+                setTimeout(() => {
+                    header.style.display = 'block';
+                }, 100);
+
+                //Smooth scroll for internal links
+                header.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const target = document.querySelector(targetId);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    });
+                });
+            }
+
+            injectTopInfoBar();
+            injectCustomHeader();
+
+            // BACK TO TOP BUTTON INJECTION
+            if (!document.getElementById('back-to-top')) {
+                const btt = document.createElement('div');
+                btt.id = 'back-to-top';
+                btt.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
+                document.body.appendChild(btt);
+
+                btt.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 400) btt.classList.add('visible');
+                    else btt.classList.remove('visible');
+                });
+            }
+
+            // MOBILE REFINEMENT: Ensure section padding is consistent
+            if (window.innerWidth < 768) {
+                document.querySelectorAll('section, .area, [class*="-area"]').forEach(section => {
+                    const style = window.getComputedStyle(section);
+                    if (parseInt(style.paddingTop) > 60) {
+                        section.style.setProperty('padding-top', '50px', 'important');
+                        section.style.setProperty('padding-bottom', '50px', 'important');
+                    }
+                });
+            }
+
+            // Ensure both survive React updates
+            setInterval(() => { injectTopInfoBar(); injectCustomHeader(); }, 2000);
+
+            // Handle scroll effect — nav always stays below the top info bar
+            const TOP_BAR_HEIGHT = 42; // height of #custom-top-bar
+            const NAV_GAP = 8;         // breathing room between top bar and pill
+            const NAV_TOP_DEFAULT = TOP_BAR_HEIGHT + NAV_GAP; // 50px
+
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('custom-floating-header');
+                if (header) {
+                    if (window.scrollY > 50) {
+                        // Scrolled down: slightly darker + full width, but STILL below top bar
+                        header.style.background = 'rgba(5, 5, 5, 0.97)';
+                        header.style.top = NAV_TOP_DEFAULT + 'px';
+                        header.style.width = '94%';
+                        header.style.boxShadow = '0 8px 32px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,204,0,0.2)';
+                    } else {
+                        // Near top: subtle glass style
+                        header.style.background = 'rgba(10, 10, 10, 0.9)';
+                        header.style.top = NAV_TOP_DEFAULT + 'px';
+                        header.style.width = '92%';
+                        header.style.boxShadow = '0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,204,0,0.15)';
+                    }
+                }
+            });
         });
     </script>
 </body>

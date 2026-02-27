@@ -59,6 +59,10 @@ Route::get('/admin/sms-logs', function () {
     return view('admin.sms-logs');
 });
 
+Route::get('/admin/group-bookings', function () {
+    return view('admin.group-bookings');
+});
+
 Route::get('/{any}', function () {
     return view('welcome');
 })->where('any', '.*');
