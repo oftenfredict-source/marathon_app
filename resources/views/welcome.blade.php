@@ -262,13 +262,22 @@
 
 
         /* PERSISTENT HEADER REDESIGN - Completely replace template header */
-        /* REFINED HEADER OVERRIDE - Strictly target only the old items we want to replace */
-        body.has-custom-header .header-top,
-        body.has-custom-header .header-top-1,
-        body.has-custom-header .header-top-2 {
+        /* REFINED HEADER OVERRIDE - Hide everything that might conflict with our custom header */
+        .header-top,
+        .header-top-1,
+        .header-top-2,
+        .top-bar-area,
+        .header-top-area,
+        .tp-header-top-area,
+        header:not(#custom-floating-header) {
             display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
         }
-        
+
         /* Ensure the main site content is ALWAYS visible */
         #root {
             display: block !important;
@@ -2058,8 +2067,28 @@
                 }
             }
 
+            function cleanTemplateConflicts() {
+                // Remove (don't just hide) ANY template bar that isn't ours
+                // This stops the duplication dead in its tracks
+                const conflictingSelectors = [
+                    '.header-top', '.header-top-1', '.header-top-2', '.top-bar-area',
+                    '.header-top-area', '.tp-header-top-area', '.top-bar', '.header-top-left',
+                    '.top-left', '.header-top-right', '.top-right', '.header-social'
+                ];
+
+                conflictingSelectors.forEach(sel => {
+                    document.querySelectorAll(sel).forEach(el => {
+                        // Crucial: Don't remove our OWN custom top bar which shares these keywords sometimes
+                        if (!el.closest('#custom-top-bar') && el.id !== 'custom-top-bar') {
+                            el.remove();
+                        }
+                    });
+                });
+            }
+
             const safeUpdate = () => {
                 try {
+                    cleanTemplateConflicts();
                     injectCustomHero();
                     injectPartnersSection();
                     injectTopInfoBar();
