@@ -1338,114 +1338,105 @@
                 }
             });
 
-            // KM Statistics Injection (Below About Section)
-            document.querySelectorAll('.about-section, #about, .about-area').forEach(section => {
-                section.style.paddingBottom = '20px'; // Reduce bottom padding of the about section
-                if (!document.getElementById('km-stats-section')) {
-                    const statsHtml = `
-                        <div id="km-stats-section" class="stats-section fix" style="background: #111; padding: 40px 0; color: white; width: 100%;">
-                            <!-- RACE CATEGORY ANCHOR -->
-                            <div id="race-category-anchor" style="position: absolute; top: -100px;"></div>
-                            <div class="container">
-                                <div class="row text-center">
-                                    <div class="col-xl-2 col-lg-4 col-md-6 mb-4 mb-xl-0">
-                                        <div class="stat-item">
-                                            <i class="fa-solid fa-person-walking" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
-                                            <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">1000</h2>
-                                            <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">2.5 KM Fun Run</p>
+            // ONE-TIME INJECTIONS
+            function performOneTimeInjections() {
+                if (window.oneTimeInjectionsDone) return;
+                
+                // KM Statistics Injection
+                document.querySelectorAll('.about-section, #about, .about-area').forEach(section => {
+                    section.style.paddingBottom = '20px';
+                    if (!document.getElementById('km-stats-section')) {
+                        const statsHtml = `
+                            <div id="km-stats-section" class="stats-section fix" style="background: #111; padding: 40px 0; color: white; width: 100%; position: relative;">
+                                <div id="race-category-anchor" style="position: absolute; top: -100px;"></div>
+                                <div class="container">
+                                    <div class="row text-center">
+                                        <div class="col-xl-2 col-lg-4 col-md-6 mb-4 mb-xl-0">
+                                            <div class="stat-item">
+                                                <i class="fa-solid fa-person-walking" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
+                                                <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">1000</h2>
+                                                <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">2.5 KM Fun Run</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xl-2 col-lg-4 col-md-6 mb-4 mb-xl-0">
-                                        <div class="stat-item">
-                                            <i class="fa-solid fa-person-running" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
-                                            <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">1000</h2>
-                                            <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">5 KM Classic</p>
+                                        <div class="col-xl-2 col-lg-4 col-md-6 mb-4 mb-xl-0">
+                                            <div class="stat-item">
+                                                <i class="fa-solid fa-person-running" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
+                                                <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">1000</h2>
+                                                <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">5 KM Classic</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xl-2 col-lg-4 col-md-6 mb-4 mb-xl-0">
-                                        <div class="stat-item">
-                                            <i class="fa-solid fa-medal" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
-                                            <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">1250</h2>
-                                            <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">10 KM Challenge</p>
+                                        <div class="col-xl-2 col-lg-4 col-md-6 mb-4 mb-xl-0">
+                                            <div class="stat-item">
+                                                <i class="fa-solid fa-medal" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
+                                                <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">1250</h2>
+                                                <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">10 KM Challenge</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xl-2 col-lg-4 col-md-6 mb-4 mb-xl-0">
-                                        <div class="stat-item">
-                                            <i class="fa-solid fa-person-running" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
-                                            <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">1250</h2>
-                                            <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">21 KM Half</p>
+                                        <div class="col-xl-2 col-lg-4 col-md-6 mb-4 mb-xl-0">
+                                            <div class="stat-item">
+                                                <i class="fa-solid fa-person-running" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
+                                                <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">1250</h2>
+                                                <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">21 KM Half</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xl-2 col-lg-4 col-md-6 mb-4 mb-xl-0">
-                                        <div class="stat-item">
-                                            <i class="fa-solid fa-trophy" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
-                                            <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">500</h2>
-                                            <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">42 KM Full</p>
+                                        <div class="col-xl-2 col-lg-4 col-md-6 mb-4 mb-xl-0">
+                                            <div class="stat-item">
+                                                <i class="fa-solid fa-trophy" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
+                                                <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">500</h2>
+                                                <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">42 KM Full</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xl-2 col-lg-4 col-md-6">
-                                        <div class="stat-item">
-                                 <i class="fa-solid fa-users" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
-                                            <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">5000</h2>
-                                            <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">Total Participants</p>
+                                        <div class="col-xl-2 col-lg-4 col-md-6">
+                                            <div class="stat-item">
+                                                <i class="fa-solid fa-users" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
+                                                <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">5000</h2>
+                                                <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">Total Participants</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    `;
-                    section.insertAdjacentHTML('afterend', statsHtml);
-                }
-            });
+                        `;
+                        section.insertAdjacentHTML('afterend', statsHtml);
+                    }
+                });
 
-            // Latest Projects Injection (Below Stats Section)
-            if (!document.getElementById('latest-projects-section')) {
-                const statsSection = document.getElementById('km-stats-section');
-                if (statsSection) {
-                    const projectNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-                    // Duplicate for seamless scroll
-                    const allProjects = [...projectNumbers, ...projectNumbers];
-
-                    const projectsHtml = `
-                        <div id="latest-projects-section" class="project-section section-padding" style="background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('/img/header/header-2.jpeg'); background-size: cover; background-position: center; background-attachment: fixed; padding: 80px 0; color: white; overflow: hidden; position: relative;">
-                            <div class="container-fluid p-0" style="position: relative; z-index: 3;">
-                                <div class="section-title text-center mb-4">
-                                    <span class="sub-title" style="color: #ffcc00; text-transform: uppercase; font-weight: 700; letter-spacing: 2px; font-size: 14px;">Portfolio</span>
-                                    <h2 style="color: white; font-weight: 800; font-size: 32px; margin-top: 5px;">LATEST PROJECT</h2>
-                                </div>
-                                <div class="project-marquee-container" style="overflow: hidden; padding: 20px 0; position: relative;">
-                                    <div class="project-marquee-inner" style="display: flex; gap: 20px; width: max-content; animation: scrollMarquee 40s linear infinite;">
-                                        ${allProjects.map((num, index) => `
-                                            <div class="project-marquee-item" style="flex: 0 0 350px;">
-                                                <div class="project-item" style="position: relative; overflow: hidden; border-radius: 15px; background: rgba(17, 17, 17, 0.4); backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1);">
-                                                    <div class="project-image">
-                                                        <img src="/img/project/0${num}.jpg" alt="Project ${num}" style="width: 100%; height: 350px; object-fit: cover; transition: transform 0.5s; display: block;">
-                                                    </div>
-                                                    <div class="project-content" style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 25px; background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); opacity: 0; transition: 0.4s; transform: translateY(20px);">
-                                                        <p style="color: #ffcc00; margin-bottom: 5px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Marathon Event</p>
-                                                        <h4 style="color: white; font-size: 18px; font-weight: 700;">Swahili Marathon 2024</h4>
+                // Latest Projects Injection
+                if (!document.getElementById('latest-projects-section')) {
+                    const statsSection = document.getElementById('km-stats-section');
+                    if (statsSection) {
+                        const projectNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+                        const allProjects = [...projectNumbers, ...projectNumbers];
+                        const projectsHtml = `
+                            <div id="latest-projects-section" class="project-section section-padding" style="background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('/img/header/header-2.jpeg'); background-size: cover; background-position: center; background-attachment: fixed; padding: 80px 0; color: white; overflow: hidden; position: relative;">
+                                <div class="container-fluid p-0" style="position: relative; z-index: 3;">
+                                    <div class="section-title text-center mb-4">
+                                        <span class="sub-title" style="color: #ffcc00; text-transform: uppercase; font-weight: 700; letter-spacing: 2px; font-size: 14px;">Portfolio</span>
+                                        <h2 style="color: white; font-weight: 800; font-size: 32px; margin-top: 5px;">LATEST PROJECT</h2>
+                                    </div>
+                                    <div class="project-marquee-container" style="overflow: hidden; padding: 20px 0; position: relative;">
+                                        <div class="project-marquee-inner" style="display: flex; gap: 20px; width: max-content; animation: scrollMarquee 40s linear infinite;">
+                                            ${allProjects.map((num, index) => `
+                                                <div class="project-marquee-item" style="flex: 0 0 350px;">
+                                                    <div class="project-item" style="position: relative; overflow: hidden; border-radius: 15px; background: rgba(17, 17, 17, 0.4); backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1);">
+                                                        <div class="project-image"><img src="/img/project/0${num}.jpg" alt="Project ${num}" style="width: 100%; height: 350px; object-fit: cover; transition: transform 0.5s; display: block;"></div>
+                                                        <div class="project-content" style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 25px; background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); opacity: 0; transition: 0.4s; transform: translateY(20px);">
+                                                            <p style="color: #ffcc00; margin-bottom: 5px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Marathon Event</p>
+                                                            <h4 style="color: white; font-size: 18px; font-weight: 700;">Swahili Marathon 2024</h4>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        `).join('')}
+                                            `).join('')}
+                                        </div>
                                     </div>
-                                    <div style="position: absolute; top: 0; left: 0; width: 200px; height: 100%; background: linear-gradient(to right, rgba(0,0,0,0.9), transparent); z-index: 2;"></div>
-                                    <div style="position: absolute; top: 0; right: 0; width: 200px; height: 100%; background: linear-gradient(to left, rgba(0,0,0,0.9), transparent); z-index: 2;"></div>
                                 </div>
                             </div>
-                        </div>
-                        <style>
-                            @keyframes scrollMarquee {
-                                0% { transform: translateX(0); }
-                                100% { transform: translateX(-50%); }
-                            }
-                            .project-marquee-inner:hover { animation-play-state: paused; }
-                            .project-item:hover .project-image img { transform: scale(1.1); }
-                            .project-item:hover .project-content { opacity: 1 !important; transform: translateY(0) !important; }
-                        </style>
-                    `;
-                    statsSection.insertAdjacentHTML('afterend', projectsHtml);
+                        `;
+                        statsSection.insertAdjacentHTML('afterend', projectsHtml);
+                    }
                 }
+                
+                window.oneTimeInjectionsDone = true;
             }
 
             // Swahili Marathon Background Injection
@@ -2099,9 +2090,26 @@
                 }
             };
 
+            const safeUpdate = () => {
+                if (window.safeUpdateRunning) return;
+                window.safeUpdateRunning = true;
+                try {
+                    cleanTemplateConflicts();
+                    injectCustomHero();
+                    injectPartnersSection();
+                    injectTopInfoBar();
+                    injectCustomHeader();
+                    performOneTimeInjections();
+                    updateBranding();
+                } catch (e) {
+                    console.error("Updates failed:", e);
+                } finally {
+                    window.safeUpdateRunning = false;
+                }
+            };
+
+            // Run ONCE on load, then strictly interval
             safeUpdate();
-            safeUpdate();
-            // Moderate interval to handle React state changes without being too aggressive
             setInterval(safeUpdate, 3000);
 
             // Global Nuke for any remaining #1d8f2c green
@@ -2307,8 +2315,8 @@
                 });
             }
 
-            injectTopInfoBar();
-            injectCustomHeader();
+            // injectTopInfoBar();
+            // injectCustomHeader();
 
             // BACK TO TOP BUTTON INJECTION
             if (!document.getElementById('back-to-top')) {
