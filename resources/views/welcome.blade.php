@@ -1236,12 +1236,9 @@
                 }
 
                 // Phone replacement (ensuring correct numbers show)
-                if (html.includes('123-456-7890') || html.includes('000') || !html.includes('165 284')) {
-                    // Try to catch the common placeholder phone pattern
-                    box.innerHTML = box.innerHTML.replace(/\+?\d{1,4}[-.\s]?\d{1,12}[-.\s]?\d{1,12}/g, (match) => {
-                        if (match.length > 7 && !match.includes('165 284')) return '+255 755 165 284 | +255 654 507 505';
-                        return match;
-                    });
+                if (html.includes('123-456-7890') || html.includes('000-000-0000') || (html.includes('example.com') && !html.includes('165 284'))) {
+                    // Only replace if we see the placeholder markers and NOT our already-injected numbers
+                    box.innerHTML = box.innerHTML.replace(/123-456-7890|000-000-0000/g, '+255 755 165 284 | +255 654 507 505');
                 }
 
                 // Force individual element styles too
@@ -2060,6 +2057,8 @@
                 try {
                     injectCustomHero();
                     injectPartnersSection();
+                    injectTopInfoBar();
+                    injectCustomHeader();
                     updateBranding();
                 } catch (e) {
                     console.error("Updates failed:", e);
@@ -2067,18 +2066,9 @@
             };
 
             safeUpdate();
-            // Initial burst for first few seconds to win against React
-            for (let i = 1; i <= 20; i++) {
-                setTimeout(safeUpdate, i * 400);
-            }
-
-            // Long term observer
-            const observer = new MutationObserver((mutations) => {
-                observer.disconnect();
-                safeUpdate();
-                observer.observe(targetNode, { childList: true, subtree: true });
-            });
-            setInterval(safeUpdate, 1500);
+            safeUpdate();
+            // Moderate interval to handle React state changes without being too aggressive
+            setInterval(safeUpdate, 3000);
 
             // Global Nuke for any remaining #1d8f2c green
             function globalColorNuke() {
@@ -2168,7 +2158,7 @@
                     }
                 }
             }
-            setInterval(killLogin, 500);
+            // setInterval(killLogin, 500); // Handled within safeUpdate and updateBranding
             killLogin();
 
             // INJECT TOP INFO BAR
@@ -2324,7 +2314,8 @@
             }
 
             // Ensure both survive React updates
-            setInterval(() => { injectTopInfoBar(); injectCustomHeader(); }, 2000);
+            // Handled via safeUpdate
+            // setInterval(() => { injectTopInfoBar(); injectCustomHeader(); }, 2000);
 
             // Handle scroll effect — nav always stays below the top info bar
             const TOP_BAR_HEIGHT = 42; // height of #custom-top-bar
