@@ -1228,18 +1228,17 @@
 
             // Specific Top Bar Contact Fixes
             document.querySelectorAll('.header-top, .top-bar, .top-left, .header-top-left, .top-bar-left, .header-top-right, .top-right, .header-social, [class*="top-right"]').forEach(box => {
-                let html = box.innerHTML;
-
-                // Email replacement
-                if (html.includes('info@example.com') || html.includes('example.com')) {
-                    box.innerHTML = box.innerHTML.replace(/info@example\.com|example\.com/gi, 'info@swahilimarathon.com');
-                }
-
-                // Phone replacement (ensuring correct numbers show)
-                if (html.includes('123-456-7890') || html.includes('000-000-0000') || (html.includes('example.com') && !html.includes('165 284'))) {
-                    // Only replace if we see the placeholder markers and NOT our already-injected numbers
-                    box.innerHTML = box.innerHTML.replace(/123-456-7890|000-000-0000/g, '+255 755 165 284 | +255 654 507 505');
-                }
+                // STOP using innerHTML.replace on parents as it causes re-renders and duplication
+                // Instead, find and update specific text nodes or elements
+                box.querySelectorAll('*').forEach(el => {
+                    const html = el.innerHTML;
+                    if (html.includes('info@example.com') || html.includes('example.com')) {
+                        el.innerHTML = html.replace(/info@example\.com|example\.com/gi, 'info@swahilimarathon.com');
+                    }
+                    if (html.includes('123-456-7890') || html.includes('000-000-0000')) {
+                        el.innerHTML = html.replace(/123-456-7890|000-000-0000/g, '+255 755 165 284 | +255 654 507 505');
+                    }
+                });
 
                 // Force individual element styles too
                 box.querySelectorAll('a, span, p, li, div').forEach(el => {
@@ -2163,6 +2162,11 @@
 
             // INJECT TOP INFO BAR
             function injectTopInfoBar() {
+                // Kill any other bars that aren't ours to prevent duplication wars
+                document.querySelectorAll('.header-top, .top-bar, [class*="top-bar"]:not(#custom-top-bar), [class*="header-top"]:not(#custom-top-bar)').forEach(el => {
+                    if (el.id !== 'custom-top-bar') el.style.display = 'none';
+                });
+
                 if (document.getElementById('custom-top-bar')) return;
                 const bar = document.createElement('div');
                 bar.id = 'custom-top-bar';
