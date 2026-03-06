@@ -262,11 +262,20 @@
 
 
         /* PERSISTENT HEADER REDESIGN - Completely replace template header */
-        /* REFINED HEADER OVERRIDE - Only hide the specific template bars if our custom bar is present */
+        /* REFINED HEADER OVERRIDE - Strictly target only the old items we want to replace */
         body.has-custom-header .header-top,
-        body.has-custom-header .top-bar,
-        body.has-custom-header header:not(#custom-floating-header) {
+        body.has-custom-header .header-top-1,
+        body.has-custom-header .header-top-2 {
             display: none !important;
+        }
+        
+        /* Ensure the main site content is ALWAYS visible */
+        #root {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: relative !important;
+            z-index: 1 !important;
         }
 
         /* ================================================
@@ -1326,6 +1335,8 @@
                 if (!document.getElementById('km-stats-section')) {
                     const statsHtml = `
                         <div id="km-stats-section" class="stats-section fix" style="background: #111; padding: 40px 0; color: white; width: 100%;">
+                            <!-- RACE CATEGORY ANCHOR -->
+                            <div id="race-category-anchor" style="position: absolute; top: -100px;"></div>
                             <div class="container">
                                 <div class="row text-center">
                                     <div class="col-xl-2 col-lg-4 col-md-6 mb-4 mb-xl-0">
@@ -1987,14 +1998,11 @@
                     </section>
                 `;
 
-                // Hide original hero sections
-                const selectorsToHide = [
-                    '.hero-section', '.slider-area', '.hero-1', '.hero-2', '.hero-3', '.banner-area', '.tp-hero-area', '.hero-content', '.slider-active'
-                ];
-                selectorsToHide.forEach(sel => {
-                    document.querySelectorAll(sel).forEach(el => {
+                // Only hide the main slider/hero area to avoid hiding content sections
+                document.querySelectorAll('.slider-area, .tp-slider-area, .hero-section-area').forEach(el => {
+                    if (el.getBoundingClientRect().top < 400) {
                         el.style.setProperty('display', 'none', 'important');
-                    });
+                    }
                 });
 
                 // Inject before #root
@@ -2138,25 +2146,13 @@
             }
 
             // Run immediately and then periodic
-            globalColorNuke();
-            setInterval(globalColorNuke, 2000);
+            // Disable heavy global color nuke as it might be breaking React performance
+            // globalColorNuke();
+            // setInterval(globalColorNuke, 2000);
 
-            // ULTRA-AGGRESSIVE LOGIN TEXT KILLER (Runs every 500ms)
-            function killLogin() {
-                const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-                let node;
-                while (node = walker.nextNode()) {
-                    if (node.nodeValue.includes('Login')) {
-                        const parent = node.parentElement;
-                        // Avoid script/style tags and already processed nodes
-                        if (parent && !['SCRIPT', 'STYLE'].includes(parent.tagName)) {
-                            node.nodeValue = node.nodeValue.replace(/Login/gi, 'Register');
-                        }
-                    }
-                }
-            }
-            // setInterval(killLogin, 500); // Handled within safeUpdate and updateBranding
-            killLogin();
+            // Disable destructive loops that might be crashing React
+            // killLogin(); 
+            // setInterval(killLogin, 500);
 
             // INJECT TOP INFO BAR
             function injectTopInfoBar() {
@@ -2210,7 +2206,7 @@
                         <ul class="nav-links-pill">
                             <li><a href="{{ url('/') }}">Home</a></li>
                             <li><a href="#about">About</a></li>
-                            <li><a href="#km-stats-section">Race Category</a></li>
+                            <li><a href="#race-category-anchor">Race Category</a></li>
                             <li><a href="#contact">Contact</a></li>
                         </ul>
                         <div style="display: flex; align-items: center; gap: 10px;">
