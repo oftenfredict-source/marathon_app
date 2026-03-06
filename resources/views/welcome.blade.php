@@ -1193,7 +1193,7 @@
     </script>
 
     @viteReactRefresh
-    @vite(['resources/js/sungo/main.tsx'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="antialiased">
