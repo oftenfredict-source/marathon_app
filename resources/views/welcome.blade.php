@@ -262,13 +262,11 @@
 
 
         /* PERSISTENT HEADER REDESIGN - Completely replace template header */
-        header,
-        .header-area,
-        .header-top,
-        [class*="header"] {
+        /* REFINED HEADER OVERRIDE - Only hide the specific template bars if our custom bar is present */
+        body.has-custom-header .header-top,
+        body.has-custom-header .top-bar,
+        body.has-custom-header header:not(#custom-floating-header) {
             display: none !important;
-            visibility: hidden !important;
-            pointer-events: none !important;
         }
 
         /* ================================================
@@ -2162,12 +2160,8 @@
 
             // INJECT TOP INFO BAR
             function injectTopInfoBar() {
-                // Kill any other bars that aren't ours to prevent duplication wars
-                document.querySelectorAll('.header-top, .top-bar, [class*="top-bar"]:not(#custom-top-bar), [class*="header-top"]:not(#custom-top-bar)').forEach(el => {
-                    if (el.id !== 'custom-top-bar') el.style.display = 'none';
-                });
-
                 if (document.getElementById('custom-top-bar')) return;
+                document.body.classList.add('has-custom-header');
                 const bar = document.createElement('div');
                 bar.id = 'custom-top-bar';
                 bar.innerHTML = `
