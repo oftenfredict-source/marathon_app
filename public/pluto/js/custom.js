@@ -8,7 +8,7 @@
 -------------------------------------------------------------------*/
 
 /*--------------------------------------
-	sidebar
+  sidebar
 --------------------------------------*/
 
 "use strict";
@@ -19,10 +19,12 @@ $(document).ready(function () {
     $('#sidebar').toggleClass('active');
   });
   /*-- calendar js --*/
-  $('#example14').calendar({
-    inline: true
-  });
-  $('#example15').calendar();
+  if ($.fn.calendar) {
+    $('#example14').calendar({
+      inline: true
+    });
+    $('#example15').calendar();
+  }
   /*-- tooltip js --*/
   $('[data-toggle="tooltip"]').tooltip();
 });
@@ -38,12 +40,23 @@ var ps = new PerfectScrollbar('#sidebar');
 --------------------------------------*/
 
 $(function () {
-  new Chart(document.getElementById("line_chart").getContext("2d"), getChartJs('line'));
-  new Chart(document.getElementById("bar_chart").getContext("2d"), getChartJs('bar'));
-  new Chart(document.getElementById("radar_chart").getContext("2d"), getChartJs('radar'));
-  new Chart(document.getElementById("pie_chart").getContext("2d"), getChartJs('pie'));
-  new Chart(document.getElementById("area_chart").getContext("2d"), getChartJs('area'));
-  new Chart(document.getElementById("donut_chart").getContext("2d"), getChartJs('donut'));
+  const lineChart = document.getElementById("line_chart");
+  if (lineChart) new Chart(lineChart.getContext("2d"), getChartJs('line'));
+
+  const barChart = document.getElementById("bar_chart");
+  if (barChart) new Chart(barChart.getContext("2d"), getChartJs('bar'));
+
+  const radarChart = document.getElementById("radar_chart");
+  if (radarChart) new Chart(radarChart.getContext("2d"), getChartJs('radar'));
+
+  const pieChart = document.getElementById("pie_chart");
+  if (pieChart) new Chart(pieChart.getContext("2d"), getChartJs('pie'));
+
+  const areaChart = document.getElementById("area_chart");
+  if (areaChart) new Chart(areaChart.getContext("2d"), getChartJs('area'));
+
+  const donutChart = document.getElementById("donut_chart");
+  if (donutChart) new Chart(donutChart.getContext("2d"), getChartJs('donut'));
 });
 
 function getChartJs(type) {
