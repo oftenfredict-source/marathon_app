@@ -104,27 +104,16 @@ class RegistrationController extends Controller
             DB::beginTransaction();
             \Log::info('Registration transaction started');
 
-            // Find or create runner
-            // Match by email+name if email provided, otherwise by phone+name
-            if ($request->filled('email')) {
-                $matchFields = [
-                    'email' => $request->email,
-                    'first_name' => $request->first_name,
-                    'last_name' => $request->last_name,
-                ];
-            } else {
-                $matchFields = [
-                    'phone' => $request->phone,
-                    'first_name' => $request->first_name,
-                    'last_name' => $request->last_name,
-                ];
-            }
+            // Match by phone - this is the unique identifier now
+            $matchFields = [
+                'phone' => $request->phone,
+            ];
 
             \Log::info('Attempting Runner updateOrCreate', ['match' => $matchFields]);
 
             $runner = Runner::updateOrCreate(
                 $matchFields,
-                $request->only(['email', 'phone', 'nationality', 'region', 'country', 'passport_number', 't_shirt_size', 'gender'])
+                $request->only(['first_name', 'last_name', 'email', 'phone', 'nationality', 'region', 'country', 'passport_number', 't_shirt_size', 'gender'])
             );
             \Log::info('Runner processed', ['runner_id' => $runner->id]);
 
