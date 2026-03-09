@@ -397,7 +397,7 @@
             <div class="spinner mb-3"></div>
             <div style="background: rgba(255,255,255,0.9); padding: 8px 15px; border-radius: 25px;">
                 <span style="color: black; font-weight: 600; font-size: 0.9rem;">
-                    Powered by <span style="color: #940000;">EmCa Technologies</span>
+                    Powered by <span style="color: #940000;">EmCa Techonologies</span>
                 </span>
             </div>
         </div>
@@ -830,7 +830,7 @@
             <div class="mt-4 pt-3 border-top border-secondary">
                 <span
                     style="color: black; background: rgba(255,255,255,0.8); padding: 5px 10px; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">
-                    Powered by <span style="color: #940000;">EmCa Technologies</span>
+                    Powered by <span style="color: #940000;">EmCa Techonologies</span>
                 </span>
             </div>
         </div>
@@ -934,7 +934,7 @@
             updatePrice();
         }
 
-        let exchangeRate = 2600; // Default fallback
+        let exchangeRate = 2455; // Default fallback (matching backend)
 
         // Fetch Exchange Rate
         async function fetchExchangeRate() {
@@ -1132,6 +1132,7 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            fetchExchangeRate(); // Enable live rate fetching
             fetchCategories();
             populateCountries();
             toggleNationality(document.querySelector('input[name="nationality"]:checked'));

@@ -22,7 +22,6 @@ class CurrencyExchangeService
     public function getUsdToTshRate(): ?float
     {
         // 1. Check if manager has set a manual override in Hotel Settings (Top Priority)
-        // Note: Using class_exists to avoid dependency errors if the model doesn't exist in this project
         if (class_exists(\App\Models\HotelSetting::class)) {
             $configuredRate = \App\Models\HotelSetting::getValue('exchange_rate_usd_to_tzs');
             // If the manual rate is set to something reasonable (not 0 or default fallback 2455)

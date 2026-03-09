@@ -14,7 +14,7 @@ class MarathonSeeder extends Seeder
     {
         $marathon = \App\Models\Marathon::create([
             'name' => 'Swahili Marathon 2026',
-            'event_date' => '2026-06-15',
+            'event_date' => '2026-06-27',
             'location' => 'Dar es Salaam, Tanzania',
             'description' => 'The premier marathon event in East Africa.',
             'is_active' => true,

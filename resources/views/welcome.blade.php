@@ -9,15 +9,14 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <!-- Theme Compiled CSS -->
     <link rel="stylesheet" href="{{ asset('css/sungo-compiled.css') }}">
@@ -37,11 +36,31 @@
         /* SUPER AGGRESSIVE BRANDING OVERRIDES */
         :root {
             --primary-color: #ffcc00 !important;
-            /* Yellow from logo */
             --secondary-color: #ff8c42 !important;
-            /* Orange from logo */
             --theme-color: #ffcc00 !important;
             --main-color: #ffcc00 !important;
+            --font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important;
+        }
+
+        body {
+            font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .section-title h2,
+        .sub-title,
+        .nav-links-pill li a,
+        .register-btn,
+        .footer-widget h4,
+        .theme-btn,
+        .stat-item h2,
+        .price-display {
+            font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif !important;
         }
 
         /* Kill all green and blue elements, replace with yellow/white as needed */
@@ -196,9 +215,303 @@
             display: none !important;
         }
 
+        /* Image Showcase Marquee */
+        .showcase-marquee {
+            overflow: hidden;
+            user-select: none;
+            display: flex;
+            gap: 20px;
+            padding: 40px 0;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        .marquee-content {
+            display: flex;
+            gap: 20px;
+            animation: scroll 40s linear infinite;
+            flex-shrink: 0;
+        }
+
+        .marquee-item {
+            position: relative;
+            height: 280px;
+            flex-shrink: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .marquee-item img {
+            height: 100%;
+            width: auto;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+
+        .marquee-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            color: #ffcc00;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .marquee-item:hover .marquee-overlay {
+            opacity: 1;
+        }
+
+        .marquee-item:hover img {
+            transform: scale(1.1);
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(calc(-100% - 20px));
+            }
+        }
+
+        .showcase-marquee:hover .marquee-content {
+            animation-play-state: paused;
+        }
+
         .submenu,
         .megamenu {
             display: none !important;
+        }
+
+        /* Currency Toggle Switch */
+        .currency-switch-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 5px;
+        }
+
+        /* PREMIUM FOOTER STYLING */
+        .footer-area {
+            background: #0f0f0f;
+            color: #ffffff;
+            padding: 80px 0 0;
+            font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-top {
+            padding-bottom: 50px;
+        }
+
+        .footer-widget h4 {
+            color: #ffcc00;
+            font-weight: 800;
+            font-size: 20px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-about p {
+            color: #aaa;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .footer-social a:hover {
+            background: #ffcc00;
+            color: #000;
+            transform: translateY(-3px);
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: #aaa;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links ul li a i {
+            font-size: 12px;
+            color: #ffcc00;
+        }
+
+        .footer-links ul li a:hover {
+            color: #ffcc00;
+            padding-left: 5px;
+        }
+
+        .footer-contact-info {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-contact-info li {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: #aaa;
+            font-size: 15px;
+        }
+
+        .footer-contact-info i {
+            color: #ffcc00;
+            font-size: 18px;
+            margin-top: 3px;
+        }
+
+        .footer-bottom {
+            background: #050505;
+            padding: 25px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-bottom-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .footer-bottom .powered-by {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .footer-bottom .powered-by a {
+            color: #940000;
+            font-weight: 700;
+            transition: opacity 0.3s;
+        }
+
+        .footer-bottom .powered-by a:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 991px) {
+            .footer-widget {
+                margin-bottom: 40px;
+            }
+
+            .footer-bottom-content {
+                justify-content: center;
+                text-align: center;
+            }
+        }
+
+        .currency-label {
+            font-weight: 700;
+            font-size: 16px;
+            color: #555;
+            transition: color 0.3s;
+        }
+
+        .currency-label.active {
+            color: #ffcc00;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .switch-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .switch-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.switch-slider {
+            background-color: #ffcc00;
+        }
+
+        input:focus+.switch-slider {
+            box-shadow: 0 0 1px #ffcc00;
+        }
+
+        input:checked+.switch-slider:before {
+            transform: translateX(26px);
         }
 
         /* Hide search icon / extra icons before Login button */
@@ -406,7 +719,7 @@
            FLOATING NAVIGATION PILL - Polished Premium Design
         ================================================ */
         #custom-floating-header {
-            display: none;
+            display: block;
             position: fixed;
             top: 52px;
             left: 50%;
@@ -924,23 +1237,15 @@
             transform: translateY(-5px);
         }
 
-        /* Force hide any template hero/sliders */
-        .hero-section,
+        /* Force back and visibility for template hero/sliders */
         .slider-area,
-        .hero-1,
-        .hero-2,
-        .hero-3,
-        .banner-area,
-        .tp-hero-area,
-        .hero-content {
-            display: none !important;
-            visibility: hidden !important;
-            height: 0 !important;
-            margin: 0 !important;
-            padding: 0 !important;
+        .hero-section,
+        .about-section {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         }
 
-        /* PARTNERS SECTION */
         #custom-partners-section {
             background: #f9f9f9;
             padding: 60px 40px;
@@ -1216,1152 +1521,821 @@
     <div id="root">
     </div>
 
-    <script>
-        // EMERGENCY OVERRIDE JS - Runs after React mounts
-        function updateBranding() {
-            // Find and replace "Marathon App" or "SMRMS" in titles/hero
-            const replaceText = (node) => {
-                if (node.nodeType === 3) { // Text node
-                    const oldText = node.nodeValue;
-                    const newText = oldText
-                        .replace(/Marathon App/gi, 'Swahili Marathon')
-                        .replace(/SMRMS/gi, 'Swahili Marathon')
-                        .replace(/info@example\.com|example\.com/gi, 'info@swahilimarathon.com')
-                        .replace(/123-456-7890|000-000-0000/gi, '+255 755 165 284 | +255 654 507 505')
-                        .replace(/#1d8f2c/gi, '#ffffff')
-                        .replace(/\bLogin\b/g, 'Register');
-                    if (oldText !== newText) node.nodeValue = newText;
-                } else {
-                    node.childNodes.forEach(replaceText);
-                }
-            };
-            // Replace in critical areas
-            document.querySelectorAll('.hero-content, .header, .logo, .navbar, .breadcrumb, h1, h2, h3, h4, h5, p, span, a').forEach(node => {
-                if (node.childNodes.length > 0) {
-                    replaceText(node);
-                }
-            });
+    <!-- UI Elements moved from JS to Blade for instant loading -->
+    <div id="custom-top-bar">
+        <div class="top-bar-left">
+            <a href="tel:+255755165284"><i class="fa-solid fa-phone-volume"></i> +255 755 165 284</a>
+            <div class="top-bar-divider"></div>
+            <a href="tel:+255757979611"><i class="fa-solid fa-phone-volume"></i> +255 757 979 611</a>
+            <div class="top-bar-divider"></div>
+            <a href="mailto:info@swahilimarathon.com" class="email-link"><i class="fa-solid fa-envelope"></i>
+                info@swahilimarathon.com</a>
+        </div>
+    </div>
 
-            // Specific Top Bar Contact Fixes
-            document.querySelectorAll('.header-top, .top-bar, .top-left, .header-top-left, .top-bar-left, .header-top-right, .top-right, .header-social, [class*="top-right"]').forEach(box => {
-                // STOP using innerHTML.replace on parents as it causes re-renders and duplication
-                // Instead, find and update specific text nodes or elements
-                box.querySelectorAll('*').forEach(el => {
-                    const html = el.innerHTML;
-                    if (html.includes('info@example.com') || html.includes('example.com')) {
-                        el.innerHTML = html.replace(/info@example\.com|example\.com/gi, 'info@swahilimarathon.com');
-                    }
-                    if (html.includes('123-456-7890') || html.includes('000-000-0000')) {
-                        el.innerHTML = html.replace(/123-456-7890|000-000-0000/g, '+255 755 165 284 | +255 654 507 505');
-                    }
-                });
+    <div id="custom-floating-header">
+        <div class="pill-inner">
+            <div class="logo-box-pill"><a href="{{ url('/') }}"><img src="/img/logo/swahili Marathon.jpeg" alt="Logo"
+                        style="height:48px; border-radius:6px;"></a></div>
+            <ul class="nav-links-pill">
+                <li><a href="{{ url('/') }}">Home</a></li>
+                <li><a href="#marathon-background-section">About</a></li>
+                <li><a href="#race-category-anchor">Race Category</a></li>
+                <li><a href="#race-pricing-section">Price</a></li>
+            </ul>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <a href="{{ url('/register') }}" class="register-btn">Register <i
+                        class="fa-solid fa-arrow-right"></i></a>
+                <button id="mobile-menu-toggle"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+    </div>
 
-                // Force individual element styles too
-                box.querySelectorAll('a, span, p, li, div').forEach(el => {
-                    // If it contains "Follow Us" or social icons, force dark background
-                    if (el.innerText.includes('Follow Us') || el.querySelector('i[class*="fa-"]')) {
-                        el.style.setProperty('background-color', '#1a222a', 'important');
-                        el.style.setProperty('background', '#1a222a', 'important');
-                    }
+    <div id="mobile-menu-overlay"></div>
+    <div id="mobile-side-menu">
+        <div class="mobile-header-close"><button class="close-btn"><i class="fa-solid fa-xmark"></i></button></div>
+        <ul class="mobile-nav-list">
+            <li><a href="{{ url('/') }}"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="#marathon-background-section"><i class="fa-solid fa-circle-info"></i> About</a></li>
+            <li><a href="#race-category-anchor"><i class="fa-solid fa-person-running"></i> Race Category</a></li>
+            <li><a href="#race-pricing-section"><i class="fa-solid fa-tag"></i> Price</a></li>
+        </ul>
+    </div>
 
-                    // Force white if it matches the user's specific green hex
-                    const style = window.getComputedStyle(el);
-                    const isTargetGreen = (str) => {
-                        return str && (
-                            str.includes('29, 143, 44') ||
-                            str.includes('1d8f2c') ||
-                            str.includes('1D8F2C')
-                        );
-                    };
+    <div id="custom-hero-slider" class="slider-area hero-section fix">
+        <div class="swiper hero-slider">
+            <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+                <div class="swiper-slide bg-cover"
+                    style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/header/header-1.jpeg'); padding: 220px 0 450px;">
+                    <div class="container">
+                        <div class="hero-content text-center">
+                            <span class="sub-title wow slideUp"
+                                style="color: #ffcc00; font-weight: 700; letter-spacing: 3px; font-size: 18px;">JUNE 27, 2026 | SWAHILI
+                                MARATHON</span>
+                            <h1 class="text-white wow slideUp" data-delay=".3"
+                                style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">Run For <span
+                                    style="color: #ffcc00;">Unity & Heritage</span></h1>
+                            <p class="text-white wow slideUp" data-delay=".4"
+                                style="font-size: 1.4rem; max-width: 850px; margin: 0 auto 30px; line-height: 1.7; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">
+                                Experience the thrill of Tanzania's premier marathon event. Join thousands of runners to
+                                celebrate culture, health, and the spirit of endurance in the heart of our community.
+                            </p>
+                            <div class="hero-btns mt-4 wow slideUp" data-delay=".5">
+                                <a href="/register" class="theme-btn">Register Now <i
+                                        class="fa-solid fa-arrow-right-long"></i></a>
+                                <a href="#marathon-background-section" class="theme-btn style-2 ms-3">Explore More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="swiper-slide bg-cover"
+                    style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/header/header-2.jpeg'); padding: 220px 0 450px;">
+                    <div class="container">
+                        <div class="hero-content text-center">
+                            <span class="sub-title wow slideUp"
+                                style="color: #ffcc00; font-weight: 700; letter-spacing: 3px; font-size: 18px;">JUNE 27, 2026 |
+                                CELEBRATING CULTURE</span>
+                            <h1 class="text-white wow slideUp" data-delay=".3"
+                                style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">Beyond The <span
+                                    style="color: #ffcc00;">Finish Line</span></h1>
+                            <p class="text-white wow slideUp" data-delay=".4"
+                                style="font-size: 1.4rem; max-width: 850px; margin: 0 auto 30px; line-height: 1.7; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">
+                                It's not just a race; it's a milestone. Push your limits and discover the true meaning
+                                of athletic excellence with every kilometer.
+                            </p>
+                            <div class="hero-btns mt-4 wow slideUp" data-delay=".5">
+                                <a href="/register" class="theme-btn">Join Us Now <i
+                                        class="fa-solid fa-arrow-right-long"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="swiper-slide bg-cover"
+                    style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/header/header-3.jpeg'); padding: 220px 0 450px;">
+                    <div class="container">
+                        <div class="hero-content text-center">
+                            <span class="sub-title wow slideUp"
+                                style="color: #ffcc00; font-weight: 700; letter-spacing: 3px; font-size: 18px;">JUNE 27, 2026 | JOIN THE
+                                CHALLENGE</span>
+                            <h1 class="text-white wow slideUp" data-delay=".3"
+                                style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">Connect & <span
+                                    style="color: #ffcc00;">Achieve</span></h1>
+                            <p class="text-white wow slideUp" data-delay=".4"
+                                style="font-size: 1.4rem; max-width: 850px; margin: 0 auto 30px; line-height: 1.7; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">
+                                Build lasting connections with fellow runners and achieve your personal best. Swahili
+                                Marathon is where community meets ambition.
+                            </p>
+                            <div class="hero-btns mt-4 wow slideUp" data-delay=".5">
+                                <a href="/register" class="theme-btn">Start Your Journey <i
+                                        class="fa-solid fa-arrow-right-long"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 4 -->
+                <div class="swiper-slide bg-cover"
+                    style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/header/header-4.jpeg'); padding: 220px 0 450px;">
+                    <div class="container">
+                        <div class="hero-content text-center">
+                            <span class="sub-title wow slideUp"
+                                style="color: #ffcc00; font-weight: 700; letter-spacing: 3px; font-size: 18px;">JUNE 27, 2026 | TRAIN &
+                                RACE</span>
+                            <h1 class="text-white wow slideUp" data-delay=".3"
+                                style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">Train, Race, <span
+                                    style="color: #ffcc00;">Inspire</span></h1>
+                            <p class="text-white wow slideUp" data-delay=".4"
+                                style="font-size: 1.4rem; max-width: 850px; margin: 0 auto 30px; line-height: 1.7; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">
+                                Push your limits and set new standards for yourself. Experience the thrill of
+                                competition and the joy of reaching the finish line.
+                            </p>
+                            <div class="hero-btns mt-4 wow slideUp" data-delay=".5">
+                                <a href="/register" class="theme-btn">Join Us Now <i
+                                        class="fa-solid fa-arrow-right-long"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 5 -->
+                <div class="swiper-slide bg-cover"
+                    style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/header/header-5.jpeg'); padding: 220px 0 450px;">
+                    <div class="container">
+                        <div class="hero-content text-center">
+                            <span class="sub-title wow slideUp"
+                                style="color: #ffcc00; font-weight: 700; letter-spacing: 3px; font-size: 18px;">JUNE 27, 2026 |
+                                EXCELLENCE AWAITS</span>
+                            <h1 class="text-white wow slideUp" data-delay=".3"
+                                style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">A Heritage of <span
+                                    style="color: #ffcc00;">Excellence</span></h1>
+                            <p class="text-white wow slideUp" data-delay=".4"
+                                style="font-size: 1.4rem; max-width: 850px; margin: 0 auto 30px; line-height: 1.7; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">
+                                Be part of a tradition that spans generations. The Swahili Marathon is more than a race;
+                                it's a celebration of where we come from and where we're going.
+                            </p>
+                            <div class="hero-btns mt-4 wow slideUp" data-delay=".5">
+                                <a href="/register" class="theme-btn">Join Us Now <i
+                                        class="fa-solid fa-arrow-right-long"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
 
-                    if (isTargetGreen(style.backgroundColor) || isTargetGreen(el.style.backgroundColor)) {
-                        el.style.setProperty('background-color', '#ffffff', 'important');
-                        el.style.setProperty('color', '#000000', 'important');
-                    }
-                    if (isTargetGreen(style.color) || isTargetGreen(el.style.color)) {
-                        el.style.setProperty('color', '#ffffff', 'important');
-                    }
 
-                    el.style.setProperty('color', '#ffffff', 'important');
-                    if (el.innerText.includes('example.com')) {
-                        el.innerText = 'info@swahilimarathon.com';
-                        if (el.tagName === 'A') el.href = 'mailto:info@swahilimarathon.com';
-                    }
-                });
-
-                // Also force the container itself
-                box.style.setProperty('background-color', '#1a222a', 'important');
-                box.style.setProperty('background', '#1a222a', 'important');
-            });
-
-            // About Us Video Injection & Styling
-            document.querySelectorAll('.about-section, #about, .about-area').forEach(section => {
-                if (!section.id) section.id = 'about';
-                // Remove section-wide overrides
-                section.style.backgroundColor = '';
-                section.style.color = '';
-
-                // Target the "About Us" sub-title specifically to be yellow
-                section.querySelectorAll('.sub-title, span[class*="subtitle"], span, b, i').forEach(el => {
-                    if (el.innerText.toUpperCase().trim() === 'ABOUT US') {
-                        el.style.setProperty('color', '#ffcc00', 'important');
-                        el.style.textTransform = 'uppercase';
-                        el.style.fontWeight = '700';
-                        el.style.letterSpacing = '2px';
-                    }
-                });
-
-                // Target green icon circles in About Us
-                section.querySelectorAll('.icon, .icon-items .icon, [class*="icon"]').forEach(icon => {
-                    const style = window.getComputedStyle(icon);
-                    if (style.backgroundColor.includes('rgb(63, 171, 48)') || style.backgroundColor.includes('green')) {
-                        icon.style.setProperty('background-color', '#ffcc00', 'important');
-                        icon.style.setProperty('background', '#ffcc00', 'important');
-                    }
-                    const i = icon.querySelector('i');
-                    if (i) i.style.setProperty('color', '#000', 'important');
-                });
-
-                // Update about-img mask/shadow if needed
-                const imgContainer = section.querySelector('.about-image-items, .about-img, .about-image');
-                if (imgContainer && !section.querySelector('video')) {
-                    imgContainer.innerHTML = `
-                        <div class="video-item wow slideLeft" data-delay=".3" style="border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+    <!-- About Us / Our Heritage Section -->
+    <section id="marathon-background-section" class="about-section fix section-padding">
+        <div class="container">
+            <div class="about-wrapper">
+                <div class="section-title text-center">
+                    <span class="sub-title wow slideUp">About Us</span>
+                    <h2 class="wow slideUp" data-delay=".3">Swahili Marathon: <span>A Cultural & Athletic
+                            Celebration</span></h2>
+                </div>
+                <div class="row g-4 align-items-center mt-5">
+                    <div class="col-lg-6">
+                        <div class="about-image-item wow slideLeft" data-delay=".3"
+                            style="border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
                             <video autoplay muted loop playsinline style="width: 100%; height: auto; display: block;">
                                 <source src="/img/about/about-us.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         </div>
-                    `;
-                    imgContainer.style.background = 'none';
-                    imgContainer.classList.add('p-0');
-                }
-            });
-
-            // Moved KM Statistics and Latest Projects below updateBranding for correct scope
-
-
-            // Swahili Marathon Background Injection
-            if (!document.getElementById('marathon-background-section')) {
-                const projectSection = document.getElementById('latest-projects-section');
-                if (projectSection) {
-                    const backgroundHtml = `
-                        <div id="marathon-background-section" class="section-padding" style="background: #fff; padding: 100px 0; color: #333;">
-                            <div class="container">
-                                <div class="row justify-content-center">
-                                    <div class="col-lg-10 text-center">
-                                        <h2 style="color: #2c3e50; font-weight: 800; font-size: 36px; margin-bottom: 5px;">Swahili Marathon: A Cultural & Athletic Celebration</h2>
-                                        <div style="width: 50px; height: 3px; background: #ffcc00; margin: 15px auto 20px;"></div>
-                                        <p style="color: #5d6d7e; text-transform: uppercase; font-weight: 700; letter-spacing: 2px; font-size: 14px; margin-bottom: 40px;">PROJECT BACKGROUND</p>
-                                        
-                                        <div class="text-content" style="font-size: 16px; line-height: 1.8; color: #555; text-align: left; max-width: 900px; margin: 0 auto;">
-                                            <p style="margin-bottom: 25px;">The Swahili Marathon is a unique celebration that brings together fitness enthusiasts, professional athletes, and cultural seekers from across Tanzania, Africa, and beyond. Set against the vibrant backdrop of coastal heritage and local spirit, this event combines athletic excellence with community empowerment.</p>
-                                            
-                                            <p style="margin-bottom: 25px;">Marathons hold a timeless charm in Tanzania, representing endurance, health milestones, and nostalgic memories of shared local triumphs. The Swahili Marathon offers a platform not only to challenge physical limits but also to inspire younger generations to appreciate the value of health and sportsmanship.</p>
-                                            
-                                            <p>Alongside the race, the marathon experience allows participants and visitors to embark on scenic routes, cultural tours, and wildlife excursions in the surrounding regions, making the event both an athletic spectacle and an unforgettable travel experience.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    projectSection.insertAdjacentHTML('afterend', backgroundHtml);
-                }
-            }
-
-            // China Marathon Announcement Injection
-            if (!document.getElementById('china-announcement-section')) {
-                const backgroundSection = document.getElementById('marathon-background-section');
-                if (backgroundSection) {
-                    const announcementHtml = `
-                        <div id="china-announcement-section" class="section-padding" style="background: #fff; padding: 20px 0 100px;">
-                            <div class="container">
-                                <div class="announcement-box" style="background: #1a1a1a; border: 2px solid #940000; border-radius: 20px; padding: 40px; color: #fff; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-                                    <button type="button" style="position: absolute; top: 20px; right: 20px; background: none; border: none; color: #777; font-size: 24px; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#777'" onclick="document.getElementById('china-announcement-section').style.display='none'">&times;</button>
-                                    
-                                    <div class="badge-container" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(148, 0, 0, 0.2); border: 1px solid #940000; padding: 6px 16px; border-radius: 50px; margin-bottom: 25px;">
-                                        <i class="fa-solid fa-earth-africa" style="color: #ffcc00;"></i>
-                                        <span style="color: #ffcc00; font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px;">COMING SOON · INTERNATIONAL EVENT</span>
-                                    </div>
-                                    
-                                    <h2 style="color: #fff; font-weight: 800; font-size: 32px; margin-bottom: 20px;">China International Marathon</h2>
-                                    
-                                    <p style="font-size: 18px; line-height: 1.6; color: rgba(255,255,255,0.8); margin-bottom: 30px;">
-                                        We are excited to announce that an <span style="color: #ffcc00; font-weight: 700;">international marathon event in China</span> is being organised for our runners! 
-                                        Registration will officially open once the event date is confirmed. <span style="color: #ffcc00; font-weight: 700;">Stay tuned for updates.</span>
-                                    </p>
-                                    
-                                    <div class="announcement-footer" style="display: flex; flex-wrap: wrap; gap: 20px 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px;">
-                                        <div style="display: flex; align-items: center; gap: 10px;">
-                                            <i class="fa-solid fa-location-dot" style="color: #940000; font-size: 18px;"></i>
-                                            <span style="font-size: 15px; color: rgba(255,255,255,0.7); font-weight: 500;">China</span>
-                                        </div>
-                                        <div style="display: flex; align-items: center; gap: 10px;">
-                                            <i class="fa-solid fa-calendar-days" style="color: #940000; font-size: 18px;"></i>
-                                            <span style="font-size: 15px; color: rgba(255,255,255,0.7); font-weight: 500;">Date: To Be Announced</span>
-                                        </div>
-                                        <div style="display: flex; align-items: center; gap: 10px;">
-                                            <i class="fa-solid fa-users" style="color: #940000; font-size: 18px;"></i>
-                                            <span style="font-size: 15px; color: rgba(255,255,255,0.7); font-weight: 500;">Open to All Categories</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    backgroundSection.insertAdjacentHTML('afterend', announcementHtml);
-                }
-            }
-
-            // Pricing Section Injection
-            if (!document.getElementById('race-pricing-section')) {
-                const announcementSection = document.getElementById('china-announcement-section');
-                if (announcementSection) {
-                    const pricingHtml = `
-                        <div id="race-pricing-section" class="section-padding" style="background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('/img/header/header-4.jpeg'); background-size: cover; background-position: center; background-attachment: fixed; padding: 100px 0; color: #fff; border-top: 1px solid #333;">
-                            <div class="container">
-                                <div class="section-title text-center mb-5">
-                                    <span class="sub-title" style="color: #ffcc00; text-transform: uppercase; font-weight: 700; letter-spacing: 2px; font-size: 14px;">Registration Packages</span>
-                                    <h2 style="color: #fff; font-weight: 800; font-size: 36px; margin-top: 10px;">Race Fees</h2>
-                                    <p style="margin-top: 15px; color: #ccc;">Choose your category and join the movement.</p>
-                                    
-                                    <!-- Currency Toggle -->
-                                    <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 30px;">
-                                        <span style="font-weight: 700; color: #fff; font-size: 14px;">TZS</span>
-                                        <label class="currency-switch" style="position: relative; display: inline-block; width: 50px; height: 26px; margin: 0;">
-                                            <input type="checkbox" id="currency-toggle" style="opacity: 0; width: 0; height: 0;">
-                                            <span class="slider round" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
-                                        </label>
-                                        <span style="font-weight: 700; color: #2c3e50; font-size: 14px;">USD</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="row g-4 justify-content-center">
-                                    <!-- Adult Card -->
-                                    <div class="col-lg-5 col-md-6">
-                                        <div class="pricing-card" style="background: #fff; border-radius: 20px; padding: 50px 40px; text-align: center; border: 1px solid #eee; transition: all 0.4s ease; position: relative; overflow: hidden; height: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.02);">
-                                            <div style="background: #940000; color: #fff; transform: rotate(45deg); position: absolute; top: 20px; right: -35px; width: 150px; padding: 5px; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; z-index: 2;">Popular</div>
-                                            <h3 style="font-weight: 800; color: #2c3e50; margin-bottom: 20px; font-size: 24px;">ADULT</h3>
-                                            <div class="price-box" style="margin-bottom: 30px; display: flex; align-items: center; justify-content: center;">
-                                                <span class="amount" id="adult-price" style="font-size: 48px; font-weight: 900; color: #940000; transition: all 0.3s;">40,000</span>
-                                                <span class="currency" id="adult-currency" style="font-size: 18px; font-weight: 700; color: #940000; margin-left: 8px;">TZS</span>
-                                            </div>
-                                            <ul style="list-style: none; padding: 0; margin-bottom: 40px; text-align: left; display: inline-block; width: 100%;">
-                                                <li style="margin-bottom: 15px; display: flex; align-items: center; font-size: 15px; color: #555;"><i class="fa-solid fa-circle-check" style="color: #ffcc00; margin-right: 12px;"></i> Official Race T-Shirt</li>
-                                                <li style="margin-bottom: 15px; display: flex; align-items: center; font-size: 15px; color: #555;"><i class="fa-solid fa-circle-check" style="color: #ffcc00; margin-right: 12px;"></i> Finisher's Medal</li>
-                                                <li style="margin-bottom: 15px; display: flex; align-items: center; font-size: 15px; color: #555;"><i class="fa-solid fa-circle-check" style="color: #ffcc00; margin-right: 12px;"></i> Digital Certificate</li>
-                                                <li style="margin-bottom: 15px; display: flex; align-items: center; font-size: 15px; color: #555;"><i class="fa-solid fa-circle-check" style="color: #ffcc00; margin-right: 12px;"></i> Refreshments & Goodie Bag</li>
-                                            </ul>
-                                            <a href="/register" class="btn" style="background: #111; color: #fff; border-radius: 50px; padding: 16px 40px; font-weight: 700; width: 100%; display: block; border: none; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;">Register Now</a>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Student Card -->
-                                    <div class="col-lg-5 col-md-6">
-                                        <div class="pricing-card" style="background: #fff; border-radius: 20px; padding: 50px 40px; text-align: center; border: 1px solid #eee; transition: all 0.4s ease; height: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.02);">
-                                            <h3 style="font-weight: 800; color: #2c3e50; margin-bottom: 20px; font-size: 24px;">STUDENT</h3>
-                                            <div class="price-box" style="margin-bottom: 30px; display: flex; align-items: center; justify-content: center;">
-                                                <span class="amount" id="student-price" style="font-size: 48px; font-weight: 900; color: #2c3e50; transition: all 0.3s;">20,000</span>
-                                                <span class="currency" id="student-currency" style="font-size: 18px; font-weight: 700; color: #2c3e50; margin-left: 8px;">TZS</span>
-                                            </div>
-                                            <ul style="list-style: none; padding: 0; margin-bottom: 40px; text-align: left; display: inline-block; width: 100%;">
-                                                <li style="margin-bottom: 15px; display: flex; align-items: center; font-size: 15px; color: #555;"><i class="fa-solid fa-circle-check" style="color: #ffcc00; margin-right: 12px;"></i> Official Race T-Shirt</li>
-                                                <li style="margin-bottom: 15px; display: flex; align-items: center; font-size: 15px; color: #555;"><i class="fa-solid fa-circle-check" style="color: #ffcc00; margin-right: 12px;"></i> Finisher's Medal</li>
-                                                <li style="margin-bottom: 15px; display: flex; align-items: center; font-size: 15px; color: #555;"><i class="fa-solid fa-circle-check" style="color: #ffcc00; margin-right: 12px;"></i> Digital Certificate</li>
-                                                <li style="margin-bottom: 15px; display: flex; align-items: center; font-size: 15px; color: #555;"><i class="fa-solid fa-circle-check" style="color: #ffcc00; margin-right: 12px;"></i> Student ID Required</li>
-                                            </ul>
-                                            <a href="/register" class="btn" style="background: #f8f9fa; color: #111; border: 2px solid #111; border-radius: 50px; padding: 14px 40px; font-weight: 700; width: 100%; display: block; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;">Register Now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <style>
-                            .pricing-card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px rgba(0,0,0,0.1); border-color: #940000; }
-                            .pricing-card:hover .btn { background: #940000 !important; color: #fff !important; border-color: #940000 !important; }
-                            .currency-switch input:checked + .slider { background-color: #940000; }
-                            .currency-switch input:checked + .slider:before { transform: translateX(24px); }
-                            .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
-                        </style>
-                    `;
-                    announcementSection.insertAdjacentHTML('afterend', pricingHtml);
-
-                    // Toggle Logic
-                    const toggle = document.getElementById('currency-toggle');
-                    if (toggle) {
-                        let pricingData = {
-                            adult: { tzs: '40,000', usd: '16' }, // Fallback
-                            student: { tzs: '20,000', usd: '8' }  // Fallback
-                        };
-
-                        // Fetch real rate from API
-                        fetch('/api/exchange-rate')
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.rate) {
-                                    const rate = parseFloat(data.rate);
-                                    pricingData.adult.usd = (40000 / rate).toFixed(2);
-                                    pricingData.student.usd = (20000 / rate).toFixed(2);
-                                    console.log("Real-time exchange rate applied:", rate);
-                                }
-                            })
-                            .catch(err => console.error("Could not fetch exchange rate:", err));
-
-                        toggle.addEventListener('change', function () {
-                            const isUsd = this.checked;
-                            const adultPrice = document.getElementById('adult-price');
-                            const studentPrice = document.getElementById('student-price');
-                            const adultCurr = document.getElementById('adult-currency');
-                            const studentCurr = document.getElementById('student-currency');
-
-                            if (adultPrice && studentPrice) {
-                                adultPrice.style.opacity = '0';
-                                studentPrice.style.opacity = '0';
-
-                                setTimeout(() => {
-                                    adultPrice.innerText = isUsd ? pricingData.adult.usd : pricingData.adult.tzs;
-                                    studentPrice.innerText = isUsd ? pricingData.student.usd : pricingData.student.tzs;
-                                    adultCurr.innerText = isUsd ? 'USD' : 'TZS';
-                                    studentCurr.innerText = isUsd ? 'USD' : 'TZS';
-                                    adultPrice.style.opacity = '1';
-                                    studentPrice.style.opacity = '1';
-                                }, 200);
-                            }
-                        });
-                    }
-                }
-            }
-
-            // Fix About Us Icons and Buttons (Catching React renders)
-            document.querySelectorAll('.about-icon-items').forEach(container => {
-                container.classList.add('d-flex', 'align-items-start', 'gap-3');
-                container.style.display = 'flex';
-                container.style.gap = '20px';
-                container.style.alignItems = 'flex-start';
-                container.style.marginTop = '20px';
-            });
-
-            document.querySelectorAll('.icon-items, .about-icon-items .icon-items').forEach(item => {
-                item.style.flex = '1';
-                item.style.margin = '0';
-
-                const h4 = item.querySelector('h4');
-                const p = item.querySelector('p');
-                if (h4) {
-                    h4.style.fontSize = '16px';
-                    h4.style.marginBottom = '5px';
-                    if (p) p.style.fontSize = '13px';
-
-                    if (h4.innerText.includes('Reliability') || h4.innerText.includes('Performance')) {
-                        const iconDiv = item.querySelector('.icon');
-                        if (iconDiv) {
-                            iconDiv.innerHTML = '<i class="fa-solid fa-gauge-high" style="font-size: 24px; color: #000;"></i>';
-                            iconDiv.style.minWidth = '40px';
-                        }
-                        if (p) p.innerText = 'Optimized for accuracy and speed.';
-                    } else if (h4.innerText.includes('Support') || h4.innerText.includes('assistance')) {
-                        const iconDiv = item.querySelector('.icon');
-                        if (iconDiv) {
-                            iconDiv.innerHTML = '<i class="fa-solid fa-headset" style="font-size: 24px; color: #000;"></i>';
-                            iconDiv.style.minWidth = '40px';
-                        }
-                        if (p) p.innerText = '24/7 assistance for all queries.';
-                    }
-                }
-            });
-
-            // Remove Explore More button
-            document.querySelectorAll('.theme-btn, .about-button, a').forEach(btn => {
-                if (btn.innerText && btn.innerText.includes('Explore More')) {
-                    btn.remove();
-                }
-            });
-
-            // Remove dropdown icons
-            document.querySelectorAll('.fa-angle-down, .fas.fa-angle-down').forEach(el => el.remove());
-
-            // === MENU MANAGEMENT: Idempotent rebuild ===
-            const navUl = document.querySelector('.main-menu nav > ul');
-            if (navUl) {
-                const wantedLabels = ['Home', 'About', 'Race Category', 'Contact'];
-                const currentLabels = Array.from(navUl.querySelectorAll(':scope > li a'))
-                    .map(a => a.innerText.replace(/\s+/g, ' ').trim());
-
-                // Only rebuild if nav doesn't already match our desired links
-                if (JSON.stringify(currentLabels) !== JSON.stringify(wantedLabels)) {
-                    navUl.innerHTML = '';
-                    const menuLinks = [
-                        { label: 'Home', href: '{{ url("/") }}' },
-                        { label: 'About', href: '#about' },
-                        { label: 'Race Category', href: '#km-stats-section' },
-                        { label: 'Contact', href: '#contact' },
-                    ];
-                    menuLinks.forEach(item => {
-                        const li = document.createElement('li');
-                        const a = document.createElement('a');
-                        a.href = item.href;
-                        a.innerText = item.label;
-
-                        // Fix for multi-click issue: Intercept anchor clicks
-                        if (item.href.startsWith('#')) {
-                            a.onclick = (e) => {
-                                e.preventDefault();
-                                const target = document.querySelector(item.href);
-                                if (target) {
-                                    // No offset for footer/contact to ensure it doesn't land on the section above
-                                    const isContact = item.href === '#contact';
-                                    const headerOffset = isContact ? 0 : 100;
-                                    const elementPosition = target.getBoundingClientRect().top;
-                                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                                    window.scrollTo({
-                                        top: offsetPosition,
-                                        behavior: "smooth"
-                                    });
-                                }
-                                window.history.pushState(null, null, item.href);
-                            };
-                        }
-
-                        li.appendChild(a);
-                        navUl.appendChild(li);
-                    });
-
-                    // Force hover color via JS as final fallback
-                    navUl.querySelectorAll('li a').forEach(a => {
-                        a.style.transition = 'color 0.3s ease';
-                        a.onmouseenter = () => a.style.setProperty('color', '#ffcc00', 'important');
-                        a.onmouseleave = () => a.style.setProperty('color', '#000000', 'important');
-                    });
-                }
-            }
-
-            // Update Button Link and Text (Login into Register)
-            const registerUrl = "{{ url('/register') }}";
-            document.querySelectorAll('.header-button a, .login-btn, a[href*="login"], a[href*="register"], .slider-btn, .hero-btn, a').forEach(btn => {
-                const text = btn.innerText.trim();
-
-                // Convert Login into Register
-                if (text.includes('Login') || btn.href.includes('/login') || text.includes('Register') || btn.href.includes('/register') || btn.classList.contains('login-btn')) {
-                    btn.href = registerUrl;
-                    btn.onclick = (e) => { e.preventDefault(); window.location.href = registerUrl; };
-
-                    // Kill all child text nodes that say Login
-                    const walker = document.createTreeWalker(btn, NodeFilter.SHOW_TEXT, null, false);
-                    let node;
-                    while (node = walker.nextNode()) {
-                        if (node.nodeValue.includes('Login')) node.nodeValue = 'Register';
-                    }
-
-                    const span = btn.querySelector('span');
-                    if (span && span.innerText.includes('Login')) span.innerText = 'Register';
-
-                    if (btn.innerText.includes('Login')) {
-                        btn.innerHTML = btn.innerHTML.replace(/Login/g, 'Register');
-                    }
-                }
-
-                if (text.includes('Learn More') || text.includes('Explore More')) {
-                    btn.href = registerUrl;
-                    btn.onclick = (e) => { e.preventDefault(); window.location.href = registerUrl; };
-                    const span = btn.querySelector('span');
-                    if (span) span.innerText = 'Register';
-                    else btn.innerHTML = '<span>Register <i class="fa-solid fa-arrow-right-long"></i></span>';
-                }
-            });
-
-            // Cleanup search-related elements that might be injected
-            document.querySelectorAll('[class*="search"], [id*="search"]').forEach(el => {
-                if (!el.innerText.includes('Home') && !el.innerText.includes('Login')) {
-                    el.remove();
-                }
-            });
-
-            // Update Logo
-            document.querySelectorAll('.logo img, .header-logo img, .navbar-brand img').forEach(img => {
-                if (!img.src.includes('asa-logo.png')) {
-                    img.src = '/img/logo/asa-logo.png';
-                    img.style.maxWidth = '150px';
-                    img.style.maxHeight = '60px';
-                    img.style.display = 'inline-block';
-                }
-            });
-
-            // Mobile Toggle Cleanup (Desktop only)
-            if (window.innerWidth >= 1200) {
-                document.querySelectorAll('.mobile-menu-trigger, .offcanvas__trigger, .sidebar-trigger, .offcanvas-trigger, .hamburger-menu, .menu-trigger, .menu-tigger, .nav-toggler').forEach(el => {
-                    el.style.display = 'none';
-                    el.style.visibility = 'hidden';
-                });
-            }
-
-            // === FOOTER CUSTOMIZATION ===
-            // Clear existing contact ID to avoid conflicts
-            document.querySelectorAll('#contact').forEach(el => el.id = '');
-
-            // Target the actual contact bar more precisely
-            let contactTarget = document.querySelector('.contact-info-area, [class*="contact-info"]');
-            if (!contactTarget) {
-                // Fallback: search for unique contact text
-                document.querySelectorAll('span, p, a, div').forEach(el => {
-                    if (el.innerText.includes('+255') || el.innerText.includes('info@')) {
-                        const parent = el.closest('.container')?.parentElement || el.closest('section') || el.closest('div');
-                        if (parent && !contactTarget) contactTarget = parent;
-                    }
-                });
-            }
-            if (contactTarget) contactTarget.id = 'contact';
-            else {
-                const footerFallback = document.querySelector('footer, .footer-area');
-                if (footerFallback) footerFallback.id = 'contact';
-            }
-            // Strategy: Find headings by text (case-insensitive), walk up to column parent, replace content
-            // Targeting h3, h4, and h5 to be safe
-            const footerHeadings = document.querySelectorAll('footer h3, footer h4, footer h5, .footer-area h3, .footer-area h4, .footer-area h5, .footer-section h3, .footer-section h4, .footer-section h5');
-
-            footerHeadings.forEach(h => {
-                const text = h.innerText.trim().toUpperCase();
-                // Find the column container (parent with 'col' in class)
-                let col = h.closest('[class*="col-"]');
-                if (!col) col = h.parentElement?.parentElement;
-
-                // QUICK LINKS: Replace marathon links
-                if (text.includes('QUICK LINKS') && col) {
-                    h.innerText = 'Quick Links';
-                    h.style.setProperty('color', '#ffcc00', 'important');
-                    const ul = col.querySelector('ul');
-                    if (ul) {
-                        ul.innerHTML = `
-                                <li style="white-space: nowrap;"><a href="{{ url("/") }}"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> Home</a></li>
-                                <li style="white-space: nowrap;"><a href="#about"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> About</a></li>
-                                <li style="white-space: nowrap;"><a href="#km-stats-section"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> Race Category</a></li>
-                                <li style="white-space: nowrap;"><a href="#contact"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> Contact</a></li>
-                            `;
-                    }
-                }
-
-                // SERVICES → RACE CATEGORY
-                if ((text.includes('SERVICES') || text.includes('SERVICE') || text.includes('RACE CATEGORY')) && col) {
-                    h.innerText = 'Race Category';
-                    h.style.setProperty('color', '#ffcc00', 'important');
-                    const ul = col.querySelector('ul');
-                    if (ul) {
-                        ul.innerHTML = `
-                                <li><a href="{{ url("/") }}#registration"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> 2.5 KM Fun Run</a></li>
-                                <li><a href="{{ url("/") }}#registration"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> 5 KM Classic</a></li>
-                                <li><a href="{{ url("/") }}#registration"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> 10 KM Challenge</a></li>
-                                <li><a href="{{ url("/") }}#registration"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> 21 KM Half</a></li>
-                                <li><a href="{{ url("/") }}#registration"><i class="fa-solid fa-chevron-right" style="color:#ffcc00;"></i> 42 KM Full</a></li>
-                            `;
-                    }
-                }
-
-                // RECENT POSTS → Replace with Contact
-                if ((text.includes('RECENT POST') || text.includes('CONTACT')) && col) {
-                    // h.innerText = 'Contact'; // We'll set it inside the innerHTML below
-                    h.style.setProperty('color', '#ffcc00', 'important');
-                    // Remove old content (images, dates, etc.)
-                    const oldContent = col.querySelector('.single-footer-widget, [class*="widget"]');
-                    if (oldContent) {
-                        oldContent.innerHTML = `
-                                <h3 class="widget-title" style="color: #ffcc00 !important; margin-bottom: 30px;">Contact</h3>
-                                <ul class="list-area" style="list-style: none; padding: 0; margin-top: 25px;">
-                                    <li style="margin-bottom: 20px; display: flex; align-items: flex-start; gap: 15px;">
-                                        <i class="fa-solid fa-phone" style="color: #ffcc00 !important; font-size: 20px !important; margin-top: 4px;"></i>
-                                        <div>
-                                            <a href="tel:+255755165284" style="color: #ccc !important; display: block; font-size: 16px !important; text-decoration: none !important;">+255 755 165 284</a>
-                                            <a href="tel:+255757979611" style="color: #ccc !important; display: block; font-size: 16px !important; text-decoration: none !important; margin-top: 6px;">+255 757 979 611</a>
-                                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="about-content">
+                            <p class="wow slideUp" data-delay=".5"
+                                style="font-size: 18px; line-height: 1.8; color: #444;">
+                                The Swahili Marathon is a unique celebration bringing together athletes and cultural
+                                seekers.
+                                Set against the coastal heritage, it empowers the community and inspires health.
+                                Our vision is to create a world-class event that showcases the beauty of Tanzania
+                                while promoting physical fitness and cultural unity.
+                            </p>
+                            <div class="about-info-list mt-4">
+                                <ul style="list-style: none; padding: 0;">
+                                    <li class="wow slideUp" data-delay=".6"
+                                        style="margin-bottom: 15px; display: flex; align-items: center; gap: 15px; font-weight: 500;">
+                                        <i class="fa-solid fa-check-circle"
+                                            style="color: #ffcc00; font-size: 20px;"></i> Professional Race Management
                                     </li>
-                                    <li style="margin-bottom: 20px; display: flex; align-items: center; gap: 15px;">
-                                        <i class="fa-solid fa-envelope" style="color: #ffcc00 !important; font-size: 20px !important;"></i>
-                                        <a href="mailto:info@swahilimarathon.com" style="color: #ccc !important; font-size: 16px !important; text-decoration: none !important;">info@swahilimarathon.com</a>
+                                    <li class="wow slideUp" data-delay=".7"
+                                        style="margin-bottom: 15px; display: flex; align-items: center; gap: 15px; font-weight: 500;">
+                                        <i class="fa-solid fa-check-circle"
+                                            style="color: #ffcc00; font-size: 20px;"></i> Cultural Exhibition & Displays
                                     </li>
-                                    <li style="margin-bottom: 20px; display: flex; align-items: center; gap: 15px;">
-                                        <i class="fa-solid fa-location-dot" style="color: #ffcc00 !important; font-size: 20px !important;"></i>
-                                        <span style="color: #ccc !important; font-size: 16px !important;">Dar es Salaam, Tanzania</span>
+                                    <li class="wow slideUp" data-delay=".8"
+                                        style="margin-bottom: 15px; display: flex; align-items: center; gap: 15px; font-weight: 500;">
+                                        <i class="fa-solid fa-check-circle"
+                                            style="color: #ffcc00; font-size: 20px;"></i> Community Health Initiatives
                                     </li>
                                 </ul>
-                            `;
-                    }
-                }
-            });
-
-            // Footer about text replacement
-            document.querySelectorAll('p').forEach(p => {
-                const t = p.innerText.toLowerCase();
-                const isFooter = p.closest('footer') || p.closest('.footer-area') || p.closest('.footer-section');
-                if (isFooter && (t.includes('phasellus') || t.includes('ultricies') || t.includes('curabitur') || t.includes('solar energy'))) {
-                    p.innerText = 'The Swahili Marathon is a premier athletic event celebrating culture, health, and endurance. Join us for an unforgettable experience through scenic routes.';
-                    p.style.lineHeight = '1.8';
-                    p.style.color = '#ccc';
-                    p.style.marginTop = '20px';
-                }
-            });
-
-            // Footer logo
-            document.querySelectorAll('[class*="footer"] img, footer img').forEach(img => {
-                if (!img.src.includes('swahili Marathon') && !img.src.includes('news') && img.closest('[class*="col-"]')) {
-                    const isInFirstCol = !img.closest('[class*="col-"]')?.querySelector('h3');
-                    if (isInFirstCol || img.alt?.toLowerCase().includes('logo')) {
-                        img.src = '/img/logo/swahili Marathon.jpeg';
-                        img.style.maxWidth = '180px';
-                        img.style.height = 'auto';
-                        img.style.borderRadius = '8px';
-                    }
-                }
-            });
-
-            // Footer copyright & terms - complete rebuild of footer-bottom
-            const footerBottom = document.querySelector('.footer-bottom, [class*="footer-bottom"], [class*="copyright"]');
-            if (footerBottom) {
-                footerBottom.style.setProperty('background', '#111', 'important');
-                footerBottom.style.setProperty('padding', '15px 0', 'important');
-                footerBottom.style.setProperty('margin-top', '10px', 'important');
-                const innerContainer = footerBottom.querySelector('.container') || footerBottom;
-                innerContainer.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; color: #999; font-size: 14px;">
-                        <p style="margin: 0;">© All Copyright 2026 by <strong style="color: #fff;">Swahili Marathon</strong></p>
-                        <a href="https://www.emca.tech" target="_blank" style="color: #ddd; text-decoration: none; font-size: 14px;">Powered by <span style="color: #940000; font-weight: 700;">EmCa Technologies</span></a>
-                    </div>
-                `;
-            } else {
-                // Fallback: target text directly
-                document.querySelectorAll('p, span, div').forEach(el => {
-                    if (el.innerText.includes('Copyright') && el.innerText.includes('Solar')) {
-                        el.innerHTML = '© All Copyright 2026 by <strong>Swahili Marathon</strong>';
-                    }
-                });
-                document.querySelectorAll('a').forEach(a => {
-                    const t = a.innerText.trim();
-                    if (t === 'Terms & Condition' || t === 'Terms & Conditions') {
-                        a.innerHTML = 'Powered by <span style="color: #940000; font-weight: 700;">EmCa Technologies</span>';
-                        a.href = 'https://www.emca.tech';
-                        a.target = '_blank';
-                    }
-                    if (t === 'Privacy Policy') a.style.display = 'none';
-
-                    // Extra fix for footer links to ensure instant scroll
-                    if (a.getAttribute('href')?.startsWith('#')) {
-                        a.onclick = (e) => {
-                            const href = a.getAttribute('href');
-                            if (href && href !== '#') {
-                                try {
-                                    const target = document.querySelector(href);
-                                    if (target) {
-                                        e.preventDefault();
-                                        target.scrollIntoView({ behavior: 'smooth' });
-                                        window.history.pushState(null, null, href);
-                                    }
-                                } catch (e) { console.warn("Invalid scroll target:", href); }
-                            }
-                        };
-                    }
-                });
-            }
-        }
-
-        window.addEventListener('load', function () {
-            const targetNode = document.getElementById('root') || document.body;
-
-            function injectCustomHero() {
-                if (document.getElementById('custom-hero-section')) return;
-
-                const heroHTML = `
-                    <section id="custom-hero-section">
-                        <div class="hero-slider-container">
-                            <div class="hero-slide active" style="background-image: url('/img/header/header-1.jpeg');"></div>
-                            <div class="hero-slide" style="background-image: url('/img/header/header-2.jpeg');"></div>
-                            <div class="hero-slide" style="background-image: url('/img/header/header-3.jpeg');"></div>
-                            <div class="hero-slide" style="background-image: url('/img/header/header-4.jpeg');"></div>
-                            <div class="hero-slide" style="background-image: url('/img/header/header-5.jpeg');"></div>
-                        </div>
-                        <div class="hero-overlay"></div>
-                        <div class="hero-container" style="position: relative; z-index: 10;">
-                            <!-- Top spacer to guarantee clearance of floating menu on real devices -->
-                            <div class="hero-mobile-spacer" style="height: 150px; display: none;"></div>
-                            <div class="hero-badges-wrapper" style="display: flex; gap: 15px; flex-wrap: wrap;">
-                                <span class="hero-badge">JOIN THE COMMUNITY</span>
-                                <span class="hero-badge" style="background: #fff; color: #000; box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);">27th June 2026</span>
-                            </div>
-                            <h1>More Than Just A <br>Running Tracker</h1>
-                            <p>Connect with fellow marathoners and share your journey towards peak performance. The ultimate platform for registration and community engagement.</p>
-                            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                                <a href="{{ url("/register") }}" class="hero-cta">
-                                    REGISTER NOW <i class="fa-solid fa-arrow-right"></i>
-                                </a>
-                                <a href="#about" class="hero-cta" style="background: rgba(255,255,255,0.1) !important; color: #fff !important; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3); box-shadow: none;">
-                                    LEARN MORE
-                                </a>
                             </div>
                         </div>
-                    </section>
-                `;
-
-                // Only hide the main slider/hero area to avoid hiding content sections
-                document.querySelectorAll('.slider-area, .tp-slider-area, .hero-section-area').forEach(el => {
-                    if (el.getBoundingClientRect().top < 400) {
-                        el.style.setProperty('display', 'none', 'important');
-                    }
-                });
-
-                // Inject before #root
-                const root = document.getElementById('root');
-                if (root) {
-                    root.insertAdjacentHTML('beforebegin', heroHTML);
-                }
-
-                // Start image slider auto-rotation
-                let currentSlide = 0;
-                const slides = document.querySelectorAll('#custom-hero-section .hero-slide');
-                if (slides.length > 1) {
-                    setInterval(() => {
-                        slides[currentSlide].classList.remove('active');
-                        currentSlide = (currentSlide + 1) % slides.length;
-                        slides[currentSlide].classList.add('active');
-                    }, 5000); // Change every 5 seconds
-                }
-            }
-
-            function injectPartnersSection() {
-                if (document.getElementById('custom-partners-section')) return;
-
-                const partners = [
-                    { img: '/img/logo/nenbo ya taifa.png', name: 'Serikali ya Tanzania' },
-                    { img: '/img/logo/Bakita.jpeg', name: 'BAKITA' },
-                    { img: '/img/logo/Asa.png', name: 'ASA' },
-                    { img: '/img/logo/EmCa.png', name: 'EmCa Techonologies' },
-                ];
-
-                const cards = partners.map(p => `
-                    <div class="partner-card">
-                        <img src="${p.img}" alt="${p.name}">
-                        <span>${p.name}</span>
                     </div>
-                `).join('');
+                </div>
+            </div>
+        </div>
+    </section>
 
-                const section = document.createElement('section');
-                section.id = 'custom-partners-section';
-                section.innerHTML = `
-                    <p class="partners-label">Our Partners & Supporters</p>
-                    <h2>Proudly <span>Supported By</span></h2>
-                    <div class="partners-grid">${cards}</div>
-                `;
+    <!-- Race Category / Stats Section -->
+    <section id="km-stats-section" class="stats-section fix"
+        style="background: #111; padding: 60px 0; position: relative;">
+        <div id="race-category-anchor" style="position: absolute; top: -100px;"></div>
+        <div class="container">
+            <div class="section-title text-center mb-4 wow slideUp">
+                <span class="sub-title" style="color: #ffcc00 !important; font-size: 14px;">Event Highlights</span>
+                <h2 class="text-white" style="font-weight: 800; font-size: 32px;">Race <span
+                        style="color: #ffcc00;">Category</span></h2>
+            </div>
+            <div class="row text-center g-4">
+                <div class="col-xl-2 col-lg-4 col-md-4 col-6 wow slideUp" data-delay=".2">
+                    <div class="stat-item">
+                        <h2 class="text-white" style="font-weight: 800;">1000</h2>
+                        <p
+                            style="color: #ffcc00; text-transform: uppercase; letter-spacing: 1px; font-size: 12px; font-weight: 700;">
+                            2.5 KM Fun Run</p>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-4 col-md-4 col-6 wow slideUp" data-delay=".3">
+                    <div class="stat-item">
+                        <h2 class="text-white" style="font-weight: 800;">1000</h2>
+                        <p
+                            style="color: #ffcc00; text-transform: uppercase; letter-spacing: 1px; font-size: 12px; font-weight: 700;">
+                            5 KM Classic</p>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-4 col-md-4 col-6 wow slideUp" data-delay=".4">
+                    <div class="stat-item">
+                        <h2 class="text-white" style="font-weight: 800;">1250</h2>
+                        <p
+                            style="color: #ffcc00; text-transform: uppercase; letter-spacing: 1px; font-size: 12px; font-weight: 700;">
+                            10 KM Challenge</p>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-4 col-md-4 col-6 wow slideUp" data-delay=".5">
+                    <div class="stat-item">
+                        <h2 class="text-white" style="font-weight: 800;">1250</h2>
+                        <p
+                            style="color: #ffcc00; text-transform: uppercase; letter-spacing: 1px; font-size: 12px; font-weight: 700;">
+                            21 KM Half</p>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-4 col-md-4 col-6 wow slideUp" data-delay=".6">
+                    <div class="stat-item">
+                        <h2 class="text-white" style="font-weight: 800;">500</h2>
+                        <p
+                            style="color: #ffcc00; text-transform: uppercase; letter-spacing: 1px; font-size: 12px; font-weight: 700;">
+                            42 KM Full</p>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-4 col-md-4 col-6 wow slideUp" data-delay=".7">
+                    <div class="stat-item">
+                        <h2 class="text-white" style="font-weight: 800;">5000</h2>
+                        <p
+                            style="color: #ffcc00; text-transform: uppercase; letter-spacing: 1px; font-size: 12px; font-weight: 700;">
+                            Participants</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                // Insert after the hero section, before the rest of page content
-                const hero = document.getElementById('custom-hero-section');
-                if (hero) {
-                    hero.insertAdjacentElement('afterend', section);
-                } else {
-                    const root = document.getElementById('root');
-                    if (root) root.insertAdjacentElement('beforebegin', section);
-                }
-            }
+    <section id="custom-partners-section" class="brand-section section-padding fix"
+        style="background: #f9f9f9; border-top: 1px solid #eee;">
+        <div class="container">
+            <div class="section-title text-center mb-5">
+                <span class="sub-title">Our Partners</span>
+                <h2>Proudly <span>Supported By</span></h2>
+            </div>
+            <div class="swiper brand-slider">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="brand-img"
+                            style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 140px; padding: 10px;">
+                            <img src="/img/logo/nenbo ya taifa.png" alt="Serikali ya Tanzania"
+                                style="max-height: 80px; width: auto; transition: all 0.3s; object-fit: contain;">
+                            <p style="font-size: 13px; margin-top: 15px; color: #666; font-weight: 500;">Serikali ya
+                                Tanzania</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="brand-img"
+                            style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 140px; padding: 10px;">
+                            <img src="/img/logo/Bakita.jpeg" alt="BAKITA"
+                                style="max-height: 80px; width: auto; transition: all 0.3s; object-fit: contain;">
+                            <p style="font-size: 13px; margin-top: 15px; color: #666; font-weight: 500;">BAKITA</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="brand-img"
+                            style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 140px; padding: 10px;">
+                            <img src="/img/logo/Asa.png" alt="ASA"
+                                style="max-height: 80px; width: auto; transition: all 0.3s; object-fit: contain;">
+                            <p style="font-size: 13px; margin-top: 15px; color: #666; font-weight: 500;">ASA</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="brand-img"
+                            style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 140px; padding: 10px;">
+                            <img src="/img/logo/EmCa.png" alt="EmCa Techonologies"
+                                style="max-height: 80px; width: auto; transition: all 0.3s; object-fit: contain;">
+                            <p style="font-size: 13px; margin-top: 15px; color: #666; font-weight: 500;">EmCa
+                                Techonologies</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            function cleanTemplateConflicts() {
-                // Remove (don't just hide) ANY template bar that isn't ours
-                // This stops the duplication dead in its tracks
-                const conflictingSelectors = [
-                    '.header-top', '.header-top-1', '.header-top-2', '.top-bar-area',
-                    '.header-top-area', '.tp-header-top-area', '.top-bar', '.header-top-left',
-                    '.top-left', '.header-top-right', '.top-right', '.header-social'
-                ];
+    <!-- Image Showcase Marquee -->
+    <section class="showcase-section fix" style="background: #fff; border-bottom: 1px solid #eee; padding-top: 60px;">
+        <div class="container">
+            <div class="section-title text-center mb-5">
+                <span class="sub-title">Gallery</span>
+                <h2 style="font-weight: 800;">Latest <span>Events</span></h2>
+            </div>
+        </div>
+        <div class="showcase-marquee">
+            <div class="marquee-content">
+                <div class="marquee-item">
+                    <img src="/img/project/01.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+                <div class="marquee-item">
+                    <img src="/img/project/02.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+                <div class="marquee-item">
+                    <img src="/img/project/03.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+                <div class="marquee-item">
+                    <img src="/img/project/04.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+                <div class="marquee-item">
+                    <img src="/img/project/05.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+                <div class="marquee-item">
+                    <img src="/img/project/06.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+                <div class="marquee-item">
+                    <img src="/img/project/07.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+                <div class="marquee-item">
+                    <img src="/img/project/08.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+                <div class="marquee-item">
+                    <img src="/img/project/09.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+            </div>
+            <!-- Duplicate content for seamless infinite loop -->
+            <div class="marquee-content" aria-hidden="true">
+                <div class="marquee-item">
+                    <img src="/img/project/01.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+                <div class="marquee-item">
+                    <img src="/img/project/02.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+                <div class="marquee-item">
+                    <img src="/img/project/03.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+                <div class="marquee-item">
+                    <img src="/img/project/04.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+                <div class="marquee-item">
+                    <img src="/img/project/05.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+                <div class="marquee-item">
+                    <img src="/img/project/06.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+                <div class="marquee-item">
+                    <img src="/img/project/07.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+                <div class="marquee-item">
+                    <img src="/img/project/08.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+                <div class="marquee-item">
+                    <img src="/img/project/09.jpg" alt="Showcase">
+                    <div class="marquee-overlay">Swahili Marathon 2024</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                conflictingSelectors.forEach(sel => {
-                    document.querySelectorAll(sel).forEach(el => {
-                        // Crucial: Don't remove our OWN custom top bar which shares these keywords sometimes
-                        if (!el.closest('#custom-top-bar') && el.id !== 'custom-top-bar') {
-                            el.remove();
-                        }
-                    });
-                });
-            }
+    <!-- China International Marathon Announcement -->
+    <section id="china-announcement-section" class="offer-section fix section-padding"
+        style="background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('/img/header/header-1.jpeg'); background-size: cover; background-position: center; background-attachment: fixed;">
+        <div class="container">
+            <div class="section-title text-center">
+                <span class="sub-title"
+                    style="color: #ffcc00 !important; font-weight: 700; letter-spacing: 2px;">INTERNATIONAL EVENT</span>
+                <h2 class="text-white" style="font-weight: 900;">China International Marathon</h2>
+                <div style="width: 80px; height: 4px; background: #ffcc00; margin: 20px auto;"></div>
+                <p class="text-white mt-4"
+                    style="font-size: 20px; max-width: 800px; margin: 0 auto; line-height: 1.6; opacity: 0.9;">
+                    Exciting news! We are organizing an international marathon group for our top runners to compete in
+                    China.
+                    Be part of this global experience.
+                </p>
+                <div class="mt-5">
+                    <span class="text-white"
+                        style="font-weight: 700; text-transform: uppercase; background: rgba(255,204,0,0.2); padding: 12px 30px; border-radius: 50px; border: 1px solid #ffcc00;">Coming
+                        Soon - Stay Tuned</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            // ONE-TIME INJECTIONS - Correct Global Scope
-            function performOneTimeInjections() {
-                if (window.oneTimeInjectionsDone) return;
-                
-                // KM Statistics Injection
-                document.querySelectorAll('.about-section, #about, .about-area').forEach(section => {
-                    section.style.paddingBottom = '20px';
-                    if (!document.getElementById('km-stats-section')) {
-                        const statsHtml = `
-                            <div id="km-stats-section" class="stats-section fix" style="background: #111; padding: 40px 0; color: white; width: 100%; position: relative;">
-                                <div id="race-category-anchor" style="position: absolute; top: -100px;"></div>
-                                <div class="container">
-                                    <div class="row text-center">
-                                        <div class="col-xl-2 col-lg-4 col-md-6 mb-4 mb-xl-0">
-                                            <div class="stat-item">
-                                                <i class="fa-solid fa-person-walking" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
-                                                <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">1000</h2>
-                                                <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">2.5 KM Fun Run</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-4 col-md-6 mb-4 mb-xl-0">
-                                            <div class="stat-item">
-                                                <i class="fa-solid fa-person-running" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
-                                                <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">1000</h2>
-                                                <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">5 KM Classic</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-4 col-md-6 mb-4 mb-xl-0">
-                                            <div class="stat-item">
-                                                <i class="fa-solid fa-medal" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
-                                                <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">1250</h2>
-                                                <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">10 KM Challenge</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-4 col-md-6 mb-4 mb-xl-0">
-                                            <div class="stat-item">
-                                                <i class="fa-solid fa-person-running" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
-                                                <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">1250</h2>
-                                                <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">21 KM Half</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-4 col-md-6 mb-4 mb-xl-0">
-                                            <div class="stat-item">
-                                                <i class="fa-solid fa-trophy" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
-                                                <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">500</h2>
-                                                <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">42 KM Full</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-4 col-md-6">
-                                            <div class="stat-item">
-                                                <i class="fa-solid fa-users" style="font-size: 32px; color: #ffcc00; margin-bottom: 15px;"></i>
-                                                <h2 style="font-weight: 800; font-size: 32px; margin: 0; color: white;">5000</h2>
-                                                <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; color: #888; margin-top: 5px;">Total Participants</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+    <!-- Race Fees Section -->
+    <section id="race-pricing-section" class="offer-section fix"
+        style="background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%); padding: 30px 0 60px;">
+        <div class="container">
+            <div class="section-title text-center mb-1">
+                <span class="sub-title">Race Categories</span>
+                <h2 style="font-weight: 800; color: #ffcc00; margin-bottom: 0;">Price</h2>
+            </div>
+
+            <!-- Currency Toggle -->
+            <div class="currency-switch-wrapper wow slideUp">
+                <span class="currency-label TZS active">TZS</span>
+                <label class="switch">
+                    <input type="checkbox" id="currency-toggle">
+                    <span class="switch-slider"></span>
+                </label>
+                <span class="currency-label USD">USD</span>
+            </div>
+
+            <div class="row g-4 justify-content-center mt-0">
+                <div class="col-xl-4 col-lg-6">
+                    <div class="offer-items text-center p-4 wow slideUp" data-delay=".2"
+                        style="border-radius: 20px; background: #fff; box-shadow: 0 15px 40px rgba(0,0,0,0.08); transition: all 0.4s ease; border: 1px solid #eee; border-top: 6px solid #ffcc00;">
+                        <div class="icon"
+                            style="width: 70px; height: 70px; line-height: 70px; margin: 0 auto 25px; background: #ffcc00; color: #000; border-radius: 50%; font-size: 26px; box-shadow: 0 5px 15px rgba(255,204,0,0.3);">
+                            <i class="fa-solid fa-person-running"></i>
+                        </div>
+                        <h4 style="font-weight: 800; margin-bottom: 12px; font-size: 22px; color: #111;">Adult Category
+                        </h4>
+                        <p style="color: #666; margin-bottom: 25px; font-size: 15px; line-height: 1.6;">Full access to
+                            the main event,
+                            race kit, and participation medal.</p>
+                        <h2 class="price-display"
+                            style="font-weight: 900; color: #111; margin-bottom: 30px; font-size: 32px;"
+                            data-tzs="40,000" data-usd="16.29">
+                            <span class="price-value">40,000</span> <small class="currency-code"
+                                style="font-size: 16px; color: #ffcc00; font-weight: 700; margin-left: 5px;">TZS</small>
+                        </h2>
+                        <a href="/register" class="theme-btn"
+                            style="width: 100%; padding: 14px 30px; border-radius: 10px; font-weight: 700;">Register
+                            Online
+                            <i class="fa-solid fa-arrow-right-long" style="margin-left: 10px;"></i></a>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6">
+                    <div class="offer-items text-center p-4 wow slideUp" data-delay=".3"
+                        style="border-radius: 20px; background: #fff; box-shadow: 0 15px 40px rgba(0,0,0,0.08); transition: all 0.4s ease; border: 1px solid #eee; border-top: 6px solid #ff8c42;">
+                        <div class="icon"
+                            style="width: 70px; height: 70px; line-height: 70px; margin: 0 auto 25px; background: #f8f9fa; color: #333; border-radius: 50%; font-size: 26px; border: 1px solid #eee;">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <h4 style="font-weight: 800; margin-bottom: 12px; font-size: 22px; color: #111;">Student
+                            Category</h4>
+                        <p style="color: #666; margin-bottom: 25px; font-size: 15px; line-height: 1.6;">Special
+                            discounted rate for
+                            students with valid identification.</p>
+                        <h2 class="price-display"
+                            style="font-weight: 900; color: #111; margin-bottom: 30px; font-size: 32px;"
+                            data-tzs="20,000" data-usd="8.15">
+                            <span class="price-value">20,000</span> <small class="currency-code"
+                                style="font-size: 16px; color: #ff8c42; font-weight: 700; margin-left: 5px;">TZS</small>
+                        </h2>
+                        <a href="/register" class="theme-btn style-2"
+                            style="width: 100%; padding: 14px 30px; border-radius: 10px; font-weight: 700;">Register
+                            Online <i class="fa-solid fa-arrow-right-long" style="margin-left: 10px;"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Footer Section -->
+    <footer class="footer-area fix">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-xl-4 col-lg-6 col-md-6 wow slideUp" data-delay=".2">
+                        <div class="footer-widget footer-about">
+                            <div class="footer-logo mb-4">
+                                <img src="/img/logo/swahili Marathon.jpeg" alt="Logo"
+                                    style="max-height: 70px; border-radius: 8px;">
                             </div>
-                        `;
-                        section.insertAdjacentHTML('afterend', statsHtml);
-                    }
-                });
-
-                // Latest Projects Injection
-                if (!document.getElementById('latest-projects-section')) {
-                    const statsSection = document.getElementById('km-stats-section');
-                    if (statsSection) {
-                        const projectNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-                        const allProjects = [...projectNumbers, ...projectNumbers];
-                        const projectsHtml = `
-                            <div id="latest-projects-section" class="project-section section-padding" style="background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('/img/header/header-2.jpeg'); background-size: cover; background-position: center; background-attachment: fixed; padding: 80px 0; color: white; overflow: hidden; position: relative;">
-                                <div class="container-fluid p-0" style="position: relative; z-index: 3;">
-                                    <div class="section-title text-center mb-4">
-                                        <span class="sub-title" style="color: #ffcc00; text-transform: uppercase; font-weight: 700; letter-spacing: 2px; font-size: 14px;">Portfolio</span>
-                                        <h2 style="color: white; font-weight: 800; font-size: 32px; margin-top: 5px;">LATEST PROJECT</h2>
-                                    </div>
-                                    <div class="project-marquee-container" style="overflow: hidden; padding: 20px 0; position: relative;">
-                                        <div class="project-marquee-inner" style="display: flex; gap: 20px; width: max-content; animation: scrollMarquee 40s linear infinite;">
-                                            ${allProjects.map((num, index) => `
-                                                <div class="project-marquee-item" style="flex: 0 0 350px;">
-                                                    <div class="project-item" style="position: relative; overflow: hidden; border-radius: 15px; background: rgba(17, 17, 17, 0.4); backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1);">
-                                                        <div class="project-image"><img src="/img/project/0${num}.jpg" alt="Project ${num}" style="width: 100%; height: 350px; object-fit: cover; transition: transform 0.5s; display: block;"></div>
-                                                        <div class="project-content" style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 25px; background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); opacity: 0; transition: 0.4s; transform: translateY(20px);">
-                                                            <p style="color: #ffcc00; margin-bottom: 5px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Marathon Event</p>
-                                                            <h4 style="color: white; font-size: 18px; font-weight: 700;">Swahili Marathon 2024</h4>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            `).join('')}
-                                        </div>
-                                    </div>
-                                </div>
+                            <p>The Swahili Marathon is a premier athletic event celebrating culture, health, and
+                                endurance. Join us for an unforgettable experience through scenic routes of Tanzania.
+                            </p>
+                            <div class="footer-social">
+                                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
                             </div>
-                        `;
-                        statsSection.insertAdjacentHTML('afterend', projectsHtml);
-                    }
-                }
-                
-                window.oneTimeInjectionsDone = true;
-            }
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-6 col-md-6 wow slideUp" data-delay=".4">
+                        <div class="footer-widget footer-links">
+                            <h4>Quick Links</h4>
+                            <ul>
+                                <li><a href="{{ url('/') }}"><i class="fa-solid fa-chevron-right"></i> Home</a></li>
+                                <li><a href="#marathon-background-section"><i class="fa-solid fa-chevron-right"></i>
+                                        About Us</a></li>
+                                <li><a href="#race-category-anchor"><i class="fa-solid fa-chevron-right"></i> Race
+                                        Categories</a></li>
+                                <li><a href="/register"><i class="fa-solid fa-chevron-right"></i> Register Now</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 wow slideUp" data-delay=".6">
+                        <div class="footer-widget footer-links">
+                            <h4>Race Categories</h4>
+                            <ul>
+                                <li><a href="#"><i class="fa-solid fa-chevron-right"></i> 2.5 KM Fun Run</a></li>
+                                <li><a href="#"><i class="fa-solid fa-chevron-right"></i> 5 KM Classic</a></li>
+                                <li><a href="#"><i class="fa-solid fa-chevron-right"></i> 10 KM Challenge</a></li>
+                                <li><a href="#"><i class="fa-solid fa-chevron-right"></i> 21 KM Half Marathon</a></li>
+                                <li><a href="#"><i class="fa-solid fa-chevron-right"></i> 42 KM Full Marathon</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 wow slideUp" data-delay=".8">
+                        <div class="footer-widget footer-contact">
+                            <h4>Contact Us</h4>
+                            <ul class="footer-contact-info">
+                                <li>
+                                    <i class="fa-solid fa-phone"></i>
+                                    <div>+255 755 165 284<br>+255 757 979 611</div>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-envelope"></i>
+                                    <a href="mailto:info@swahilimarathon.com"
+                                        style="color: #aaa;">info@swahilimarathon.com</a>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <div>Dar es Salaam, Tanzania</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-content">
+                    <p>© 2026 <strong>Swahili Marathon</strong>. All Rights Reserved.</p>
+                    <div class="powered-by">
+                        Powered by <a href="https://emca.tech" target="_blank">EmCa Techonologies</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-            const safeUpdate = () => {
-                if (window.safeUpdateRunning) return;
-                window.safeUpdateRunning = true;
-                try {
-                    cleanTemplateConflicts();
-                    injectCustomHero();
-                    injectPartnersSection();
-                    injectTopInfoBar();
-                    injectCustomHeader();
-                    performOneTimeInjections();
-                    updateBranding();
-                } catch (e) {
-                    console.error("Updates failed:", e);
-                } finally {
-                    window.safeUpdateRunning = false;
-                }
+    <div id="back-to-top"><i class="fa-solid fa-arrow-up"></i></div>
+
+    <script>
+        // MASTER GUARD: Prevent multiple script executions or overlapping intervals
+        (function () {
+            if (window.SM_MASTER_INIT_DONE) {
+                console.warn("Master initialization already running, skipping script execution.");
+                return;
+            }
+            window.SM_MASTER_INIT_DONE = true;
+            console.log("Starting Marathon Master Guard...");
+
+            // State management
+            const state = {
+                heroInjected: false,
+                partnersInjected: false,
+                topBarInjected: false,
+                headerInjected: false,
+                oneTimeDone: false,
+                updateRunning: false
             };
 
-            // Run ONCE on load, then strictly interval
-            safeUpdate();
-            setInterval(safeUpdate, 3000);
-
-            // Global Nuke for any remaining #1d8f2c green
-            function globalColorNuke() {
-                const isTargetGreen = (str) => {
-                    return str && (
-                        str.includes('29, 143, 44') ||
-                        str.includes('1d8f2c') ||
-                        str.includes('1D8F2C')
-                    );
+            function updateBranding() {
+                const replaceText = (node) => {
+                    if (node.nodeType === 3) {
+                        const oldText = node.nodeValue;
+                        const newText = oldText
+                            .replace(/Marathon App/gi, 'Swahili Marathon')
+                            .replace(/SMRMS/gi, 'Swahili Marathon')
+                            .replace(/info@example\.com|example\.com/gi, 'info@swahilimarathon.com')
+                            .replace(/123-456-7890|000-000-0000/gi, '+255 755 165 284 | +255 757 979 611')
+                            .replace(/#1d8f2c/gi, '#ffffff')
+                            .replace(/\bLogin\b/g, 'Register');
+                        if (oldText !== newText) node.nodeValue = newText;
+                    } else {
+                        node.childNodes.forEach(replaceText);
+                    }
                 };
 
-                document.querySelectorAll('*').forEach(el => {
-                    const style = window.getComputedStyle(el);
+                document.querySelectorAll('h1, h2, h3, h4, h5, p, span, a').forEach(node => {
+                    if (node.id === 'custom-top-bar' || node.closest('#custom-top-bar')) return;
+                    if (node.childNodes.length > 0) replaceText(node);
+                });
 
-                    // Kill background green
-                    if (isTargetGreen(style.backgroundColor) || isTargetGreen(el.style.backgroundColor)) {
-                        el.style.setProperty('background-color', '#ffffff', 'important');
-                        el.style.setProperty('background', '#ffffff', 'important');
-                        el.style.setProperty('color', '#111111', 'important');
-                    }
-
-                    // Kill text green
-                    if (isTargetGreen(style.color) || isTargetGreen(el.style.color)) {
-                        el.style.setProperty('color', '#ffffff', 'important');
-                    }
-
-                    // Also catch the #3fab30 green just in case
-                    if (style.backgroundColor.includes('63, 171, 48') || el.style.backgroundColor.includes('#3fab30')) {
-                        el.style.setProperty('background-color', '#ffcc00', 'important');
-                        el.style.setProperty('color', '#000000', 'important');
-                    }
-
-                    // KILL LOGIN TEXT persistently
-                    if (el.innerText && el.innerText.includes('Login')) {
-                        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
-                        let node;
-                        while (node = walker.nextNode()) {
-                            if (node.nodeValue.includes('Login')) {
-                                node.nodeValue = node.nodeValue.replace(/Login/g, 'Register');
-                            }
-                        }
-                    }
-
-                    // Force Visibility for Header Button
-                    const isHeaderButton = el.classList.contains('header-button') ||
-                        (el.className && typeof el.className === 'string' && el.className.includes('header-button')) ||
-                        (el.innerText && el.innerText.trim() === 'Register' && el.tagName === 'A');
-
-                    if (isHeaderButton) {
-                        el.style.setProperty('display', 'inline-flex', 'important');
-                        el.style.setProperty('visibility', 'visible', 'important');
-                        el.style.setProperty('opacity', '1', 'important');
-                        el.style.setProperty('order', '99', 'important');
-
-                        // Force parent to be a flex row container
-                        let current = el.parentElement;
-                        let depth = 0;
-                        while (current && depth < 3) {
-                            if (current.tagName === 'DIV' || current.tagName === 'HEADER') {
-                                current.style.setProperty('display', 'flex', 'important');
-                                current.style.setProperty('flex-direction', 'row', 'important');
-                                current.style.setProperty('flex-wrap', 'nowrap', 'important');
-                                current.style.setProperty('align-items', 'center', 'important');
-                            }
-                            current = current.parentElement;
-                            depth++;
-                        }
+                // Update Logo
+                document.querySelectorAll('.logo img, .header-logo img, .navbar-brand img, .footer-widget img').forEach(img => {
+                    if (!img.src.includes('swahili Marathon.jpeg') && !img.closest('#custom-floating-header')) {
+                        img.src = '/img/logo/swahili Marathon.jpeg';
+                        img.style.maxHeight = '60px';
+                        img.style.borderRadius = '5px';
                     }
                 });
             }
 
-            // Run immediately and then periodic
-            // Disable heavy global color nuke as it might be breaking React performance
-            // globalColorNuke();
-            // setInterval(globalColorNuke, 2000);
-
-            // Disable destructive loops that might be crashing React
-            // killLogin(); 
-            // setInterval(killLogin, 500);
-
-            // INJECT TOP INFO BAR
-            function injectTopInfoBar() {
-                if (document.getElementById('custom-top-bar')) return;
-                document.body.classList.add('has-custom-header');
-                const bar = document.createElement('div');
-                bar.id = 'custom-top-bar';
-                bar.innerHTML = `
-                    <div class="top-bar-left">
-                        <a href="tel:+255755165284">
-                            <i class="fa-solid fa-phone-volume"></i> +255 755 165 284
-                        </a>
-                        <div class="top-bar-divider"></div>
-                        <a href="tel:+255757979611">
-                            <i class="fa-solid fa-phone-volume"></i> +255 757 979 611
-                        </a>
-                        <div class="top-bar-divider"></div>
-                        <a href="mailto:info@swahilimarathon.com" class="email-link">
-                            <i class="fa-solid fa-envelope"></i> info@swahilimarathon.com
-                        </a>
-                    </div>
-                    <div class="top-bar-right">
-                        <a href="https://www.facebook.com" target="_blank" title="Facebook">
-                            <i class="fa-brands fa-facebook-f"></i>
-                        </a>
-                        <a href="https://www.twitter.com" target="_blank" title="Twitter / X">
-                            <i class="fa-brands fa-x-twitter"></i>
-                        </a>
-                        <a href="https://www.instagram.com" target="_blank" title="Instagram">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-                        <a href="https://www.youtube.com" target="_blank" title="YouTube">
-                            <i class="fa-brands fa-youtube"></i>
-                        </a>
-                    </div>
-                `;
-                document.body.insertAdjacentElement('afterbegin', bar);
+            function injectPartners() {
+                if (typeof Swiper !== 'undefined' && !window.brandSwiperInit) {
+                    new Swiper('.brand-slider', {
+                        slidesPerView: 2,
+                        spaceBetween: 30,
+                        loop: true,
+                        autoplay: { delay: 3000 },
+                        breakpoints: {
+                            640: { slidesPerView: 2 },
+                            768: { slidesPerView: 3 },
+                            1024: { slidesPerView: 4 },
+                        }
+                    });
+                    window.brandSwiperInit = true;
+                }
             }
 
-            // INJECT NEW FLOATING HEADER
-            function injectCustomHeader() {
-                if (document.getElementById('custom-floating-header')) return;
-
-                const header = document.createElement('div');
-                header.id = 'custom-floating-header';
-                header.innerHTML = `
-                    <div class="pill-inner">
-                        <div class="logo-box-pill">
-                            <a href="{{ url('/') }}"><img src="/img/logo/swahili Marathon.jpeg" alt="Swahili Marathon Logo" style="height:48px; width:auto; border-radius:6px;"></a>
-                        </div>
-                        <ul class="nav-links-pill">
-                            <li><a href="{{ url('/') }}">Home</a></li>
-                            <li><a href="#about">About</a></li>
-                            <li><a href="#race-category-anchor">Race Category</a></li>
-                            <li><a href="#contact">Contact</a></li>
-                        </ul>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <a href="{{ url('/register') }}" class="register-btn">
-                                Register <i class="fa-solid fa-arrow-right"></i>
-                            </a>
-                            <button id="mobile-menu-toggle">
-                                <i class="fa-solid fa-bars"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-
-                // INJECT MOBILE SIDE MENU
-                const mobileMenuHTML = `
-                    <div id="mobile-menu-overlay"></div>
-                    <div id="mobile-side-menu">
-                        <div class="mobile-header-close">
-                            <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
-                        </div>
-                        <ul class="mobile-nav-list">
-                            <li><a href="{{ url('/') }}"><i class="fa-solid fa-house"></i> Home</a></li>
-                            <li><a href="#about"><i class="fa-solid fa-circle-info"></i> About</a></li>
-                            <li><a href="#km-stats-section"><i class="fa-solid fa-person-running"></i> Race Category</a></li>
-                            <li><a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a></li>
-                        </ul>
-                    </div>
-                `;
-
-                document.body.insertAdjacentHTML('beforeend', mobileMenuHTML);
-                document.body.appendChild(header);
-
-                // Handle Mobile Menu Logic
-                const toggle = header.querySelector('#mobile-menu-toggle');
+            function setupHeaderLogic() {
+                const header = document.getElementById('custom-floating-header');
+                const toggle = document.getElementById('mobile-menu-toggle');
                 const sideMenu = document.getElementById('mobile-side-menu');
                 const overlay = document.getElementById('mobile-menu-overlay');
-                const closeBtn = sideMenu.querySelector('.close-btn');
+                const closeBtn = sideMenu ? sideMenu.querySelector('.close-btn') : null;
 
                 const toggleMenu = (open) => {
-                    sideMenu.classList.toggle('active', open);
-                    overlay.classList.toggle('active', open);
+                    if (sideMenu) sideMenu.classList.toggle('active', open);
+                    if (overlay) overlay.classList.toggle('active', open);
                     document.body.style.overflow = open ? 'hidden' : '';
                 };
 
                 if (toggle) toggle.onclick = () => toggleMenu(true);
                 if (closeBtn) closeBtn.onclick = () => toggleMenu(false);
                 if (overlay) overlay.onclick = () => toggleMenu(false);
+                if (sideMenu) {
+                    sideMenu.querySelectorAll('a').forEach(link => link.onclick = () => toggleMenu(false));
+                }
 
-                // Close menu when clicking links
-                sideMenu.querySelectorAll('a').forEach(link => {
-                    link.onclick = () => toggleMenu(false);
+                window.addEventListener('scroll', () => {
+                    if (!header) return;
+                    if (window.scrollY > 50) {
+                        header.style.background = 'rgba(5, 5, 5, 0.97)';
+                        header.style.width = '94%';
+                    } else {
+                        header.style.background = 'rgba(10, 10, 10, 0.9)';
+                        header.style.width = '92%';
+                    }
                 });
+            }
 
-                // Show after injection
-                setTimeout(() => {
-                    header.style.display = 'block';
-                }, 100);
+            function setupHeroSlider() {
+                if (typeof Swiper !== 'undefined' && !window.heroSwiperInit) {
+                    new Swiper('#custom-hero-slider .hero-slider', {
+                        loop: true,
+                        autoplay: { delay: 4000, disableOnInteraction: false },
+                        pagination: { el: '.swiper-pagination', clickable: true },
+                        speed: 1000,
+                        slidesPerView: 1,
+                        watchSlidesProgress: true
+                    });
+                    window.heroSwiperInit = true;
+                }
+            }
 
-                //Smooth scroll for internal links
-                header.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                    anchor.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        const targetId = this.getAttribute('href');
-                        const target = document.querySelector(targetId);
-                        if (target) {
-                            target.scrollIntoView({ behavior: 'smooth' });
+            function setupBackToTop() {
+                const btt = document.getElementById('back-to-top');
+                if (btt) {
+                    btt.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.addEventListener('scroll', () => {
+                        if (window.scrollY > 400) btt.classList.add('visible');
+                        else btt.classList.remove('visible');
+                    });
+                }
+            }
+
+
+            function setupCurrencyToggle() {
+                const toggle = document.getElementById('currency-toggle');
+                const tzsLabel = document.querySelector('.currency-label.TZS');
+                const usdLabel = document.querySelector('.currency-label.USD');
+                if (!toggle) return;
+
+                // Fetch live exchange rate from API
+                fetch('/api/exchange-rate')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.rate) {
+                            const rate = data.rate;
+                            document.querySelectorAll('.price-display').forEach(display => {
+                                const tzsValue = parseFloat(display.dataset.tzs.replace(/,/g, ''));
+                                if (!isNaN(tzsValue)) {
+                                    // Calculate USD with 2 decimal places for precision as per user request
+                                    const usdValue = (tzsValue / rate).toFixed(2);
+                                    display.dataset.usd = usdValue;
+                                }
+                            });
                         }
+                    })
+                    .catch(err => console.error("Currency API Error:", err));
+
+                toggle.addEventListener('change', function () {
+                    const isUSD = this.checked;
+                    document.querySelectorAll('.price-display').forEach(display => {
+                        const priceValue = display.querySelector('.price-value');
+                        const currencyCode = display.querySelector('.currency-code');
+                        if (isUSD) {
+                            priceValue.textContent = display.dataset.usd;
+                            currencyCode.textContent = 'USD';
+                        } else {
+                            priceValue.textContent = display.dataset.tzs;
+                            currencyCode.textContent = 'TZS';
+                        }
+                    });
+
+                    if (isUSD) {
+                        tzsLabel.classList.remove('active');
+                        usdLabel.classList.add('active');
+                    } else {
+                        tzsLabel.classList.add('active');
+                        usdLabel.classList.remove('active');
+                    }
+                });
+            }
+
+
+            function cleanTemplateConflicts() {
+                const conflictingSelectors = ['.header-top', '.header-top-1', '.header-top-2', '.top-bar-area', '.header-top-area', '.tp-header-top-area', '.top-bar', '.header-top-left', '.top-left', '.header-top-right', '.top-right', '.header-social'];
+                conflictingSelectors.forEach(sel => {
+                    document.querySelectorAll(sel).forEach(el => {
+                        if (!el.closest('#custom-top-bar') && el.id !== 'custom-top-bar') el.remove();
                     });
                 });
             }
 
-            // injectTopInfoBar();
-            // injectCustomHeader();
-
-            // BACK TO TOP BUTTON INJECTION
-            if (!document.getElementById('back-to-top')) {
-                const btt = document.createElement('div');
-                btt.id = 'back-to-top';
-                btt.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
-                document.body.appendChild(btt);
-
-                btt.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-
-                window.addEventListener('scroll', () => {
-                    if (window.scrollY > 400) btt.classList.add('visible');
-                    else btt.classList.remove('visible');
-                });
-            }
-
-            // MOBILE REFINEMENT: Ensure section padding is consistent
-            if (window.innerWidth < 768) {
-                document.querySelectorAll('section, .area, [class*="-area"]').forEach(section => {
-                    const style = window.getComputedStyle(section);
-                    if (parseInt(style.paddingTop) > 60) {
-                        section.style.setProperty('padding-top', '50px', 'important');
-                        section.style.setProperty('padding-bottom', '50px', 'important');
-                    }
-                });
-            }
-
-            // Ensure both survive React updates
-            // Handled via safeUpdate
-            // setInterval(() => { injectTopInfoBar(); injectCustomHeader(); }, 2000);
-
-            // Handle scroll effect — nav always stays below the top info bar
-            const TOP_BAR_HEIGHT = 42; // height of #custom-top-bar
-            const NAV_GAP = 8;         // breathing room between top bar and pill
-            const NAV_TOP_DEFAULT = TOP_BAR_HEIGHT + NAV_GAP; // 50px
-
-            window.addEventListener('scroll', () => {
-                const header = document.getElementById('custom-floating-header');
-                if (header) {
-                    if (window.scrollY > 50) {
-                        // Scrolled down: slightly darker + full width, but STILL below top bar
-                        header.style.background = 'rgba(5, 5, 5, 0.97)';
-                        header.style.top = NAV_TOP_DEFAULT + 'px';
-                        header.style.width = '94%';
-                        header.style.boxShadow = '0 8px 32px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,204,0,0.2)';
-                    } else {
-                        // Near top: subtle glass style
-                        header.style.background = 'rgba(10, 10, 10, 0.9)';
-                        header.style.top = NAV_TOP_DEFAULT + 'px';
-                        header.style.width = '92%';
-                        header.style.boxShadow = '0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,204,0,0.15)';
-                    }
+            const safeLoop = () => {
+                if (state.updateRunning) return;
+                state.updateRunning = true;
+                try {
+                    setupHeroSlider();
+                    injectPartners();
+                    setupHeaderLogic();
+                    setupBackToTop();
+                    setupCurrencyToggle();
+                } catch (e) {
+                    console.error("Marathon Error:", e);
+                } finally {
+                    state.updateRunning = false;
+                    setTimeout(safeLoop, 3000);
                 }
-            });
-        });
+            };
+
+            if (document.readyState === 'loading') {
+                window.addEventListener('load', safeLoop);
+            } else {
+                safeLoop();
+            }
+
+            setInterval(() => {
+                const bars = document.querySelectorAll('#custom-top-bar');
+                if (bars.length > 1) {
+                    for (let i = 1; i < bars.length; i++) bars[i].remove();
+                }
+            }, 500);
+        })();
     </script>
 </body>
 
