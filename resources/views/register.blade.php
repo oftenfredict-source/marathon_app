@@ -974,11 +974,14 @@
                 if (select) {
                     select.innerHTML = '<option value="">Select Distance</option>';
                     categories.forEach(cat => {
-                        const isFull = cat.registrations_count >= cat.registration_limit;
+                        const count = Number(cat.registrations_count || 0);
+                        const limit = Number(cat.registration_limit || 0);
+                        const isFull = count >= limit;
+                        
                         const option = document.createElement('option');
                         option.value = cat.id;
                         option.disabled = isFull;
-                        option.textContent = `${cat.name} (${cat.registrations_count}/${cat.registration_limit})${isFull ? ' [FULL]' : ''}`;
+                        option.textContent = `${cat.name} (${count}/${limit})${isFull ? ' [FULL]' : ''}`;
                         select.appendChild(option);
                     });
 

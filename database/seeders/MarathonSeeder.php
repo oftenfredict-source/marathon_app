@@ -28,8 +28,11 @@ class MarathonSeeder extends Seeder
             ['name' => '2.5km Family Run', 'distance' => 2.50, 'price_local' => 40000, 'price_international' => 15, 'registration_limit' => 1000],
         ];
 
-        foreach ($categories as $category) {
-            $marathon->categories()->create($category);
+        foreach ($categories as $categoryData) {
+            \App\Models\RaceCategory::updateOrCreate(
+                ['marathon_id' => $marathon->id, 'name' => $categoryData['name']],
+                $categoryData
+            );
         }
     }
 }
