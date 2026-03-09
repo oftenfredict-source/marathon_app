@@ -292,20 +292,19 @@
                 </div>
             @endif
 
-            <form action="{{ url('/login') }}" method="POST"
-                onsubmit="document.getElementById('loading-overlay').style.display='flex'">
+            <form id="login-form" action="{{ url('/login') }}" method="POST" onsubmit="return handleLogin(event)">
                 @csrf
                 <div class="form-group">
                     <label class="label_field">Email Address</label>
                     <i class="fas fa-envelope"></i>
-                    <input type="email" name="email" class="form-control" value="{{ old('email') }}" required
+                    <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required
                         autofocus />
                 </div>
 
                 <div class="form-group">
                     <label class="label_field">Password</label>
                     <i class="fas fa-lock"></i>
-                    <input type="password" name="password" class="form-control" required />
+                    <input type="password" name="password" id="password" class="form-control" required />
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -317,6 +316,48 @@
 
                 <button type="submit" class="btn btn-marathon">Sign In</button>
             </form>
+
+            <script>
+                async function handleLogin(event) {
+                    event.preventDefault();
+                    const form = event.target;
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+                    const loadingOverlay = document.getElementById('loading-overlay');
+
+                    loadingOverlay.style.display = 'flex';
+
+                    try {
+                        // 1. Fetch API Token for Dashboard
+                        const response = await fetch("{{ url('/api/login') }}", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                email,
+                                password
+                            })
+                        });
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.access_token) {
+                                // Store token for API calls in dashboard
+                                localStorage.setItem('auth_token', data.access_token);
+                            }
+                        }
+                    } catch (error) {
+                        console.error('API Sync Error:', error);
+                    }
+
+                    // 2. Proceed with standard session login
+                    form.submit();
+                    return false;
+                }
+            </script>
 
             <div class="links-section">
                 <p class="mb-0">Don't have an account? <a href="{{ url('/register') }}">Register Now</a></p>
