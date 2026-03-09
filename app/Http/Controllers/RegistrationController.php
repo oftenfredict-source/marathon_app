@@ -79,12 +79,20 @@ class RegistrationController extends Controller
         ]);
 
         if ($validator->fails()) {
-            \Log::warning('Registration validation failed', ['errors' => $validator->errors()]);
-            return response()->json(['errors' => $validator->errors()], 422);
+            \Log::warning('Registration validation failed', ['errors' => $validator->errors()->all()]);
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
         }
 
         // Check Capacity
         $category = RaceCategory::find($request->category_id);
+        if (!$category) {
+            \Log::error('Race category not found', ['category_id' => $request->category_id]);
+            return response()->json(['message' => 'Selected race distance is not available.'], 404);
+        }
+
         $currentCount = Registration::where('category_id', $request->category_id)->count();
 
         if ($currentCount >= $category->registration_limit) {
@@ -94,6 +102,7 @@ class RegistrationController extends Controller
 
         try {
             DB::beginTransaction();
+            \Log::info('Registration transaction started');
 
             // Find or create runner
             // Match by email+name if email provided, otherwise by phone+name
@@ -110,11 +119,14 @@ class RegistrationController extends Controller
                     'last_name' => $request->last_name,
                 ];
             }
+
+            \Log::info('Attempting Runner updateOrCreate', ['match' => $matchFields]);
+
             $runner = Runner::updateOrCreate(
                 $matchFields,
                 $request->only(['email', 'phone', 'nationality', 'region', 'country', 'passport_number', 't_shirt_size', 'gender'])
             );
-            \Log::info('Runner updated/created', ['runner_id' => $runner->id]);
+            \Log::info('Runner processed', ['runner_id' => $runner->id]);
 
             // Create Registration (WITHOUT bib number - assigned after payment)
             $registration = Registration::create([
@@ -129,6 +141,7 @@ class RegistrationController extends Controller
             \Log::info('Registration created', ['registration_id' => $registration->id]);
 
             DB::commit();
+            \Log::info('Registration transaction committed successfully');
 
             // Calculate Amount based on Nationality and Type
             $amount = 0;
@@ -153,6 +166,7 @@ class RegistrationController extends Controller
 
             // Send SMS notification
             try {
+                \Log::info('Preparing SMS for runner', ['phone' => $runner->phone]);
                 $smsService = app(\App\Services\SmsService::class);
 
                 // SMS 1: Payment Details
@@ -183,9 +197,10 @@ class RegistrationController extends Controller
                     'registration_instructions',
                     $runner->id
                 );
+                \Log::info('Registration SMS batch sent successfully');
 
             } catch (\Exception $e) {
-                \Log::error('SMS sending failed', ['error' => $e->getMessage()]);
+                \Log::error('SMS sending failed during registration', ['error' => $e->getMessage()]);
                 // Don't fail the registration if SMS fails
             }
 
@@ -202,8 +217,11 @@ class RegistrationController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            \Log::error('Registration error occurred', ['exception' => $e->getMessage()]);
-            return response()->json(['message' => 'Registration failed: ' . $e->getMessage()], 500);
+            \Log::error('Registration DB error occurred', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return response()->json(['message' => 'Database error: ' . $e->getMessage()], 500);
         }
     }
 

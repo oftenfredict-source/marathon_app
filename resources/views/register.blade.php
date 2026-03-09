@@ -1077,7 +1077,8 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                     },
                     body: JSON.stringify(data)
                 });
@@ -1085,6 +1086,10 @@
                 const result = await response.json();
 
                 if (!response.ok) {
+                    if (response.status === 422 && result.errors) {
+                        const errorMessages = Object.values(result.errors).flat().join('<br>');
+                        throw new Error(errorMessages);
+                    }
                     throw new Error(result.message || 'Registration failed');
                 }
 
