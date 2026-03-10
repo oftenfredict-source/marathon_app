@@ -280,10 +280,11 @@
         <div class="glass-card">
             <div class="logo-section">
                 <div class="text-center mb-3">
-                    <img src="{{ asset('img/logo/asa-logo.png') }}" alt="SMRMS Logo" style="max-width: 140px;">
+                    <img src="{{ asset('img/logo/swahili Marathon.jpeg') }}" alt="Swahili Marathon Logo"
+                        style="max-width: 140px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
                 </div>
-                <h2>SMRMS</h2>
-                <p>Swahili Marathon Management System</p>
+                <h2 style="color: #ffcc00;">Swahili Marathon</h2>
+                <p>Management System</p>
             </div>
 
             @if($errors->any())
