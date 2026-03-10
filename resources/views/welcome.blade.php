@@ -242,6 +242,12 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
+        @media (max-width: 767px) {
+            .marquee-item {
+                height: 180px;
+            }
+        }
+
         .marquee-item img {
             height: 100%;
             width: auto;
@@ -699,7 +705,9 @@
 
             #custom-top-bar .top-bar-left .email-link,
             #custom-top-bar .top-bar-divider,
-            #custom-top-bar .top-bar-right {
+            #custom-top-bar .top-bar-right,
+            #custom-top-bar .top-bar-left a:nth-child(3) {
+                /* Hide second phone */
                 display: none !important;
             }
 
@@ -710,7 +718,7 @@
             }
 
             #custom-top-bar .top-bar-left a {
-                font-size: 11.5px;
+                font-size: 11px;
                 font-weight: 600;
             }
         }
@@ -810,7 +818,7 @@
         @media (max-width: 991px) {
             #custom-floating-header {
                 width: 95%;
-                padding: 8px 10px 8px 16px;
+                padding: 6px 10px 6px 16px;
                 top: 48px;
                 border-radius: 20px;
             }
@@ -820,7 +828,7 @@
             }
 
             #custom-floating-header .logo-box-pill img {
-                height: 36px;
+                height: 32px;
             }
 
             #mobile-menu-toggle {
@@ -828,9 +836,9 @@
             }
 
             #custom-floating-header .register-btn {
-                padding: 8px 18px;
-                font-size: 11px;
-                margin-right: 10px;
+                padding: 7px 14px;
+                font-size: 10px;
+                margin-right: 5px;
             }
         }
 
@@ -1126,7 +1134,15 @@
         }
 
         /* Responsive Tweaks */
+        .hero-slide-padding {
+            padding: 220px 0 450px;
+        }
+
         @media (max-width: 991px) {
+            .hero-slide-padding {
+                padding: 140px 0 160px;
+            }
+
             #custom-hero-section {
                 height: 80vh;
                 text-align: center;
@@ -1138,11 +1154,13 @@
                 align-items: center;
             }
 
-            #custom-hero-section h1 {
-                font-size: 3.5rem !important;
+            #custom-hero-section h1,
+            #custom-hero-slider h1 {
+                font-size: 3.2rem !important;
             }
 
-            #custom-hero-section p {
+            #custom-hero-section p,
+            #custom-hero-slider p {
                 font-size: 1.1rem !important;
                 margin-bottom: 30px;
             }
@@ -1475,6 +1493,14 @@
         }
 
         @media (max-width: 991px) {
+            .section-padding {
+                padding: 60px 0 !important;
+            }
+
+            .about-content p {
+                font-size: 16px !important;
+                line-height: 1.6 !important;
+            }
 
             .footer-section .col-lg-3,
             .footer-area .col-lg-3,
@@ -1502,6 +1528,48 @@
                 display: flex !important;
                 justify-content: center !important;
                 text-align: center !important;
+            }
+        }
+
+        @media (max-width: 575px) {
+            #custom-hero-slider h1 {
+                font-size: 2.2rem !important;
+            }
+
+            #custom-hero-slider p {
+                font-size: 0.95rem !important;
+            }
+
+            .hero-btns {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+
+            .hero-btns .theme-btn {
+                width: 100%;
+                margin: 0 !important;
+            }
+
+            .stat-item h2 {
+                font-size: 24px !important;
+            }
+
+            .stat-item p {
+                font-size: 10px !important;
+            }
+
+            .offer-items {
+                padding: 20px !important;
+            }
+
+            .price-display {
+                font-size: 26px !important;
+            }
+            
+            #race-pricing-section .section-title h2 {
+                font-size: 28px !important;
             }
         }
     </style>
@@ -1567,15 +1635,16 @@
             <div class="swiper-wrapper">
                 <!-- Slide 1 -->
                 <div class="swiper-slide bg-cover"
-                    style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/header/header-1.jpeg'); padding: 220px 0 450px;">
-                    <div class="container">
+                    style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/header/header-1.jpeg');">
+                    <div class="container hero-slide-padding">
                         <div class="hero-content text-center">
                             <span class="sub-title wow slideUp"
-                                style="color: #ffcc00; font-weight: 700; letter-spacing: 3px; font-size: 18px;">JUNE 27, 2026 | SWAHILI
+                                style="color: #ffcc00; font-weight: 700; letter-spacing: 3px; font-size: 18px;">JUNE 27,
+                                2026 | SWAHILI
                                 MARATHON</span>
                             <h1 class="text-white wow slideUp" data-delay=".3"
-                                style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">Run For <span
-                                    style="color: #ffcc00;">Unity & Heritage</span></h1>
+                                style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">Run For
+                                <span style="color: #ffcc00;">Unity & Heritage</span></h1>
                             <p class="text-white wow slideUp" data-delay=".4"
                                 style="font-size: 1.4rem; max-width: 850px; margin: 0 auto 30px; line-height: 1.7; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">
                                 Experience the thrill of Tanzania's premier marathon event. Join thousands of runners to
@@ -1591,15 +1660,16 @@
                 </div>
                 <!-- Slide 2 -->
                 <div class="swiper-slide bg-cover"
-                    style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/header/header-2.jpeg'); padding: 220px 0 450px;">
-                    <div class="container">
+                    style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/header/header-2.jpeg');">
+                    <div class="container hero-slide-padding">
                         <div class="hero-content text-center">
                             <span class="sub-title wow slideUp"
-                                style="color: #ffcc00; font-weight: 700; letter-spacing: 3px; font-size: 18px;">JUNE 27, 2026 |
+                                style="color: #ffcc00; font-weight: 700; letter-spacing: 3px; font-size: 18px;">JUNE 27,
+                                2026 |
                                 CELEBRATING CULTURE</span>
                             <h1 class="text-white wow slideUp" data-delay=".3"
-                                style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">Beyond The <span
-                                    style="color: #ffcc00;">Finish Line</span></h1>
+                                style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">Beyond The
+                                <span style="color: #ffcc00;">Finish Line</span></h1>
                             <p class="text-white wow slideUp" data-delay=".4"
                                 style="font-size: 1.4rem; max-width: 850px; margin: 0 auto 30px; line-height: 1.7; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">
                                 It's not just a race; it's a milestone. Push your limits and discover the true meaning
@@ -1614,15 +1684,16 @@
                 </div>
                 <!-- Slide 3 -->
                 <div class="swiper-slide bg-cover"
-                    style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/header/header-3.jpeg'); padding: 220px 0 450px;">
-                    <div class="container">
+                    style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/header/header-3.jpeg');">
+                    <div class="container hero-slide-padding">
                         <div class="hero-content text-center">
                             <span class="sub-title wow slideUp"
-                                style="color: #ffcc00; font-weight: 700; letter-spacing: 3px; font-size: 18px;">JUNE 27, 2026 | JOIN THE
+                                style="color: #ffcc00; font-weight: 700; letter-spacing: 3px; font-size: 18px;">JUNE 27,
+                                2026 | JOIN THE
                                 CHALLENGE</span>
                             <h1 class="text-white wow slideUp" data-delay=".3"
-                                style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">Connect & <span
-                                    style="color: #ffcc00;">Achieve</span></h1>
+                                style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">Connect &
+                                <span style="color: #ffcc00;">Achieve</span></h1>
                             <p class="text-white wow slideUp" data-delay=".4"
                                 style="font-size: 1.4rem; max-width: 850px; margin: 0 auto 30px; line-height: 1.7; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">
                                 Build lasting connections with fellow runners and achieve your personal best. Swahili
@@ -1637,15 +1708,16 @@
                 </div>
                 <!-- Slide 4 -->
                 <div class="swiper-slide bg-cover"
-                    style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/header/header-4.jpeg'); padding: 220px 0 450px;">
-                    <div class="container">
+                    style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/header/header-4.jpeg');">
+                    <div class="container hero-slide-padding">
                         <div class="hero-content text-center">
                             <span class="sub-title wow slideUp"
-                                style="color: #ffcc00; font-weight: 700; letter-spacing: 3px; font-size: 18px;">JUNE 27, 2026 | TRAIN &
+                                style="color: #ffcc00; font-weight: 700; letter-spacing: 3px; font-size: 18px;">JUNE 27,
+                                2026 | TRAIN &
                                 RACE</span>
                             <h1 class="text-white wow slideUp" data-delay=".3"
-                                style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">Train, Race, <span
-                                    style="color: #ffcc00;">Inspire</span></h1>
+                                style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">Train,
+                                Race, <span style="color: #ffcc00;">Inspire</span></h1>
                             <p class="text-white wow slideUp" data-delay=".4"
                                 style="font-size: 1.4rem; max-width: 850px; margin: 0 auto 30px; line-height: 1.7; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">
                                 Push your limits and set new standards for yourself. Experience the thrill of
@@ -1660,15 +1732,16 @@
                 </div>
                 <!-- Slide 5 -->
                 <div class="swiper-slide bg-cover"
-                    style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/header/header-5.jpeg'); padding: 220px 0 450px;">
-                    <div class="container">
+                    style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/header/header-5.jpeg');">
+                    <div class="container hero-slide-padding">
                         <div class="hero-content text-center">
                             <span class="sub-title wow slideUp"
-                                style="color: #ffcc00; font-weight: 700; letter-spacing: 3px; font-size: 18px;">JUNE 27, 2026 |
+                                style="color: #ffcc00; font-weight: 700; letter-spacing: 3px; font-size: 18px;">JUNE 27,
+                                2026 |
                                 EXCELLENCE AWAITS</span>
                             <h1 class="text-white wow slideUp" data-delay=".3"
-                                style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">A Heritage of <span
-                                    style="color: #ffcc00;">Excellence</span></h1>
+                                style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">A Heritage
+                                of <span style="color: #ffcc00;">Excellence</span></h1>
                             <p class="text-white wow slideUp" data-delay=".4"
                                 style="font-size: 1.4rem; max-width: 850px; margin: 0 auto 30px; line-height: 1.7; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">
                                 Be part of a tradition that spans generations. The Swahili Marathon is more than a race;
