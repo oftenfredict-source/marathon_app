@@ -397,7 +397,7 @@
             <div class="spinner mb-3"></div>
             <div style="background: rgba(255,255,255,0.9); padding: 8px 15px; border-radius: 25px;">
                 <span style="color: black; font-weight: 600; font-size: 0.9rem;">
-                    Powered by <span style="color: #940000;">EmCa Techonologies</span>
+                    Powered by <span style="color: #940000;">EmCa Technologies</span>
                 </span>
             </div>
         </div>
@@ -406,6 +406,10 @@
     <div class="registration-container">
         <div class="glass-card">
             <div class="header-section">
+                <div class="text-center mb-3">
+                    <img src="{{ asset('img/logo/swahili Marathon.jpeg') }}" alt="Swahili Marathon Logo"
+                        style="max-width: 120px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                </div>
                 <h1>Race Registration</h1>
                 <p>Secure your spot in the Swahili Marathon 2026</p>
             </div>
@@ -578,7 +582,7 @@
                 <div class="row mb-4">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Leader Full Name</label>
-                        <input type="text" id="g-leader-name" class="form-control" placeholder="John Doe">
+                        <input type="text" id="g-leader-name" class="form-control">
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Leader Phone</label>
@@ -830,7 +834,7 @@
             <div class="mt-4 pt-3 border-top border-secondary">
                 <span
                     style="color: black; background: rgba(255,255,255,0.8); padding: 5px 10px; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">
-                    Powered by <span style="color: #940000;">EmCa Techonologies</span>
+                    Powered by <span style="color: #940000;">EmCa Technologies</span>
                 </span>
             </div>
         </div>
@@ -959,14 +963,14 @@
         async function fetchCategories() {
             const registerBtn = document.querySelector('.btn-register');
             const groupRegisterBtn = document.querySelector('button[onclick="handleGroupRegistration()"]');
-            
+
             if (registerBtn) registerBtn.disabled = true;
             if (groupRegisterBtn) groupRegisterBtn.disabled = true;
 
             try {
                 const response = await fetch(`${apiBase}/categories`);
                 if (!response.ok) throw new Error('Could not fetch categories');
-                
+
                 categories = await response.json();
 
                 // Populate individual form select
@@ -977,7 +981,7 @@
                         const count = Number(cat.registrations_count || 0);
                         const limit = Number(cat.registration_limit || 0);
                         const isFull = count >= limit;
-                        
+
                         const option = document.createElement('option');
                         option.value = cat.id;
                         option.disabled = isFull;
@@ -1000,7 +1004,7 @@
                 const errBox = document.getElementById('error-box');
                 const groupErrBox = document.getElementById('error-box-group');
                 const msg = "FAILED TO CONNECT: Please check your internet or server connection. (Race distances could not be loaded)";
-                
+
                 if (errBox) {
                     errBox.textContent = msg;
                     errBox.style.display = 'block';
@@ -1207,7 +1211,7 @@
                 <div class="row">
                     <div class="col-md-8 mb-3">
                         <label class="form-label">Member Full Name</label>
-                        <input type="text" class="form-control m-full-name" data-idx="${idx}" placeholder="e.g. John Doe">
+                        <input type="text" class="form-control m-full-name" data-idx="${idx}">
                     </div>
                     <div class="col-md-4 mb-3">
                         <label class="form-label">Gender</label>

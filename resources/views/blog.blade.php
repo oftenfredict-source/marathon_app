@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Blog - SMRMS')
+@section('title', 'Blog - Swahili Marathon')
 
 @section('content')
     <x-page-title title="Blog Grid" currentPage="Blog Grid" />

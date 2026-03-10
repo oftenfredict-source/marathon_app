@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SMRMS - Group Bookings</title>
+    <title>Swahili Marathon - Group Bookings</title>
     <link rel="icon" href="/pluto/images/fevicon.png" type="image/png" />
     <link rel="stylesheet" href="/pluto/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/pluto/style.css" />
@@ -59,7 +59,8 @@
                     <div class="sidebar-header">
                         <div class="logo_section">
                             <a href="/admin/dashboard"><img class="logo_icon img-responsive"
-                                    src="/img/logo/asa-logo.png" alt="SMRMS" style="max-height: 50px;" /></a>
+                                    src="/img/logo/swahili Marathon.jpeg" alt="Swahili Marathon"
+                                    style="max-height: 50px; border-radius: 5px;" /></a>
                         </div>
                     </div>
                     <div class="sidebar_user_info">
@@ -108,8 +109,9 @@
                             <button type="button" id="sidebarCollapse" class="sidebar_toggle"><i
                                     class="fa fa-bars"></i></button>
                             <div class="logo_section topbar_logo_section">
-                                <a href="/admin/dashboard"><img class="img-responsive" src="/img/logo/asa-logo.png"
-                                        alt="SMRMS" style="max-height: 40px;" /></a>
+                                <a href="/admin/dashboard"><img class="img-responsive"
+                                        src="/img/logo/swahili Marathon.jpeg" alt="Swahili Marathon"
+                                        style="max-height: 40px; border-radius: 5px;" /></a>
                             </div>
                             <div class="right_topbar">
                                 <div class="icon_info">
@@ -244,7 +246,7 @@
                     <!-- footer -->
                     <div class="container-fluid">
                         <div class="footer">
-                            <p>Copyright &copy; 2026 SMRMS. All rights reserved.</p>
+                            <p>Copyright &copy; 2026 Swahili Marathon. All rights reserved.</p>
                         </div>
                     </div>
                 </div>

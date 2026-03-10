@@ -271,7 +271,7 @@
         <div class="spinner"></div>
         <div style="background: rgba(255,255,255,0.9); padding: 8px 15px; border-radius: 25px;">
             <span style="color: black; font-weight: 600; font-size: 0.9rem;">
-                Powered by <span style="color: #940000;">EmCa Techonologies</span>
+                Powered by <span style="color: #940000;">EmCa Technologies</span>
             </span>
         </div>
     </div>

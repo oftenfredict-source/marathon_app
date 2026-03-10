@@ -203,7 +203,8 @@
         <div class="glass-card">
             <div class="logo-section mb-4">
                 <div class="text-center mb-3">
-                    <img src="{{ asset('img/logo/asa-logo.png') }}" alt="SMRMS Logo" style="max-width: 150px;">
+                    <img src="{{ asset('img/logo/swahili Marathon.jpeg') }}" alt="Swahili Marathon Logo"
+                        style="max-width: 150px; border-radius: 10px;">
                 </div>
                 <h2>Swahili Marathon</h2>
                 <p>Swahili Marathon Registration & Management</p>

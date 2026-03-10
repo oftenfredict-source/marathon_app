@@ -1579,6 +1579,7 @@
             #china-announcement-section p {
                 font-size: 16px !important;
             }
+
             #custom-hero-slider h1 {
                 font-size: 2.2rem !important;
             }
@@ -1965,10 +1966,10 @@
                     <div class="swiper-slide">
                         <div class="brand-img"
                             style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 140px; padding: 10px;">
-                            <img src="/img/logo/EmCa.png" alt="EmCa Techonologies"
+                            <img src="/img/logo/EmCa.png" alt="EmCa Technologies"
                                 style="max-height: 80px; width: auto; transition: all 0.3s; object-fit: contain;">
                             <p style="font-size: 13px; margin-top: 15px; color: #666; font-weight: 500;">EmCa
-                                Techonologies</p>
+                                Technologies</p>
                         </div>
                     </div>
                 </div>
@@ -2235,7 +2236,7 @@
                 <div class="footer-bottom-content">
                     <p>© 2026 <strong>Swahili Marathon</strong>. All Rights Reserved.</p>
                     <div class="powered-by">
-                        Powered by <a href="https://emca.tech" target="_blank">EmCa Techonologies</a>
+                        Powered by <a href="https://emca.tech" target="_blank">EmCa Technologies</a>
                     </div>
                 </div>
             </div>

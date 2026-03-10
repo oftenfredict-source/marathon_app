@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'About Us - SMRMS')
+@section('title', 'About Us - Swahili Marathon')
 
 @section('content')
     <x-page-title title="About Us" currentPage="About Us" />
