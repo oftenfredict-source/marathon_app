@@ -1517,6 +1517,24 @@
                 line-height: 1.6 !important;
             }
 
+            .section-title h2 {
+                font-size: 28px !important;
+                line-height: 1.3 !important;
+            }
+
+            .footer-widget {
+                text-align: center !important;
+            }
+
+            .footer-logo {
+                display: flex !important;
+                justify-content: center !important;
+            }
+
+            .footer-social {
+                justify-content: center !important;
+            }
+
             .footer-section .col-lg-3,
             .footer-area .col-lg-3,
             .footer-section .col-md-6,
@@ -1526,6 +1544,7 @@
             }
 
             .single-footer-widget h3::after,
+            .footer-widget h4::after,
             .footer-widget h3::after,
             .widget-title::after {
                 left: 50% !important;
@@ -1533,6 +1552,7 @@
             }
 
             .single-footer-widget h3::before,
+            .footer-widget h4::before,
             .footer-widget h3::before,
             .widget-title::before {
                 left: 50% !important;
@@ -1547,6 +1567,18 @@
         }
 
         @media (max-width: 575px) {
+            .section-title h2 {
+                font-size: 24px !important;
+                line-height: 1.2 !important;
+            }
+
+            #china-announcement-section h2 {
+                font-size: 26px !important;
+            }
+
+            #china-announcement-section p {
+                font-size: 16px !important;
+            }
             #custom-hero-slider h1 {
                 font-size: 2.2rem !important;
             }
