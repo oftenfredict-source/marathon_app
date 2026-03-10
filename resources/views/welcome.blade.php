@@ -1134,13 +1134,28 @@
         }
 
         /* Responsive Tweaks */
+        .hero-slider .swiper-slide {
+            height: 90vh;
+            min-height: 650px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .hero-slide-padding {
-            padding: 220px 0 450px;
+            padding: 80px 0;
+            /* Reduced padding, flex handles centering */
+            width: 100%;
         }
 
         @media (max-width: 991px) {
+            .hero-slider .swiper-slide {
+                height: 70vh;
+                min-height: 500px;
+            }
+
             .hero-slide-padding {
-                padding: 140px 0 160px;
+                padding: 40px 0;
             }
 
             #custom-hero-section {
@@ -1567,7 +1582,7 @@
             .price-display {
                 font-size: 26px !important;
             }
-            
+
             #race-pricing-section .section-title h2 {
                 font-size: 28px !important;
             }
@@ -1644,7 +1659,8 @@
                                 MARATHON</span>
                             <h1 class="text-white wow slideUp" data-delay=".3"
                                 style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">Run For
-                                <span style="color: #ffcc00;">Unity & Heritage</span></h1>
+                                <span style="color: #ffcc00;">Unity & Heritage</span>
+                            </h1>
                             <p class="text-white wow slideUp" data-delay=".4"
                                 style="font-size: 1.4rem; max-width: 850px; margin: 0 auto 30px; line-height: 1.7; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">
                                 Experience the thrill of Tanzania's premier marathon event. Join thousands of runners to
@@ -1669,7 +1685,8 @@
                                 CELEBRATING CULTURE</span>
                             <h1 class="text-white wow slideUp" data-delay=".3"
                                 style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">Beyond The
-                                <span style="color: #ffcc00;">Finish Line</span></h1>
+                                <span style="color: #ffcc00;">Finish Line</span>
+                            </h1>
                             <p class="text-white wow slideUp" data-delay=".4"
                                 style="font-size: 1.4rem; max-width: 850px; margin: 0 auto 30px; line-height: 1.7; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">
                                 It's not just a race; it's a milestone. Push your limits and discover the true meaning
@@ -1693,7 +1710,8 @@
                                 CHALLENGE</span>
                             <h1 class="text-white wow slideUp" data-delay=".3"
                                 style="font-size: 80px; font-weight: 900; margin: 20px 0; line-height: 1.1;">Connect &
-                                <span style="color: #ffcc00;">Achieve</span></h1>
+                                <span style="color: #ffcc00;">Achieve</span>
+                            </h1>
                             <p class="text-white wow slideUp" data-delay=".4"
                                 style="font-size: 1.4rem; max-width: 850px; margin: 0 auto 30px; line-height: 1.7; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">
                                 Build lasting connections with fellow runners and achieve your personal best. Swahili
